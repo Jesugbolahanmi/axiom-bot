@@ -39,6 +39,7 @@ struct DexPair {
 #[derive(Debug, Deserialize)]
 struct DexVolume {
     m5: Option<f64>,
+    #[allow(dead_code)]
     h1: Option<f64>,
     h24: Option<f64>,
 }
@@ -92,38 +93,61 @@ impl DexScreenerClient {
             _ => return Ok(None),
         };
 
-        // Pick pair with highest liquidity or first pair
-        let best_pair = pairs
+        // Filter to pairs with a valid market cap or fdv > 0
+        let valid_pairs: Vec<&DexPair> = pairs
+            .iter()
+            .filter(|p| p.market_cap.or(p.fdv).unwrap_or(0.0) > 0.0)
+            .collect();
+
+        if valid_pairs.is_empty() {
+            return Ok(None);
+        }
+
+        // Canonical pair selection:
+        // Pick pair with highest 24h trading volume (correctly captures pump.fun bonding curves where liquidity is None)
+        let best_pair = valid_pairs
             .iter()
             .max_by(|a, b| {
-                let liq_a = a.liquidity.as_ref().and_then(|l| l.usd).unwrap_or(0.0);
-                let liq_b = b.liquidity.as_ref().and_then(|l| l.usd).unwrap_or(0.0);
-                liq_a.partial_cmp(&liq_b).unwrap_or(std::cmp::Ordering::Equal)
+                let vol_a = a.volume.as_ref().and_then(|v| v.h24).unwrap_or(0.0);
+                let vol_b = b.volume.as_ref().and_then(|v| v.h24).unwrap_or(0.0);
+                match vol_a.partial_cmp(&vol_b) {
+                    Some(std::cmp::Ordering::Equal) | None => {
+                        let m_a = a.market_cap.or(a.fdv).unwrap_or(0.0);
+                        let m_b = b.market_cap.or(b.fdv).unwrap_or(0.0);
+                        m_a.partial_cmp(&m_b).unwrap_or(std::cmp::Ordering::Equal)
+                    }
+                    Some(order) => order,
+                }
             })
-            .unwrap_or(&pairs[0]);
+            .copied()
+            .unwrap_or(valid_pairs[0]);
 
-        let mcap = best_pair
-            .market_cap
-            .or(best_pair.fdv)
-            .unwrap_or(0.0);
+        // Peak market cap across all active pairs to accurately capture true ATH
+        let max_mcap = valid_pairs
+            .iter()
+            .filter_map(|p| p.market_cap.or(p.fdv))
+            .fold(0.0, f64::max);
 
+        let mcap = max_mcap;
+
+        // Liquidity: use pair liquidity if available, otherwise virtual bonding curve (~40% of mcap)
         let liq = best_pair
             .liquidity
             .as_ref()
             .and_then(|l| l.usd)
-            .unwrap_or(mcap * 0.45);
+            .unwrap_or(mcap * 0.40);
 
-        let vol_24h = best_pair
-            .volume
-            .as_ref()
-            .and_then(|v| v.h24.or(v.h1))
-            .unwrap_or(0.0);
+        let vol_24h = valid_pairs
+            .iter()
+            .filter_map(|p| p.volume.as_ref().and_then(|v| v.h24))
+            .sum::<f64>()
+            .max(best_pair.volume.as_ref().and_then(|v| v.h24).unwrap_or(0.0));
 
-        let vol_5m = best_pair
-            .volume
-            .as_ref()
-            .and_then(|v| v.m5)
-            .unwrap_or(0.0);
+        let vol_5m = valid_pairs
+            .iter()
+            .filter_map(|p| p.volume.as_ref().and_then(|v| v.m5))
+            .sum::<f64>()
+            .max(best_pair.volume.as_ref().and_then(|v| v.m5).unwrap_or(0.0));
 
         let base_name = best_pair.base_token.as_ref().and_then(|t| t.name.clone());
         let base_sym = best_pair.base_token.as_ref().and_then(|t| t.symbol.clone());

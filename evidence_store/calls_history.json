@@ -721,8 +721,8 @@
     "name": "Hashlock.fun",
     "symbol": "HASHLOCK",
     "initial_market_cap_usd": 16661.65,
-    "current_market_cap_usd": 19883.41,
-    "highest_market_cap_usd": 21072.04,
+    "current_market_cap_usd": 42517.88,
+    "highest_market_cap_usd": 42517.88,
     "initial_volume_usd": 30010.58,
     "current_volume_usd": 49905.68,
     "current_volume_5m_usd": 4369.87,
@@ -877,7 +877,7 @@
     "clustered_wallets_count": 1,
     "bubblemaps_url": "https://bubblemaps.io/solana/token/GEZev5APkmxo7DLiXtvMiZ732qqEe1VAAFyv249HLock",
     "ath_timestamp": "2026-10-22T18:44:42.356636300Z",
-    "last_notified_milestone": 1.0
+    "last_notified_milestone": 2.0
   },
   {
     "alert_type": "EarlyLaunch",
