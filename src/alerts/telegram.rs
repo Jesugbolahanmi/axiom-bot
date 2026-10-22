@@ -15,7 +15,7 @@ fn disabled_link_preview() -> LinkPreviewOptions {
 }
 use tracing::{info, warn};
 
-use super::formatter::{format_alert_html, format_calls_summary, format_milestone_alert, format_pnl_analytics, format_refreshed_alert_html};
+use super::formatter::{format_alert_html, format_calls_summary, format_milestone_alert, format_pnl_analytics, format_refreshed_alert_html, format_token_pnl_html};
 use crate::enrichment::DexScreenerClient;
 use crate::execution::ExecutionEngine;
 use crate::models::alert::{AlertCard, CallRecord};
@@ -245,6 +245,102 @@ impl TelegramBotService {
 
         info!("Dispatched Telegram alert for mint: {}", card.mint);
         Ok(())
+    }
+
+    pub async fn handle_token_lookup(
+        bot: &Bot,
+        chat_id: teloxide::types::ChatId,
+        service: &TelegramBotService,
+        target: &str,
+    ) {
+        let target_clean = target.trim().trim_start_matches('$');
+        let found_record = service.calls.iter().find(|kv| {
+            kv.key().eq_ignore_ascii_case(target_clean)
+                || kv.value().symbol.eq_ignore_ascii_case(target_clean)
+                || kv.key().starts_with(target_clean)
+        }).map(|kv| kv.value().clone());
+
+        if let Some(mut rec) = found_record {
+            if let Ok(Some(metrics)) = service.dex_client.fetch_metrics(&rec.mint).await {
+                rec.current_market_cap_usd = metrics.market_cap_usd;
+                rec.current_volume_usd = metrics.total_volume_usd;
+                rec.current_volume_5m_usd = metrics.volume_5m_usd;
+                rec.current_liquidity_usd = metrics.liquidity_usd;
+                if metrics.market_cap_usd > rec.highest_market_cap_usd {
+                    rec.highest_market_cap_usd = metrics.market_cap_usd;
+                    rec.ath_timestamp = chrono::Utc::now();
+                }
+                rec.last_refreshed = chrono::Utc::now();
+                service.calls.insert(rec.mint.clone(), rec.clone());
+                service.save_calls_to_disk();
+            }
+
+            let pnl_token_html = format_token_pnl_html(&rec);
+            let keyboard = Self::create_action_keyboard(&rec.mint);
+            let _ = bot
+                .send_message(chat_id, pnl_token_html)
+                .parse_mode(ParseMode::Html)
+                .link_preview_options(disabled_link_preview())
+                .reply_markup(keyboard)
+                .await;
+        } else {
+            // Check DexScreener on demand for arbitrary mint
+            if let Ok(Some(metrics)) = service.dex_client.fetch_metrics(target_clean).await {
+                let now = chrono::Utc::now();
+                let name = metrics.base_token_name.clone().unwrap_or_else(|| "Token".to_string());
+                let symbol = metrics.base_token_symbol.clone().unwrap_or_else(|| "TOKEN".to_string());
+                let rec = CallRecord {
+                    alert_type: crate::models::alert::AlertType::EarlyLaunch,
+                    mint: target_clean.to_string(),
+                    name,
+                    symbol,
+                    initial_market_cap_usd: metrics.market_cap_usd,
+                    current_market_cap_usd: metrics.market_cap_usd,
+                    highest_market_cap_usd: metrics.market_cap_usd,
+                    initial_volume_usd: metrics.total_volume_usd,
+                    current_volume_usd: metrics.total_volume_usd,
+                    current_volume_5m_usd: metrics.volume_5m_usd,
+                    current_liquidity_usd: metrics.liquidity_usd,
+                    holder_count: 50,
+                    dev_holding_pct: 0.0,
+                    top_holder_pct: 5.0,
+                    sniper_bundler_pct: 5.0,
+                    lore_description: None,
+                    alert_timestamp: now,
+                    last_refreshed: now,
+                    bottom_market_cap_usd: metrics.market_cap_usd,
+                    surge_pct_from_bottom: 0.0,
+                    is_cto: false,
+                    cto_status_desc: "Tracked on demand".to_string(),
+                    top_holders: Vec::new(),
+                    top_10_pct: 0.0,
+                    clustered_wallets_count: 0,
+                    bubblemaps_url: format!("https://bubblemaps.io/solana/token/{}", target_clean),
+                    ath_timestamp: now,
+                    last_notified_milestone: 1.0,
+                };
+                service.calls.insert(target_clean.to_string(), rec.clone());
+                service.save_calls_to_disk();
+
+                let pnl_token_html = format_token_pnl_html(&rec);
+                let keyboard = Self::create_action_keyboard(&rec.mint);
+                let _ = bot
+                    .send_message(chat_id, pnl_token_html)
+                    .parse_mode(ParseMode::Html)
+                    .link_preview_options(disabled_link_preview())
+                    .reply_markup(keyboard)
+                    .await;
+            } else {
+                let not_found = format!(
+                    "⚠️ <b>Token Not Found</b>\n\nNo active DexScreener pair or alert record found for: <code>{}</code>\n\n• Type <b>/pnl</b> to view overall 24h / 7d / 30d win rate &amp; PnL.\n• Type <b>/calls</b> to list all active alerted coins.",
+                    html_escape::encode_text(target_clean)
+                );
+                let _ = bot
+                    .send_message(chat_id, not_found)
+                    .parse_mode(ParseMode::Html)
+                    .await;
+            }
+        }
     }
 
     /// Start listening to incoming callback queries and commands
@@ -494,8 +590,30 @@ impl TelegramBotService {
                     }
 
                     if let Some(text) = msg.text() {
-                        // Strip @bot_username suffix Telegram appends in group chats
-                        let cmd = text.split('@').next().unwrap_or(text);
+                        let text = text.trim();
+                        let mut parts = text.split_whitespace();
+                        let raw_first = parts.next().unwrap_or("");
+                        let base_first = raw_first.split('@').next().unwrap_or(raw_first);
+
+                        let (cmd, arg): (&str, Option<String>) = if base_first.starts_with("/pnl") && base_first.len() > 4 {
+                            ("/pnl", Some(base_first[4..].trim().to_string()))
+                        } else if base_first.starts_with("/calls") && base_first.len() > 6 {
+                            ("/calls", Some(base_first[6..].trim().to_string()))
+                        } else if base_first.starts_with("/stats") && base_first.len() > 6 {
+                            ("/pnl", Some(base_first[6..].trim().to_string()))
+                        } else if base_first.starts_with("/winrate") && base_first.len() > 8 {
+                            ("/pnl", Some(base_first[8..].trim().to_string()))
+                        } else if base_first.starts_with("/flips") && base_first.len() > 6 {
+                            ("/calls", Some(base_first[6..].trim().to_string()))
+                        } else {
+                            let remainder: Vec<&str> = parts.collect();
+                            let a = if !remainder.is_empty() {
+                                Some(remainder.join(" "))
+                            } else {
+                                None
+                            };
+                            (base_first, a)
+                        };
 
                         match cmd {
                             "/start" => {
@@ -521,15 +639,19 @@ I'm watching Pump.fun in real-time and will ping you the moment a new token pass
                             }
 
                             "/pnl" | "/stats" | "/winrate" => {
-                                let call_list: Vec<CallRecord> = service.calls.iter().map(|kv| kv.value().clone()).collect();
-                                let pnl_html = format_pnl_analytics(&call_list, Some(7));
-                                let keyboard = Self::create_pnl_keyboard(7);
-                                let _ = bot
-                                    .send_message(msg.chat.id, pnl_html)
-                                    .parse_mode(ParseMode::Html)
-                                    .link_preview_options(disabled_link_preview())
-                                    .reply_markup(keyboard)
-                                    .await;
+                                if let Some(target) = arg {
+                                    Self::handle_token_lookup(&bot, msg.chat.id, &service, &target).await;
+                                } else {
+                                    let call_list: Vec<CallRecord> = service.calls.iter().map(|kv| kv.value().clone()).collect();
+                                    let pnl_html = format_pnl_analytics(&call_list, Some(7));
+                                    let keyboard = Self::create_pnl_keyboard(7);
+                                    let _ = bot
+                                        .send_message(msg.chat.id, pnl_html)
+                                        .parse_mode(ParseMode::Html)
+                                        .link_preview_options(disabled_link_preview())
+                                        .reply_markup(keyboard)
+                                        .await;
+                                }
                             }
 
                             "/testpnl" => {
@@ -674,18 +796,22 @@ I'm watching Pump.fun in real-time and will ping you the moment a new token pass
                             }
 
                             "/calls" | "/flips" => {
-                                let mut call_list: Vec<CallRecord> = service
-                                    .calls
-                                    .iter()
-                                    .map(|kv| kv.value().clone())
-                                    .collect();
-                                call_list.sort_by(|a, b| b.alert_timestamp.cmp(&a.alert_timestamp));
-                                let summary = format_calls_summary(&call_list);
-                                let _ = bot
-                                    .send_message(msg.chat.id, summary)
-                                    .parse_mode(ParseMode::Html)
-                                    .link_preview_options(disabled_link_preview())
-                                    .await;
+                                if let Some(target) = arg {
+                                    Self::handle_token_lookup(&bot, msg.chat.id, &service, &target).await;
+                                } else {
+                                    let mut call_list: Vec<CallRecord> = service
+                                        .calls
+                                        .iter()
+                                        .map(|kv| kv.value().clone())
+                                        .collect();
+                                    call_list.sort_by(|a, b| b.alert_timestamp.cmp(&a.alert_timestamp));
+                                    let summary = format_calls_summary(&call_list);
+                                    let _ = bot
+                                        .send_message(msg.chat.id, summary)
+                                        .parse_mode(ParseMode::Html)
+                                        .link_preview_options(disabled_link_preview())
+                                        .await;
+                                }
                             }
 
                             "/help" => {

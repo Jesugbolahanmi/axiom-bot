@@ -64,7 +64,7 @@ trace_funding_cluster = true
 # Auto-buy must be explicitly enabled here to be active
 auto_buy_enabled = false
 # Hard maximum SOL spent per trade
-max_sol_per_trade = 0.1
+max_sol_per_trade = 0.5
 # Hard maximum SOL spend per rolling 24 hours
 max_daily_spend_sol = 1.0
 # Maximum open positions tracked simultaneously
