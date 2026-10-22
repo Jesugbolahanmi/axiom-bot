@@ -1,0 +1,8 @@
+target
+.git
+.env
+.cargo
+scratch
+evidence_store
+*.log
+*.exe

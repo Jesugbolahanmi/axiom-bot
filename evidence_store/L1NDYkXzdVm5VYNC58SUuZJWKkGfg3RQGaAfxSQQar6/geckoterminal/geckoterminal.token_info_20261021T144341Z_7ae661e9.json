@@ -1,0 +1,41 @@
+{
+  "data": {
+    "id": "solana_L1NDYkXzdVm5VYNC58SUuZJWKkGfg3RQGaAfxSQQar6",
+    "type": "token",
+    "attributes": {
+      "address": "L1NDYkXzdVm5VYNC58SUuZJWKkGfg3RQGaAfxSQQar6",
+      "name": "LINDY",
+      "symbol": "LINDY",
+      "decimals": 6,
+      "image_url": "https://assets.geckoterminal.com/70ez5lco4zaove2rkorv9ziz16io",
+      "coingecko_coin_id": null,
+      "total_supply": "999999999999992.0",
+      "normalized_total_supply": "999999999.999992",
+      "price_usd": "0.0005240929586",
+      "fdv_usd": "524092.958643644",
+      "total_reserve_in_usd": "30506.387821575497937997473517",
+      "volume_usd": {
+        "h24": "4816.7608860067"
+      },
+      "market_cap_usd": null
+    },
+    "relationships": {
+      "top_pools": {
+        "data": [
+          {
+            "id": "solana_pdRbDxjbxCfpdXknK7iSTosB4JgXZyxtyTiPdmFNh1S",
+            "type": "pool"
+          },
+          {
+            "id": "solana_2enuGCZ4jABMZjU9WskLeyTyXU2ggNFvBf8sbq837P3v",
+            "type": "pool"
+          },
+          {
+            "id": "solana_BwADzbVcmDdeiyeFXv567QraMVD8WVMxstHLFEU7oq8z",
+            "type": "pool"
+          }
+        ]
+      }
+    }
+  }
+}

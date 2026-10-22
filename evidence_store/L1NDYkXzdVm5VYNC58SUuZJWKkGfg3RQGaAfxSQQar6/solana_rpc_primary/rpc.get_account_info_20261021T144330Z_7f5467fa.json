@@ -1,0 +1,51 @@
+{
+  "jsonrpc": "2.0",
+  "result": {
+    "context": {
+      "apiVersion": "4.3.2",
+      "slot": 459723690
+    },
+    "value": {
+      "data": {
+        "parsed": {
+          "info": {
+            "decimals": 6,
+            "extensions": [
+              {
+                "extension": "metadataPointer",
+                "state": {
+                  "authority": null,
+                  "metadataAddress": "L1NDYkXzdVm5VYNC58SUuZJWKkGfg3RQGaAfxSQQar6"
+                }
+              },
+              {
+                "extension": "tokenMetadata",
+                "state": {
+                  "additionalMetadata": [],
+                  "mint": "L1NDYkXzdVm5VYNC58SUuZJWKkGfg3RQGaAfxSQQar6",
+                  "name": "LINDY",
+                  "symbol": "LINDY",
+                  "updateAuthority": null,
+                  "uri": "https://brown-quickest-lungfish-712.mypinata.cloud/ipfs/bafkreielpxednpaurtm3axaebdeqqs7p6cctqubqaphsaywjhrbmgcovly"
+                }
+              }
+            ],
+            "freezeAuthority": null,
+            "isInitialized": true,
+            "mintAuthority": null,
+            "supply": "997444806459970"
+          },
+          "type": "mint"
+        },
+        "program": "spl-token-2022",
+        "space": 443
+      },
+      "executable": false,
+      "lamports": 5202941320,
+      "owner": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+      "rentEpoch": 18446744073709551615,
+      "space": 443
+    }
+  },
+  "id": 1
+}

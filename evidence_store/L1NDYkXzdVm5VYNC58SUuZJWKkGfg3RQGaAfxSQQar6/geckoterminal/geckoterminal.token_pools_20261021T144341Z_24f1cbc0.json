@@ -1,0 +1,376 @@
+{
+  "data": [
+    {
+      "id": "solana_pdRbDxjbxCfpdXknK7iSTosB4JgXZyxtyTiPdmFNh1S",
+      "type": "pool",
+      "attributes": {
+        "base_token_price_usd": "0.0005352836084",
+        "base_token_price_native_currency": "0.00000494502831799465",
+        "quote_token_price_usd": "108.528518845931515202222848539222590277673884045",
+        "quote_token_price_native_currency": "1.0",
+        "base_token_price_quote_token": "0.000004945028318",
+        "quote_token_price_base_token": "202223.311110487",
+        "address": "pdRbDxjbxCfpdXknK7iSTosB4JgXZyxtyTiPdmFNh1S",
+        "name": "LINDY / SOL",
+        "pool_created_at": "2026-09-25T02:21:25Z",
+        "token_price_usd": "0.0005352836084",
+        "fdv_usd": "535283.608399996",
+        "market_cap_usd": null,
+        "price_change_percentage": {
+          "m5": "0",
+          "m15": "0",
+          "m30": "0.327",
+          "h1": "0.11",
+          "h6": "-9.04",
+          "h24": "-0.06"
+        },
+        "transactions": {
+          "m5": {
+            "buys": 0,
+            "sells": 1,
+            "buyers": 0,
+            "sellers": 1
+          },
+          "m15": {
+            "buys": 1,
+            "sells": 1,
+            "buyers": 1,
+            "sellers": 1
+          },
+          "m30": {
+            "buys": 1,
+            "sells": 1,
+            "buyers": 1,
+            "sellers": 1
+          },
+          "h1": {
+            "buys": 4,
+            "sells": 2,
+            "buyers": 2,
+            "sellers": 2
+          },
+          "h6": {
+            "buys": 10,
+            "sells": 10,
+            "buyers": 7,
+            "sellers": 7
+          },
+          "h24": {
+            "buys": 23,
+            "sells": 25,
+            "buyers": 10,
+            "sellers": 19
+          }
+        },
+        "volume_usd": {
+          "m5": "25.4404348602",
+          "m15": "103.6723120768",
+          "m30": "103.6723120768",
+          "h1": "527.4423359499",
+          "h6": "2608.2714765835",
+          "h24": "4777.8582838045"
+        },
+        "reserve_in_usd": "59875.2444"
+      },
+      "relationships": {
+        "base_token": {
+          "data": {
+            "id": "solana_L1NDYkXzdVm5VYNC58SUuZJWKkGfg3RQGaAfxSQQar6",
+            "type": "token"
+          }
+        },
+        "quote_token": {
+          "data": {
+            "id": "solana_So11111111111111111111111111111111111111112",
+            "type": "token"
+          }
+        },
+        "dex": {
+          "data": {
+            "id": "meteora-damm-v2",
+            "type": "dex"
+          }
+        }
+      }
+    },
+    {
+      "id": "solana_2enuGCZ4jABMZjU9WskLeyTyXU2ggNFvBf8sbq837P3v",
+      "type": "pool",
+      "attributes": {
+        "base_token_price_usd": "0.0005467922423",
+        "base_token_price_native_currency": "0.0000052103492693147",
+        "quote_token_price_usd": "108.322004509888509626578983302337241083211815304",
+        "quote_token_price_native_currency": "1.0",
+        "base_token_price_quote_token": "0.000005210349269",
+        "quote_token_price_base_token": "191925.713289376",
+        "address": "2enuGCZ4jABMZjU9WskLeyTyXU2ggNFvBf8sbq837P3v",
+        "name": "LINDY / SOL",
+        "pool_created_at": "2026-09-25T02:31:18Z",
+        "token_price_usd": "0.0005467922423",
+        "fdv_usd": "546792.242299996",
+        "market_cap_usd": null,
+        "price_change_percentage": {
+          "m5": "0",
+          "m15": "0",
+          "m30": "0",
+          "h1": "0",
+          "h6": "0",
+          "h24": "-4.28"
+        },
+        "transactions": {
+          "m5": {
+            "buys": 0,
+            "sells": 0,
+            "buyers": 0,
+            "sellers": 0
+          },
+          "m15": {
+            "buys": 0,
+            "sells": 0,
+            "buyers": 0,
+            "sellers": 0
+          },
+          "m30": {
+            "buys": 0,
+            "sells": 0,
+            "buyers": 0,
+            "sellers": 0
+          },
+          "h1": {
+            "buys": 0,
+            "sells": 0,
+            "buyers": 0,
+            "sellers": 0
+          },
+          "h6": {
+            "buys": 0,
+            "sells": 2,
+            "buyers": 0,
+            "sellers": 2
+          },
+          "h24": {
+            "buys": 4,
+            "sells": 2,
+            "buyers": 4,
+            "sellers": 2
+          }
+        },
+        "volume_usd": {
+          "m5": "0.0",
+          "m15": "0.0",
+          "m30": "0.0",
+          "h1": "0.0",
+          "h6": "3.9045087898",
+          "h24": "7.8250898818"
+        },
+        "reserve_in_usd": "597.217"
+      },
+      "relationships": {
+        "base_token": {
+          "data": {
+            "id": "solana_L1NDYkXzdVm5VYNC58SUuZJWKkGfg3RQGaAfxSQQar6",
+            "type": "token"
+          }
+        },
+        "quote_token": {
+          "data": {
+            "id": "solana_So11111111111111111111111111111111111111112",
+            "type": "token"
+          }
+        },
+        "dex": {
+          "data": {
+            "id": "meteora",
+            "type": "dex"
+          }
+        }
+      }
+    },
+    {
+      "id": "solana_BwADzbVcmDdeiyeFXv567QraMVD8WVMxstHLFEU7oq8z",
+      "type": "pool",
+      "attributes": {
+        "base_token_price_usd": "0.000002007505098",
+        "base_token_price_native_currency": "0.0000000185993404094196",
+        "quote_token_price_usd": "0.00053223014113930514939022906256970722842988333174572246804056943",
+        "quote_token_price_native_currency": "0.00000493106073914497",
+        "base_token_price_quote_token": "0.003771874125",
+        "quote_token_price_base_token": "265.1201940821",
+        "address": "BwADzbVcmDdeiyeFXv567QraMVD8WVMxstHLFEU7oq8z",
+        "name": "LIN / LINDY",
+        "pool_created_at": "2026-10-16T00:55:22Z",
+        "token_price_usd": "0.00053223014113930514939022906256970722842988333174572246804056943",
+        "fdv_usd": "532230.141139301",
+        "market_cap_usd": null,
+        "price_change_percentage": {
+          "m5": "0",
+          "m15": "0",
+          "m30": "0",
+          "h1": "0",
+          "h6": "-5.7",
+          "h24": "-7.82"
+        },
+        "transactions": {
+          "m5": {
+            "buys": 0,
+            "sells": 0,
+            "buyers": 0,
+            "sellers": 0
+          },
+          "m15": {
+            "buys": 0,
+            "sells": 0,
+            "buyers": 0,
+            "sellers": 0
+          },
+          "m30": {
+            "buys": 0,
+            "sells": 0,
+            "buyers": 0,
+            "sellers": 0
+          },
+          "h1": {
+            "buys": 0,
+            "sells": 1,
+            "buyers": 0,
+            "sellers": 1
+          },
+          "h6": {
+            "buys": 0,
+            "sells": 3,
+            "buyers": 0,
+            "sellers": 3
+          },
+          "h24": {
+            "buys": 3,
+            "sells": 3,
+            "buyers": 3,
+            "sellers": 3
+          }
+        },
+        "volume_usd": {
+          "m5": "0.0",
+          "m15": "0.0",
+          "m30": "0.0",
+          "h1": "0.05770840852",
+          "h6": "2.7607684091",
+          "h24": "5.6370774602"
+        },
+        "reserve_in_usd": "141.8433"
+      },
+      "relationships": {
+        "base_token": {
+          "data": {
+            "id": "solana_7eJWuvU1JHskxsRNFomerJLHdjoiHR6QhSTm7GgH7rU3",
+            "type": "token"
+          }
+        },
+        "quote_token": {
+          "data": {
+            "id": "solana_L1NDYkXzdVm5VYNC58SUuZJWKkGfg3RQGaAfxSQQar6",
+            "type": "token"
+          }
+        },
+        "dex": {
+          "data": {
+            "id": "meteora-damm-v2",
+            "type": "dex"
+          }
+        }
+      }
+    },
+    {
+      "id": "solana_9FBEewCpHVGoFct2TrZzFDtnjsBjV783HXTn6c912VRd",
+      "type": "pool",
+      "attributes": {
+        "base_token_price_usd": "0.001366746906",
+        "base_token_price_native_currency": "0.00000864417699546646",
+        "quote_token_price_usd": "0.9996498858",
+        "quote_token_price_native_currency": "0.008379471",
+        "base_token_price_quote_token": "0.001031589822",
+        "quote_token_price_base_token": "969.3775363918",
+        "address": "9FBEewCpHVGoFct2TrZzFDtnjsBjV783HXTn6c912VRd",
+        "name": "LINDY / USDC",
+        "pool_created_at": "2026-09-25T02:35:58Z",
+        "token_price_usd": "0.001366746906",
+        "fdv_usd": "1366746.90599999",
+        "market_cap_usd": null,
+        "price_change_percentage": {
+          "m5": "0",
+          "m15": "0",
+          "m30": "0",
+          "h1": "0",
+          "h6": "0",
+          "h24": "0"
+        },
+        "transactions": {
+          "m5": {
+            "buys": 0,
+            "sells": 0,
+            "buyers": 0,
+            "sellers": 0
+          },
+          "m15": {
+            "buys": 0,
+            "sells": 0,
+            "buyers": 0,
+            "sellers": 0
+          },
+          "m30": {
+            "buys": 0,
+            "sells": 0,
+            "buyers": 0,
+            "sellers": 0
+          },
+          "h1": {
+            "buys": 0,
+            "sells": 0,
+            "buyers": 0,
+            "sellers": 0
+          },
+          "h6": {
+            "buys": 0,
+            "sells": 0,
+            "buyers": 0,
+            "sellers": 0
+          },
+          "h24": {
+            "buys": 0,
+            "sells": 0,
+            "buyers": 0,
+            "sellers": 0
+          }
+        },
+        "volume_usd": {
+          "m5": "0.0",
+          "m15": "0.0",
+          "m30": "0.0",
+          "h1": "0.0",
+          "h6": "0.0",
+          "h24": "0.0"
+        },
+        "reserve_in_usd": "0.00000600628455689275"
+      },
+      "relationships": {
+        "base_token": {
+          "data": {
+            "id": "solana_L1NDYkXzdVm5VYNC58SUuZJWKkGfg3RQGaAfxSQQar6",
+            "type": "token"
+          }
+        },
+        "quote_token": {
+          "data": {
+            "id": "solana_EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+            "type": "token"
+          }
+        },
+        "dex": {
+          "data": {
+            "id": "meteora-damm-v2",
+            "type": "dex"
+          }
+        }
+      }
+    }
+  ]
+}

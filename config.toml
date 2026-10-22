@@ -1,0 +1,81 @@
+[bot]
+# When dry_run is true, no live trades are broadcasted (safe testing mode)
+dry_run = true
+# Poll interval in seconds for evaluating tokens in the watchlist
+poll_interval_secs = 5
+# Log level: trace, debug, info, warn, error
+log_level = "info"
+
+[telegram]
+# Bot token is loaded from environment variable: TELEGRAM_BOT_TOKEN
+# Allowed User ID is loaded from environment variable: TELEGRAM_ALLOWED_USER_ID
+alert_cooldown_mins = 60 # Cooldown before an alert can re-fire for the same token
+
+[filters]
+# Age window in minutes for standard early coin alerts
+min_age_mins = 5
+max_age_mins = 60
+
+# Market Cap range in USD
+min_mcap_usd = 10000.0
+max_mcap_usd = 35000.0
+
+# Volume ratios relative to Market Cap
+min_total_volume_mult = 1.0    # Total volume >= 1.0x Market Cap
+min_5m_volume_ratio = 0.10     # Last 5m volume >= 10% Market Cap
+
+# Liquidity ratio relative to Market Cap
+min_liquidity_ratio = 0.40     # Liquidity >= 40% Market Cap
+
+# Holders and concentration limits
+min_holders = 50
+max_dev_holding_pct = 15.0
+max_top_holder_pct = 15.0      # Excluding bonding curve / liquidity pool wallet
+max_sniper_bundler_pct = 15.0
+
+# Minimum character length for lore before being flagged as "no lore"
+min_lore_length = 20
+
+[revival_filters]
+# Enable token revival scanner
+enabled = true
+# Minimum age in minutes to qualify as a revival (60m = 1 hour old; searches older tokens)
+min_age_mins = 60
+# Maximum age to keep tracking (2880m = 48 hours)
+max_age_mins = 2880
+# Death / bottom Market Cap limit (tokens that fell to $3k - $5k death range)
+max_death_mcap_usd = 6000.0
+# Minimum surge from death / bottom to trigger notification (+50% surge)
+min_surge_from_death_pct = 50.0
+# Sudden buyer volume in the last 5 minutes
+min_5m_volume_usd = 1000.0
+# Dev dumped / CTO requirement (Dev <= 1.0% holding)
+max_dev_holding_pct = 1.0
+# Minimum holders
+min_holders = 30
+
+[heuristics]
+# Number of blocks after launch to classify buyers as snipers
+sniper_block_window = 2
+# Trace wallet funding source for bundler clustering
+trace_funding_cluster = true
+
+[safety]
+# Auto-buy must be explicitly enabled here to be active
+auto_buy_enabled = false
+# Hard maximum SOL spent per trade
+max_sol_per_trade = 0.1
+# Hard maximum SOL spend per rolling 24 hours
+max_daily_spend_sol = 1.0
+# Maximum open positions tracked simultaneously
+max_open_positions = 5
+# Maximum allowed slippage percentage
+max_slippage_pct = 2.0
+# Run RPC simulation prior to sending transaction
+simulate_before_send = true
+
+[sources]
+pumpportal_ws_url = "wss://pumpportal.fun/api/data"
+pumpportal_trade_api = "https://pumpportal.fun/api/trade-local"
+helius_rpc_url_env = "HELIUS_RPC_URL"
+solana_private_key_env = "SOLANA_PRIVATE_KEY"

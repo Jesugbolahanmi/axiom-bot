@@ -1,0 +1,15 @@
+# Fly.io configuration for Axiom Solana Bot (24/7 Background Daemon)
+app = "axiom-solana-bot"
+primary_region = "iad"
+
+[build]
+  dockerfile = "Dockerfile"
+
+[env]
+  RUST_LOG = "info"
+
+# Configure continuous 24/7 worker (no web port needed, auto_stop disabled)
+[[vm]]
+  cpu_kind = "shared"
+  cpus = 1
+  memory_mb = 256

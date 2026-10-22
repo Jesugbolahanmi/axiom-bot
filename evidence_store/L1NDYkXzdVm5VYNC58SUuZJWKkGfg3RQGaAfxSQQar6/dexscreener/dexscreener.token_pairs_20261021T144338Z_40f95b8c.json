@@ -1,0 +1,212 @@
+{
+  "schemaVersion": "1.0.0",
+  "pairs": [
+    {
+      "chainId": "solana",
+      "dexId": "meteora",
+      "url": "https://dexscreener.com/solana/pdrbdxjbxcfpdxknk7istosb4jgxzyxtytipdmfnh1s",
+      "pairAddress": "pdRbDxjbxCfpdXknK7iSTosB4JgXZyxtyTiPdmFNh1S",
+      "labels": [
+        "DYN2"
+      ],
+      "baseToken": {
+        "address": "L1NDYkXzdVm5VYNC58SUuZJWKkGfg3RQGaAfxSQQar6",
+        "name": "LINDY",
+        "symbol": "LINDY"
+      },
+      "quoteToken": {
+        "address": "So11111111111111111111111111111111111111112",
+        "name": "Wrapped SOL",
+        "symbol": "SOL"
+      },
+      "priceNative": "0.000004829",
+      "priceUsd": "0.0005248",
+      "txns": {
+        "m5": {
+          "buys": 0,
+          "sells": 0
+        },
+        "h1": {
+          "buys": 5,
+          "sells": 3
+        },
+        "h6": {
+          "buys": 11,
+          "sells": 11
+        },
+        "h24": {
+          "buys": 24,
+          "sells": 27
+        }
+      },
+      "volume": {
+        "h24": 5174.19,
+        "h6": 2972.43,
+        "h1": 870.96,
+        "m5": 0
+      },
+      "priceChange": {
+        "h1": -1.97,
+        "h6": -10.5,
+        "h24": -2.04
+      },
+      "liquidity": {
+        "usd": 59257.66,
+        "base": 56454738,
+        "quote": 272.6245
+      },
+      "fdv": 523483,
+      "marketCap": 523483,
+      "pairCreatedAt": 1790302878000,
+      "info": {
+        "imageUrl": "https://cdn.dexscreener.com/cms/images/_DcJSnszZAisl7yl?width=800&height=800&quality=95&format=auto",
+        "header": "https://cdn.dexscreener.com/cms/images/tWAYtq9R9hyxpd89?width=1500&height=500&quality=95&format=auto",
+        "openGraph": "https://cdn.dexscreener.com/token-images/og/solana/L1NDYkXzdVm5VYNC58SUuZJWKkGfg3RQGaAfxSQQar6?timestamp=1792605600000",
+        "websites": [
+          {
+            "url": "https://lindylaunch.fun",
+            "label": "Website"
+          }
+        ],
+        "socials": [
+          {
+            "url": "https://x.com/lindylaunchpad",
+            "type": "twitter"
+          }
+        ]
+      }
+    },
+    {
+      "chainId": "solana",
+      "dexId": "meteora",
+      "url": "https://dexscreener.com/solana/2enugcz4jabmzju9wskleytyxu2ggnfvbf8sbq837p3v",
+      "pairAddress": "2enuGCZ4jABMZjU9WskLeyTyXU2ggNFvBf8sbq837P3v",
+      "labels": [
+        "DLMM"
+      ],
+      "baseToken": {
+        "address": "L1NDYkXzdVm5VYNC58SUuZJWKkGfg3RQGaAfxSQQar6",
+        "name": "LINDY",
+        "symbol": "LINDY"
+      },
+      "quoteToken": {
+        "address": "So11111111111111111111111111111111111111112",
+        "name": "Wrapped SOL",
+        "symbol": "SOL"
+      },
+      "priceNative": "0.000005047",
+      "priceUsd": "0.0005473",
+      "txns": {
+        "m5": {
+          "buys": 0,
+          "sells": 0
+        },
+        "h1": {
+          "buys": 0,
+          "sells": 0
+        },
+        "h6": {
+          "buys": 0,
+          "sells": 2
+        },
+        "h24": {
+          "buys": 4,
+          "sells": 2
+        }
+      },
+      "volume": {
+        "h24": 7.82,
+        "h6": 3.9,
+        "h1": 0,
+        "m5": 0
+      },
+      "priceChange": {
+        "h6": -7.12,
+        "h24": -2.26
+      },
+      "liquidity": {
+        "usd": 579.85,
+        "base": 996044,
+        "quote": 0.3193
+      },
+      "fdv": 547388,
+      "marketCap": 547388,
+      "pairCreatedAt": 1790303478000,
+      "info": {
+        "imageUrl": "https://cdn.dexscreener.com/cms/images/_DcJSnszZAisl7yl?width=800&height=800&quality=95&format=auto",
+        "header": "https://cdn.dexscreener.com/cms/images/tWAYtq9R9hyxpd89?width=1500&height=500&quality=95&format=auto",
+        "openGraph": "https://cdn.dexscreener.com/token-images/og/solana/L1NDYkXzdVm5VYNC58SUuZJWKkGfg3RQGaAfxSQQar6?timestamp=1792605600000",
+        "websites": [
+          {
+            "url": "https://lindylaunch.fun",
+            "label": "Website"
+          }
+        ],
+        "socials": [
+          {
+            "url": "https://x.com/lindylaunchpad",
+            "type": "twitter"
+          }
+        ]
+      }
+    },
+    {
+      "chainId": "solana",
+      "dexId": "meteora",
+      "url": "https://dexscreener.com/solana/bwadzbvcmddeiyefxv567qramvd8wvmxsthlfeu7oq8z",
+      "pairAddress": "BwADzbVcmDdeiyeFXv567QraMVD8WVMxstHLFEU7oq8z",
+      "labels": [
+        "DYN2"
+      ],
+      "baseToken": {
+        "address": "7eJWuvU1JHskxsRNFomerJLHdjoiHR6QhSTm7GgH7rU3",
+        "name": "LIN D",
+        "symbol": "LIN"
+      },
+      "quoteToken": {
+        "address": "L1NDYkXzdVm5VYNC58SUuZJWKkGfg3RQGaAfxSQQar6",
+        "name": "LINDY",
+        "symbol": "LINDY"
+      },
+      "priceNative": "0.003722",
+      "priceUsd": "0.000001992",
+      "txns": {
+        "m5": {
+          "buys": 0,
+          "sells": 0
+        },
+        "h1": {
+          "buys": 1,
+          "sells": 0
+        },
+        "h6": {
+          "buys": 3,
+          "sells": 0
+        },
+        "h24": {
+          "buys": 3,
+          "sells": 3
+        }
+      },
+      "volume": {
+        "h24": 5.66,
+        "h6": 2.71,
+        "h1": 0.05,
+        "m5": 0
+      },
+      "priceChange": {
+        "h1": 0.91,
+        "h6": -2.15,
+        "h24": -4.64
+      },
+      "liquidity": {
+        "usd": 140.88,
+        "base": 35332228,
+        "quote": 131636
+      },
+      "fdv": 1993,
+      "marketCap": 1993,
+      "pairCreatedAt": 1792112122000
+    }
+  ]
+}

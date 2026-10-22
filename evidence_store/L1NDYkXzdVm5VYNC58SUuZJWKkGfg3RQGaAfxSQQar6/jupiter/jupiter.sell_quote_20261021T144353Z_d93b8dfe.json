@@ -1,0 +1,45 @@
+{
+  "inputMint": "L1NDYkXzdVm5VYNC58SUuZJWKkGfg3RQGaAfxSQQar6",
+  "inAmount": "1000000000",
+  "outputMint": "So11111111111111111111111111111111111111112",
+  "outAmount": "4780706",
+  "otherAmountThreshold": "4732899",
+  "swapMode": "ExactIn",
+  "slippageBps": 100,
+  "platformFee": null,
+  "priceImpactPct": "0.0210024267228702597872058506",
+  "routePlan": [
+    {
+      "swapInfo": {
+        "ammKey": "pdRbDxjbxCfpdXknK7iSTosB4JgXZyxtyTiPdmFNh1S",
+        "label": "Meteora DAMM v2",
+        "inputMint": "L1NDYkXzdVm5VYNC58SUuZJWKkGfg3RQGaAfxSQQar6",
+        "outputMint": "So11111111111111111111111111111111111111112",
+        "inAmount": "1000000000",
+        "outAmount": "4780706",
+        "updateContextSlot": "459722339"
+      },
+      "percent": 100,
+      "bps": null
+    }
+  ],
+  "contextSlot": 459723799,
+  "timeTaken": 0.00019327,
+  "swapUsdValue": "0.519385559666461565854",
+  "mostReliableAmmsQuoteReport": {
+    "info": {
+      "pdRbDxjbxCfpdXknK7iSTosB4JgXZyxtyTiPdmFNh1S": "4780706",
+      "Czfq3xZZDmsdGdUyrNLtRhGc47cXcZtLG4crryfu44zE": "Not used RG: FullLiquidIntermediate, contains ALT: true"
+    }
+  },
+  "longtailMarketQuoteReport": null,
+  "useIncurredSlippageForQuoting": null,
+  "useRewards": null,
+  "otherRoutePlans": null,
+  "loadedLongtailToken": false,
+  "instructionVersion": null,
+  "transactionVersion": 0,
+  "additionalIntermediateTokens": [
+    "7eJWuvU1JHskxsRNFomerJLHdjoiHR6QhSTm7GgH7rU3"
+  ]
+}
