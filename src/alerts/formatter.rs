@@ -557,37 +557,21 @@ pub fn format_milestone_alert(call: &CallRecord, milestone: f64) -> String {
 
 
 pub fn format_token_pnl_html(record: &CallRecord) -> String {
-    let name = encode_text(&record.name);
     let sym = encode_text(&record.symbol);
-    let mint = &record.mint;
+    let name = encode_text(&record.name);
+    let init_mc = record.initial_market_cap_usd / 1000.0;
+    let curr_mc = record.current_market_cap_usd / 1000.0;
+    let highest_mc = record.highest_market_cap_usd / 1000.0;
 
-    let init_mc = record.initial_market_cap_usd;
-    let curr_mc = record.current_market_cap_usd;
-    let highest_mc = record.highest_market_cap_usd;
-
-    let curr_mult = if init_mc > 0.0 { curr_mc / init_mc } else { 1.0 };
-    let peak_mult = if init_mc > 0.0 { highest_mc / init_mc } else { 1.0 };
-
-    let curr_roi = (curr_mult - 1.0) * 100.0;
-    let peak_roi = (peak_mult - 1.0) * 100.0;
-
-    let sign_curr = if curr_roi >= 0.0 { "+" } else { "" };
-    let sign_peak = if peak_roi >= 0.0 { "+" } else { "" };
-
-    let sim_entry_sol = 0.10;
-    let peak_val_sol = sim_entry_sol * peak_mult;
-    let curr_val_sol = sim_entry_sol * curr_mult;
-
-    let status_badge = if peak_mult >= 10.0 {
-        "🚀 <b>[MOONSHOT 10X+]</b>"
-    } else if peak_mult >= 5.0 {
-        "💎 <b>[5X+ SURGE]</b>"
-    } else if peak_mult >= 2.0 {
-        "🎯 <b>[2X+ FLIP / WIN]</b>"
-    } else if peak_mult >= 1.0 {
-        "📈 <b>[IN PROFIT]</b>"
+    let curr_mult = if record.initial_market_cap_usd > 0.0 {
+        record.current_market_cap_usd / record.initial_market_cap_usd
     } else {
-        "🔻 <b>[UNDER CALL / LOSS]</b>"
+        1.0
+    };
+    let peak_mult = if record.initial_market_cap_usd > 0.0 {
+        record.highest_market_cap_usd / record.initial_market_cap_usd
+    } else {
+        1.0
     };
 
     let elapsed_mins = (chrono::Utc::now() - record.alert_timestamp).num_seconds() as f64 / 60.0;
@@ -595,42 +579,43 @@ pub fn format_token_pnl_html(record: &CallRecord) -> String {
         format!("{:.1}d ago", elapsed_mins / 1440.0)
     } else if elapsed_mins >= 60.0 {
         format!("{:.1}h ago", elapsed_mins / 60.0)
+    } else if elapsed_mins < 1.0 {
+        "just now".to_string()
     } else {
-        format!("{:.1}m ago", elapsed_mins)
+        format!("{:.0}m ago", elapsed_mins)
     };
 
-    let tag = if record.alert_type == AlertType::Revival { " [REVIVAL]" } else { "" };
+    let badge = if peak_mult >= 10.0 {
+        " 🚀 [10x+ MOON]"
+    } else if peak_mult >= 5.0 {
+        " 🔥 [5x+ SURGE]"
+    } else if peak_mult >= 2.0 {
+        " 🎯 [2x+ WIN]"
+    } else if peak_mult >= 1.0 {
+        " 📈 [IN PROFIT]"
+    } else {
+        " 🔻 [LOSS]"
+    };
 
     format!(
-        "📊 <b>${}{} ({}) — Token Performance &amp; ATH PnL</b>\n        <code>{}</code>\n\n        <b>Call Performance Metrics:</b>\n        ├ Status:       {}\n        ├ Call MCap:    <b>${:.1}K</b>\n        ├ Peak ATH:     <b>{:.2}x</b> (${:.1}K, {}{:.1}%)\n        ├ Current:      <b>{:.2}x</b> (${:.1}K, {}{:.1}%)\n        └ Alerted:      <b>{}</b>\n\n        <b>Simulated PnL (0.10 SOL Entry):</b>\n        ├ Initial:      0.10 SOL\n        ├ Peak Value:   <b>{:.3} SOL</b> ({}{:.1}%)\n        └ Current Val:  <b>{:.3} SOL</b> ({}{:.1}%)\n\n        <b>Live Liquidity &amp; Volume:</b>\n        ├ Liquidity:    <b>${:.1}K</b>\n        ├ 24h Volume:   <b>${:.1}K</b>\n        └ 5m Volume:    <b>${:.1}K</b>\n\n        <a href=\"https://axiom.trade/token/{}\">Axiom</a> • <a href=\"https://dexscreener.com/solana/{}\">DexScreener</a> • <a href=\"https://bubblemaps.io/solana/token/{}\">Bubblemaps</a> • <a href=\"https://solscan.io/token/{}\">Solscan</a>\n        <i>Last refreshed: {}</i>",
+        "🎯 <b>${}</b> ({}){}
+
+        ├ <b>Call MCap:</b>  ${:.1}K
+        ├ <b>Peak ATH:</b>   <b>{:.2}x</b> (${:.1}K)
+        ├ <b>Current:</b>    <b>{:.2}x</b> (${:.1}K)
+        └ <b>Alerted:</b>    {}
+
+        <a href=\"https://dexscreener.com/solana/{}\">DexScreener</a> • <a href=\"https://axiom.trade/token/{}\">Axiom</a>",
         sym,
-        tag,
         name,
-        mint,
-        status_badge,
-        init_mc / 1000.0,
+        badge,
+        init_mc,
         peak_mult,
-        highest_mc / 1000.0,
-        sign_peak,
-        peak_roi,
+        highest_mc,
         curr_mult,
-        curr_mc / 1000.0,
-        sign_curr,
-        curr_roi,
+        curr_mc,
         elapsed_str,
-        peak_val_sol,
-        sign_peak,
-        peak_roi,
-        curr_val_sol,
-        sign_curr,
-        curr_roi,
-        record.current_liquidity_usd / 1000.0,
-        record.current_volume_usd / 1000.0,
-        record.current_volume_5m_usd / 1000.0,
-        mint,
-        mint,
-        mint,
-        mint,
-        record.last_refreshed.format("%H:%M:%S UTC")
+        record.mint,
+        record.mint
     )
 }

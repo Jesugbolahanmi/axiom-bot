@@ -191,29 +191,18 @@ impl TelegramBotService {
 
     /// Build inline keyboard: [ 🔄 Refresh Stats & Xs ] / [ 🛒 Buy 0.1 SOL ] [ 🛒 Buy 0.5 SOL ] [ ❌ Ignore ]
     fn create_action_keyboard(mint: &str) -> InlineKeyboardMarkup {
-        let bubblemaps_url = format!("https://bubblemaps.io/solana/token/{}", mint);
         InlineKeyboardMarkup::new(vec![
             vec![
                 InlineKeyboardButton::callback(
-                    "Refresh Stats & Xs",
+                    "🔄 Refresh Stats",
                     format!("refresh:{}", mint),
                 ),
-            ],
-            vec![
                 InlineKeyboardButton::callback(
-                    "Buy 0.1 SOL",
-                    format!("buy:0.1:{}", mint),
-                ),
-                InlineKeyboardButton::callback(
-                    "Buy 0.5 SOL",
+                    "🛒 Buy 0.5 SOL",
                     format!("buy:0.5:{}", mint),
                 ),
             ],
             vec![
-                InlineKeyboardButton::url(
-                    "Bubblemaps ↗",
-                    reqwest::Url::parse(&bubblemaps_url).unwrap_or_else(|_| reqwest::Url::parse("https://bubblemaps.io").unwrap()),
-                ),
                 InlineKeyboardButton::callback(
                     "Dismiss",
                     format!("ignore:{}", mint),
