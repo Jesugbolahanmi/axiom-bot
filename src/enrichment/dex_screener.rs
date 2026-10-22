@@ -12,6 +12,8 @@ pub struct DexMetrics {
     pub liquidity_usd: f64,
     pub total_volume_usd: f64,
     pub volume_5m_usd: f64,
+    pub pair_address: Option<String>,
+    pub peak_candle_mcap_usd: Option<f64>,
 }
 
 #[derive(Debug, Deserialize)]
@@ -27,6 +29,11 @@ struct DexToken {
 
 #[derive(Debug, Deserialize)]
 struct DexPair {
+    #[serde(rename = "pairAddress")]
+    pair_address: Option<String>,
+    #[serde(rename = "dexId")]
+    #[allow(dead_code)]
+    dex_id: Option<String>,
     #[serde(rename = "baseToken")]
     base_token: Option<DexToken>,
     #[serde(rename = "marketCap")]
@@ -62,6 +69,42 @@ impl DexScreenerClient {
                 .user_agent("Mozilla/5.0 (Windows NT 10.0; Win64; x64)")
                 .build()
                 .unwrap_or_default(),
+        }
+    }
+
+    /// Queries GeckoTerminal 24h OHLCV hourly candles for the pool address to get the exact highest price traded.
+    pub async fn fetch_pool_candle_peak_mcap(&self, pool_address: &str) -> Option<f64> {
+        let url = format!(
+            "https://api.geckoterminal.com/api/v2/networks/solana/pools/{}/ohlcv/hour?aggregate=1&limit=24",
+            pool_address
+        );
+        let resp = self
+            .http_client
+            .get(&url)
+            .send()
+            .await
+            .ok()?;
+
+        if !resp.status().is_success() {
+            return None;
+        }
+
+        let body: serde_json::Value = resp.json().await.ok()?;
+        let candles = body.get("data")?.get("attributes")?.get("ohlcv_list")?.as_array()?;
+        let mut max_high = 0.0;
+        for c in candles {
+            if let Some(h) = c.get(2).and_then(|v| v.as_f64()) {
+                if h > max_high {
+                    max_high = h;
+                }
+            }
+        }
+
+        if max_high > 0.0 {
+            // Pump tokens standard 1,000,000,000 supply
+            Some(max_high * 1_000_000_000.0)
+        } else {
+            None
         }
     }
 
@@ -122,13 +165,27 @@ impl DexScreenerClient {
             .copied()
             .unwrap_or(valid_pairs[0]);
 
-        // Peak market cap across all active pairs to accurately capture true ATH
-        let max_mcap = valid_pairs
+        // Current market cap of the primary active trading pair
+        let active_mcap = best_pair
+            .market_cap
+            .or(best_pair.fdv)
+            .unwrap_or(0.0);
+
+        // Peak market cap across all active pairs
+        let max_pair_mcap = valid_pairs
             .iter()
             .filter_map(|p| p.market_cap.or(p.fdv))
             .fold(0.0, f64::max);
 
-        let mcap = max_mcap;
+        // Query GeckoTerminal 24h OHLCV candles to recover the true peak ATH even if the coin dumped
+        let candle_peak = if let Some(ref addr) = best_pair.pair_address {
+            self.fetch_pool_candle_peak_mcap(addr).await
+        } else {
+            None
+        };
+
+        let peak_mcap = candle_peak.unwrap_or(0.0).max(max_pair_mcap);
+        let mcap = if active_mcap > 0.0 { active_mcap } else { max_pair_mcap };
 
         // Liquidity: use pair liquidity if available, otherwise virtual bonding curve (~40% of mcap)
         let liq = best_pair
@@ -159,6 +216,8 @@ impl DexScreenerClient {
             liquidity_usd: liq,
             total_volume_usd: vol_24h,
             volume_5m_usd: vol_5m,
+            pair_address: best_pair.pair_address.clone(),
+            peak_candle_mcap_usd: if peak_mcap > 0.0 { Some(peak_mcap) } else { None },
         }))
     }
 }

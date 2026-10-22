@@ -142,8 +142,9 @@ impl TelegramBotService {
                                 }
                             }
 
-                            if metrics.market_cap_usd > record.highest_market_cap_usd {
-                                record.highest_market_cap_usd = metrics.market_cap_usd;
+                            let peak = metrics.peak_candle_mcap_usd.unwrap_or(0.0).max(metrics.market_cap_usd);
+                            if peak > record.highest_market_cap_usd {
+                                record.highest_market_cap_usd = peak;
                                 record.ath_timestamp = chrono::Utc::now();
                             }
 
@@ -255,8 +256,9 @@ impl TelegramBotService {
                 rec.current_volume_usd = metrics.total_volume_usd;
                 rec.current_volume_5m_usd = metrics.volume_5m_usd;
                 rec.current_liquidity_usd = metrics.liquidity_usd;
-                if metrics.market_cap_usd > rec.highest_market_cap_usd {
-                    rec.highest_market_cap_usd = metrics.market_cap_usd;
+                let peak = metrics.peak_candle_mcap_usd.unwrap_or(0.0).max(metrics.market_cap_usd);
+                if peak > rec.highest_market_cap_usd {
+                    rec.highest_market_cap_usd = peak;
                     rec.ath_timestamp = chrono::Utc::now();
                 }
                 rec.last_refreshed = chrono::Utc::now();
@@ -285,7 +287,7 @@ impl TelegramBotService {
                     symbol,
                     initial_market_cap_usd: metrics.market_cap_usd,
                     current_market_cap_usd: metrics.market_cap_usd,
-                    highest_market_cap_usd: metrics.market_cap_usd,
+                    highest_market_cap_usd: metrics.peak_candle_mcap_usd.unwrap_or(metrics.market_cap_usd),
                     initial_volume_usd: metrics.total_volume_usd,
                     current_volume_usd: metrics.total_volume_usd,
                     current_volume_5m_usd: metrics.volume_5m_usd,
@@ -447,8 +449,9 @@ impl TelegramBotService {
                                                     record.name = n.clone();
                                                 }
                                             }
-                                            if m.market_cap_usd > record.highest_market_cap_usd {
-                                                record.highest_market_cap_usd = m.market_cap_usd;
+                                            let peak = m.peak_candle_mcap_usd.unwrap_or(0.0).max(m.market_cap_usd);
+                                            if peak > record.highest_market_cap_usd {
+                                                record.highest_market_cap_usd = peak;
                                                 record.ath_timestamp = chrono::Utc::now();
                                             }
                                         }
