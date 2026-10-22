@@ -449,10 +449,12 @@ impl TelegramBotService {
                                             }
                                             if m.market_cap_usd > record.highest_market_cap_usd {
                                                 record.highest_market_cap_usd = m.market_cap_usd;
+                                                record.ath_timestamp = chrono::Utc::now();
                                             }
                                         }
                                     }
                                     record.last_refreshed = chrono::Utc::now();
+                                    service.save_calls_to_disk();
                                     format_refreshed_alert_html(&record)
                                 } else {
                                     let now = chrono::Utc::now();

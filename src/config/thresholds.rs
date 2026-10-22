@@ -83,8 +83,11 @@ pub struct RevivalThresholds {
     pub max_dev_holding_pct: f64,
     #[serde(default = "default_revival_min_holders")]
     pub min_holders: u64,
+    #[serde(default = "default_revival_max_mcap_usd")]
+    pub max_mcap_usd: f64,
 }
 
+fn default_revival_max_mcap_usd() -> f64 { 100_000.0 }
 fn default_revival_enabled() -> bool { true }
 fn default_revival_min_age_mins() -> u64 { 60 }
 fn default_revival_max_age_mins() -> u64 { 2880 }
@@ -105,6 +108,7 @@ impl Default for RevivalThresholds {
             min_5m_volume_usd: default_revival_min_5m_volume_usd(),
             max_dev_holding_pct: default_revival_max_dev_holding_pct(),
             min_holders: default_revival_min_holders(),
+            max_mcap_usd: default_revival_max_mcap_usd(),
         }
     }
 }

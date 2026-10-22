@@ -183,7 +183,18 @@ impl FilterEngine {
             };
         }
 
-        // 2. Death / bottom MCap check: must have dropped to dormancy range (e.g. <= $6,000, 3k-5k zone)
+        // 2. Maximum MCap ceiling check: must be a memecoin (<= $100,000), not a multi-million or billion dollar token
+        if token.market_cap_usd > self.revival_thresholds.max_mcap_usd {
+            return FilterResult {
+                passed: false,
+                rejection_reason: Some(format!(
+                    "Current MCap ${:.0} exceeds revival ceiling ${:.0}",
+                    token.market_cap_usd, self.revival_thresholds.max_mcap_usd
+                )),
+            };
+        }
+
+        // 3. Death / bottom MCap check: must have dropped to dormancy range (e.g. <= $6,000, 3k-5k zone)
         let bottom_mcap = if token.lowest_market_cap_usd > 0.0 {
             token.lowest_market_cap_usd
         } else {

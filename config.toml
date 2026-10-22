@@ -53,6 +53,8 @@ min_5m_volume_usd = 1000.0
 max_dev_holding_pct = 1.0
 # Minimum holders
 min_holders = 30
+# Maximum Market Cap allowed for a revival (memecoins only, ceiling $100k)
+max_mcap_usd = 100000.0
 
 [heuristics]
 # Number of blocks after launch to classify buyers as snipers

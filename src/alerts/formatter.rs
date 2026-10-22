@@ -245,9 +245,21 @@ pub fn format_refreshed_alert_html(record: &CallRecord) -> String {
 
     let mc_k = record.current_market_cap_usd / 1000.0;
     let call_mc_k = record.initial_market_cap_usd / 1000.0;
+    let ath_mc_k = record.highest_market_cap_usd / 1000.0;
     let liq_k = record.current_liquidity_usd / 1000.0;
     let vol_k = record.current_volume_usd / 1000.0;
     let vol5m_k = record.current_volume_5m_usd / 1000.0;
+
+    let ath_elapsed_mins = (chrono::Utc::now() - record.ath_timestamp).num_seconds() as f64 / 60.0;
+    let ath_elapsed_str = if ath_elapsed_mins >= 1440.0 {
+        format!("{:.1}d ago", ath_elapsed_mins / 1440.0)
+    } else if ath_elapsed_mins >= 60.0 {
+        format!("{:.1}h ago", ath_elapsed_mins / 60.0)
+    } else if ath_elapsed_mins < 1.0 {
+        "just now".to_string()
+    } else {
+        format!("{:.0}m ago", ath_elapsed_mins)
+    };
 
     let revival_badge = if record.alert_type == AlertType::Revival {
         " [REVIVAL]"
@@ -258,11 +270,12 @@ pub fn format_refreshed_alert_html(record: &CallRecord) -> String {
     format!(
         "<b>{}</b> (<code>${}</code>){} — <b>LIVE REFRESH</b>\n\
         <code>{}</code>\n\n\
-        <b>Performance</b>\n\
-        ├ Status:  {}\n\
-        ├ Return:  <b>{:.2}x</b> ({}{:.1}%)\n\
-        ├ ATH:     <b>{:.2}x</b>\n\
-        └ MCap:    ${:.1}K —&gt; <b>${:.1}K</b>\n\n\
+        <b>Call Performance &amp; ATH</b>\n\
+        ├ Status:    {}\n\
+        ├ Call MCap: <b>${:.1}K</b>\n\
+        ├ Peak ATH:  <b>{:.2}x</b> (<b>${:.1}K</b>)\n\
+        ├ Current:   <b>{:.2}x</b> (<b>${:.1}K</b>, {}{:.1}%)\n\
+        └ ATH Hit:   <b>{}</b>\n\n\
         <b>Live Stats</b>\n\
         ├ LIQ:  <b>${:.2}K</b> ({:.1}% MC)\n\
         ├ VOL:  <b>${:.2}K</b> (5m: ${:.2}K)\n\
@@ -284,12 +297,14 @@ pub fn format_refreshed_alert_html(record: &CallRecord) -> String {
         revival_badge,
         mint,
         return_badge,
+        call_mc_k,
+        ath_multiple,
+        ath_mc_k,
         multiple,
+        mc_k,
         gain_sign,
         gain_pct,
-        ath_multiple,
-        call_mc_k,
-        mc_k,
+        ath_elapsed_str,
         liq_k,
         liq_pct,
         vol_k,
