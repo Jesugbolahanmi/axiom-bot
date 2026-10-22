@@ -370,3 +370,187 @@ pub fn format_calls_summary(calls: &[CallRecord]) -> String {
     out.push_str(&format!("<i>Total Tracked: {}</i>", calls.len()));
     out
 }
+
+
+pub fn format_pnl_analytics(calls: &[CallRecord], timeframe_days: Option<u32>) -> String {
+    let period_label = match timeframe_days {
+        Some(1) => "Past 24 Hours",
+        Some(7) => "Past 7 Days",
+        Some(30) => "Past 30 Days",
+        _ => "All Time",
+    };
+
+    let cutoff = timeframe_days.map(|d| chrono::Utc::now() - chrono::Duration::days(d as i64));
+    let period_calls: Vec<&CallRecord> = calls
+        .iter()
+        .filter(|c| {
+            if let Some(cut) = cutoff {
+                c.alert_timestamp >= cut
+            } else {
+                true
+            }
+        })
+        .collect();
+
+    if period_calls.is_empty() {
+        return format!(
+            "📊 <b>Axiom Calls Performance &amp; PnL ({})</b>\n\n            <i>No alerted calls recorded in this timeframe yet.\n            The automated background watcher tracks every call's live ATH and PnL 24/7.</i>",
+            period_label
+        );
+    }
+
+    let total = period_calls.len();
+    let mut wins = 0;
+    let mut bucket_10x = 0;
+    let mut bucket_5x = 0;
+    let mut bucket_2x = 0;
+    let mut bucket_1x = 0;
+    let mut bucket_loss = 0;
+
+    let mut sum_ath_multiple = 0.0;
+    let mut sum_curr_multiple = 0.0;
+    let mut best_call: Option<&CallRecord> = None;
+    let mut best_multiple = 0.0;
+
+    // Simulated 0.10 SOL fixed entry per call
+    let fixed_entry_sol = 0.10;
+    let total_invested_sol = total as f64 * fixed_entry_sol;
+    let mut total_peak_return_sol = 0.0;
+    let mut total_curr_return_sol = 0.0;
+
+    for call in &period_calls {
+        let ath_mult = if call.initial_market_cap_usd > 0.0 {
+            call.highest_market_cap_usd / call.initial_market_cap_usd
+        } else {
+            1.0
+        };
+        let curr_mult = if call.initial_market_cap_usd > 0.0 {
+            call.current_market_cap_usd / call.initial_market_cap_usd
+        } else {
+            1.0
+        };
+
+        sum_ath_multiple += ath_mult;
+        sum_curr_multiple += curr_mult;
+
+        total_peak_return_sol += ath_mult * fixed_entry_sol;
+        total_curr_return_sol += curr_mult * fixed_entry_sol;
+
+        if ath_mult >= 2.0 {
+            wins += 1;
+        }
+
+        if ath_mult >= 10.0 {
+            bucket_10x += 1;
+        } else if ath_mult >= 5.0 {
+            bucket_5x += 1;
+        } else if ath_mult >= 2.0 {
+            bucket_2x += 1;
+        } else if ath_mult >= 1.0 {
+            bucket_1x += 1;
+        } else {
+            bucket_loss += 1;
+        }
+
+        if ath_mult > best_multiple {
+            best_multiple = ath_mult;
+            best_call = Some(call);
+        }
+    }
+
+    let win_rate = (wins as f64 / total as f64) * 100.0;
+    let avg_ath = sum_ath_multiple / total as f64;
+    let avg_curr = sum_curr_multiple / total as f64;
+
+    let peak_pnl_sol = total_peak_return_sol - total_invested_sol;
+    let peak_roi_pct = if total_invested_sol > 0.0 { (peak_pnl_sol / total_invested_sol) * 100.0 } else { 0.0 };
+
+    let curr_pnl_sol = total_curr_return_sol - total_invested_sol;
+    let curr_roi_pct = if total_invested_sol > 0.0 { (curr_pnl_sol / total_invested_sol) * 100.0 } else { 0.0 };
+    let curr_sign = if curr_pnl_sol >= 0.0 { "+" } else { "" };
+
+    let top_runner_str = if let Some(top) = best_call {
+        format!("<b>${}</b> (<b>{:.2}x</b> ATH)", encode_text(&top.symbol), best_multiple)
+    } else {
+        "N/A".to_string()
+    };
+
+    let pct_10x = (bucket_10x as f64 / total as f64) * 100.0;
+    let pct_5x = (bucket_5x as f64 / total as f64) * 100.0;
+    let pct_2x = (bucket_2x as f64 / total as f64) * 100.0;
+    let pct_1x = (bucket_1x as f64 / total as f64) * 100.0;
+    let pct_loss = (bucket_loss as f64 / total as f64) * 100.0;
+
+    format!(
+        "📊 <b>Axiom Calls Performance &amp; PnL ({})</b>\n\n        <b>Overview</b>\n        ├ Total Calls:    <b>{}</b>\n        ├ Win Rate (≥2x): <b>{:.1}%</b> ({}/{} profitable)\n        ├ Average Peak:   <b>{:.2}x</b> ATH\n        ├ Average Live:   <b>{:.2}x</b> current\n        └ Top Performer:  {}\n\n        <b>Multipliers Breakdown</b>\n        ├ 🚀 10x+  Moonshots: <b>{}</b> ({:.1}%)\n        ├ 🔥 5x-10x Surges:   <b>{}</b> ({:.1}%)\n        ├ 🟢 2x-5x  Wins:     <b>{}</b> ({:.1}%)\n        ├ ⚪ 1x-2x  Modest:   <b>{}</b> ({:.1}%)\n        └ 🔴 &lt; 1x  Drawdown: <b>{}</b> ({:.1}%)\n\n        <b>Simulated PnL (0.10 SOL Entry / Call)</b>\n        ├ Capital Deployed: <b>{:.2} SOL</b>\n        ├ Peak Value Out:   <b>{:.2} SOL</b> (<b>+{:.2} SOL</b> | +{:.0}%)\n        └ Current Portfolio: <b>{:.2} SOL</b> (<b>{}{:.2} SOL</b> | {}{:.0}%)\n\n        <i>Tap buttons below to change timeframe:</i>",
+        period_label,
+        total,
+        win_rate,
+        wins,
+        total,
+        avg_ath,
+        avg_curr,
+        top_runner_str,
+        bucket_10x,
+        pct_10x,
+        bucket_5x,
+        pct_5x,
+        bucket_2x,
+        pct_2x,
+        bucket_1x,
+        pct_1x,
+        bucket_loss,
+        pct_loss,
+        total_invested_sol,
+        total_peak_return_sol,
+        peak_pnl_sol,
+        peak_roi_pct,
+        total_curr_return_sol,
+        curr_sign,
+        curr_pnl_sol,
+        curr_sign,
+        curr_roi_pct
+    )
+}
+
+pub fn format_milestone_alert(call: &CallRecord, milestone: f64) -> String {
+    let ath_multiple = if call.initial_market_cap_usd > 0.0 {
+        call.highest_market_cap_usd / call.initial_market_cap_usd
+    } else {
+        milestone
+    };
+    let curr_multiple = if call.initial_market_cap_usd > 0.0 {
+        call.current_market_cap_usd / call.initial_market_cap_usd
+    } else {
+        1.0
+    };
+    let call_mc_k = call.initial_market_cap_usd / 1000.0;
+    let ath_mc_k = call.highest_market_cap_usd / 1000.0;
+    let curr_mc_k = call.current_market_cap_usd / 1000.0;
+    let elapsed_mins = (chrono::Utc::now() - call.alert_timestamp).num_seconds() as f64 / 60.0;
+
+    let short_mint = if call.mint.len() > 10 {
+        format!("{}...{}", &call.mint[..4], &call.mint[call.mint.len() - 4..])
+    } else {
+        call.mint.clone()
+    };
+
+    let tag = if call.alert_type == AlertType::Revival { " [REVIVAL]" } else { "" };
+
+    format!(
+        "🎯 <b>CALL ATH UPDATE: ${}{} ({:.0}x Milestone Reached!)</b>\n\n        <b>Performance Metrics</b>\n        ├ Peak ATH:  <b>{:.2}x</b> (${:.1}K —&gt; <b>${:.1}K</b>)\n        ├ Current:   <b>{:.2}x</b> (${:.1}K)\n        ├ Mint:      <code>{}</code>\n        └ Alerted:   <b>{:.1}m ago</b>\n\n        <a href=\"https://dexscreener.com/solana/{}\">DexScreener</a> • <a href=\"https://bubblemaps.io/solana/token/{}\">Bubblemaps</a> • <a href=\"https://axiom.trade/token/{}\">Axiom</a>",
+        encode_text(&call.symbol),
+        tag,
+        milestone,
+        ath_multiple,
+        call_mc_k,
+        ath_mc_k,
+        curr_multiple,
+        curr_mc_k,
+        short_mint,
+        elapsed_mins,
+        call.mint,
+        call.mint,
+        call.mint
+    )
+}

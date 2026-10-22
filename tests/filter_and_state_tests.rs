@@ -279,3 +279,210 @@ fn test_revival_evaluation() {
     let result = engine.evaluate_revival(&token);
     assert!(result.passed, "Revival token should pass: {:?}", result.rejection_reason);
 }
+
+
+#[test]
+fn test_pnl_analytics_win_rate_and_math() {
+    use axiom_bot::models::alert::{CallRecord, AlertType};
+    use axiom_bot::alerts::formatter::format_pnl_analytics;
+
+    let now = Utc::now();
+    let calls = vec![
+        // 6 hours ago - 10.0x ATH (Peak $200k from $20k)
+        CallRecord {
+            alert_type: AlertType::EarlyLaunch,
+            mint: "Mint111111111111111111111111111111111111111".to_string(),
+            name: "Moon Token".to_string(),
+            symbol: "MOON".to_string(),
+            initial_market_cap_usd: 20_000.0,
+            current_market_cap_usd: 120_000.0,
+            highest_market_cap_usd: 200_000.0, // 10.0x
+            initial_volume_usd: 10_000.0,
+            current_volume_usd: 300_000.0,
+            current_volume_5m_usd: 15_000.0,
+            current_liquidity_usd: 30_000.0,
+            holder_count: 500,
+            dev_holding_pct: 0.0,
+            top_holder_pct: 5.0,
+            sniper_bundler_pct: 5.0,
+            lore_description: None,
+            alert_timestamp: now - Duration::hours(6),
+            last_refreshed: now,
+            bottom_market_cap_usd: 20_000.0,
+            surge_pct_from_bottom: 0.0,
+            is_cto: true,
+            cto_status_desc: "Dev 0.0%".to_string(),
+            top_holders: Vec::new(),
+            top_10_pct: 15.0,
+            clustered_wallets_count: 1,
+            bubblemaps_url: "https://bubblemaps.io/".to_string(),
+            ath_timestamp: now - Duration::hours(2),
+            last_notified_milestone: 10.0,
+        },
+        // 3 days ago - 3.0x ATH (Peak $60k from $20k)
+        CallRecord {
+            alert_type: AlertType::Revival,
+            mint: "Mint222222222222222222222222222222222222222".to_string(),
+            name: "Revive Token".to_string(),
+            symbol: "REVIVE".to_string(),
+            initial_market_cap_usd: 20_000.0,
+            current_market_cap_usd: 40_000.0,
+            highest_market_cap_usd: 60_000.0, // 3.0x
+            initial_volume_usd: 10_000.0,
+            current_volume_usd: 80_000.0,
+            current_volume_5m_usd: 5_000.0,
+            current_liquidity_usd: 15_000.0,
+            holder_count: 220,
+            dev_holding_pct: 0.0,
+            top_holder_pct: 6.0,
+            sniper_bundler_pct: 6.0,
+            lore_description: None,
+            alert_timestamp: now - Duration::days(3),
+            last_refreshed: now,
+            bottom_market_cap_usd: 8_000.0,
+            surge_pct_from_bottom: 150.0,
+            is_cto: true,
+            cto_status_desc: "CTO".to_string(),
+            top_holders: Vec::new(),
+            top_10_pct: 18.0,
+            clustered_wallets_count: 0,
+            bubblemaps_url: "https://bubblemaps.io/".to_string(),
+            ath_timestamp: now - Duration::days(2),
+            last_notified_milestone: 2.0,
+        },
+        // 10 days ago - 0.7x Drawdown (Peak $14k from $20k)
+        CallRecord {
+            alert_type: AlertType::EarlyLaunch,
+            mint: "Mint333333333333333333333333333333333333333".to_string(),
+            name: "Down Token".to_string(),
+            symbol: "DOWN".to_string(),
+            initial_market_cap_usd: 20_000.0,
+            current_market_cap_usd: 8_000.0,
+            highest_market_cap_usd: 14_000.0, // 0.7x
+            initial_volume_usd: 10_000.0,
+            current_volume_usd: 15_000.0,
+            current_volume_5m_usd: 500.0,
+            current_liquidity_usd: 4_000.0,
+            holder_count: 80,
+            dev_holding_pct: 4.0,
+            top_holder_pct: 8.0,
+            sniper_bundler_pct: 10.0,
+            lore_description: None,
+            alert_timestamp: now - Duration::days(10),
+            last_refreshed: now,
+            bottom_market_cap_usd: 8_000.0,
+            surge_pct_from_bottom: 0.0,
+            is_cto: false,
+            cto_status_desc: "Dev 4.0%".to_string(),
+            top_holders: Vec::new(),
+            top_10_pct: 25.0,
+            clustered_wallets_count: 2,
+            bubblemaps_url: "https://bubblemaps.io/".to_string(),
+            ath_timestamp: now - Duration::days(10),
+            last_notified_milestone: 0.0,
+        },
+    ];
+
+    // 24h filter: only 1 call (Moon Token), 10.0x ATH -> 100% win rate
+    let report_24h = format_pnl_analytics(&calls, Some(1));
+    assert!(report_24h.contains("Past 24 Hours"));
+    assert!(report_24h.contains("Total Calls:"));
+    assert!(report_24h.contains("100.0%"));
+    assert!(report_24h.contains("MOON"));
+
+    // 7d filter: 2 calls (Moon Token + Revive Token), both >=2.0x -> 100% win rate
+    let report_7d = format_pnl_analytics(&calls, Some(7));
+    assert!(report_7d.contains("Past 7 Days"));
+    assert!(report_7d.contains("100.0%"));
+
+    // 30d filter: 3 calls (2 wins, 1 loss) -> 66.7% win rate
+    let report_30d = format_pnl_analytics(&calls, Some(30));
+    assert!(report_30d.contains("Past 30 Days"));
+    assert!(report_30d.contains("66.7%"));
+    assert!(report_30d.contains("0.30 SOL")); // 3 * 0.10 SOL
+}
+
+#[test]
+fn test_milestone_alert_formatting() {
+    use axiom_bot::models::alert::{CallRecord, AlertType};
+    use axiom_bot::alerts::formatter::format_milestone_alert;
+
+    let now = Utc::now();
+    let call = CallRecord {
+        alert_type: AlertType::EarlyLaunch,
+        mint: "MintTest1111111111111111111111111111111111".to_string(),
+        name: "Super Moon".to_string(),
+        symbol: "SMOON".to_string(),
+        initial_market_cap_usd: 25_000.0,
+        current_market_cap_usd: 125_000.0,
+        highest_market_cap_usd: 125_000.0,
+        initial_volume_usd: 15_000.0,
+        current_volume_usd: 180_000.0,
+        current_volume_5m_usd: 20_000.0,
+        current_liquidity_usd: 35_000.0,
+        holder_count: 450,
+        dev_holding_pct: 0.0,
+        top_holder_pct: 4.5,
+        sniper_bundler_pct: 5.0,
+        lore_description: None,
+        alert_timestamp: now - Duration::hours(4),
+        last_refreshed: now,
+        bottom_market_cap_usd: 25_000.0,
+        surge_pct_from_bottom: 0.0,
+        is_cto: true,
+        cto_status_desc: "Dev 0.0%".to_string(),
+        top_holders: Vec::new(),
+        top_10_pct: 12.0,
+        clustered_wallets_count: 0,
+        bubblemaps_url: "https://bubblemaps.io/".to_string(),
+        ath_timestamp: now,
+        last_notified_milestone: 5.0,
+    };
+
+    let alert_msg = format_milestone_alert(&call, 5.0);
+    assert!(alert_msg.contains("CALL ATH UPDATE: $SMOON (5x Milestone Reached!)"));
+    assert!(alert_msg.contains("Peak ATH:"));
+    assert!(alert_msg.contains("$25.0K"));
+    assert!(alert_msg.contains("$125.0K"));
+}
+
+#[test]
+fn test_callrecord_serde_backwards_compatibility() {
+    use axiom_bot::models::alert::CallRecord;
+
+    // JSON payload representing a call record from before ath_timestamp and last_notified_milestone were added
+    let json_legacy = r#"{
+        "alert_type": "EarlyLaunch",
+        "mint": "LegacyMint1111111111111111111111111111111",
+        "name": "Legacy Token",
+        "symbol": "LEGACY",
+        "initial_market_cap_usd": 20000.0,
+        "current_market_cap_usd": 40000.0,
+        "highest_market_cap_usd": 50000.0,
+        "initial_volume_usd": 10000.0,
+        "current_volume_usd": 60000.0,
+        "current_volume_5m_usd": 5000.0,
+        "current_liquidity_usd": 12000.0,
+        "holder_count": 150,
+        "dev_holding_pct": 2.0,
+        "top_holder_pct": 5.0,
+        "sniper_bundler_pct": 6.0,
+        "lore_description": null,
+        "alert_timestamp": "2026-10-20T10:00:00Z",
+        "last_refreshed": "2026-10-20T10:30:00Z",
+        "bottom_market_cap_usd": 20000.0,
+        "surge_pct_from_bottom": 0.0,
+        "is_cto": false,
+        "cto_status_desc": "Dev 2.0%",
+        "top_holders": [],
+        "top_10_pct": 15.0,
+        "clustered_wallets_count": 0,
+        "bubblemaps_url": "https://bubblemaps.io/"
+    }"#;
+
+    let res: Result<CallRecord, _> = serde_json::from_str(json_legacy);
+    assert!(res.is_ok(), "Deserializing legacy record should succeed with serde defaults: {:?}", res.err());
+    let rec = res.unwrap();
+    assert_eq!(rec.last_notified_milestone, 0.0);
+    assert_eq!(rec.symbol, "LEGACY");
+}

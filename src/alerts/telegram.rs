@@ -15,7 +15,7 @@ fn disabled_link_preview() -> LinkPreviewOptions {
 }
 use tracing::{info, warn};
 
-use super::formatter::{format_alert_html, format_calls_summary, format_refreshed_alert_html};
+use super::formatter::{format_alert_html, format_calls_summary, format_milestone_alert, format_pnl_analytics, format_refreshed_alert_html};
 use crate::enrichment::DexScreenerClient;
 use crate::execution::ExecutionEngine;
 use crate::models::alert::{AlertCard, CallRecord};
@@ -38,12 +38,154 @@ impl TelegramBotService {
         let bot = Bot::new(bot_token);
         let dex_client = Arc::new(DexScreenerClient::new());
         let calls = Arc::new(dashmap::DashMap::new());
+
+        // Load historical calls from disk
+        let path = std::path::Path::new("evidence_store/calls_history.json");
+        if path.exists() {
+            if let Ok(content) = std::fs::read_to_string(path) {
+                if let Ok(list) = serde_json::from_str::<Vec<CallRecord>>(&content) {
+                    for call in list {
+                        calls.insert(call.mint.clone(), call);
+                    }
+                    info!("Loaded {} historical calls from calls_history.json", calls.len());
+                }
+            }
+        }
+
         Self {
             bot,
             allowed_user_id,
             execution_engine,
             dex_client,
             calls,
+        }
+    }
+
+    /// Save all tracked calls to disk
+    pub fn save_calls_to_disk(&self) {
+        let _ = std::fs::create_dir_all("evidence_store");
+        let list: Vec<CallRecord> = self.calls.iter().map(|kv| kv.value().clone()).collect();
+        if let Ok(json) = serde_json::to_string_pretty(&list) {
+            let _ = std::fs::write("evidence_store/calls_history.json", json);
+        }
+    }
+
+    /// Build inline keyboard for timeframe switching in PnL analytics
+    pub fn create_pnl_keyboard(current_tf: u32) -> InlineKeyboardMarkup {
+        let btn_24h = InlineKeyboardButton::callback(
+            if current_tf == 1 { "• 24 Hours •" } else { "24 Hours" },
+            "pnl_tf:1",
+        );
+        let btn_7d = InlineKeyboardButton::callback(
+            if current_tf == 7 { "• 7 Days •" } else { "7 Days" },
+            "pnl_tf:7",
+        );
+        let btn_30d = InlineKeyboardButton::callback(
+            if current_tf == 30 { "• 30 Days •" } else { "30 Days" },
+            "pnl_tf:30",
+        );
+        let btn_all = InlineKeyboardButton::callback(
+            if current_tf == 0 { "• All Time •" } else { "All Time" },
+            "pnl_tf:0",
+        );
+
+        InlineKeyboardMarkup::new(vec![
+            vec![btn_24h, btn_7d],
+            vec![btn_30d, btn_all],
+        ])
+    }
+
+    /// 24/7 background worker to continuously update ATH and PnL metrics for all calls
+    pub async fn run_ath_tracker(&self) {
+        info!("Started 24/7 automated Call ATH & PnL tracker (interval: 30s)");
+        let mut interval = tokio::time::interval(std::time::Duration::from_secs(30));
+        loop {
+            interval.tick().await;
+
+            let call_mints: Vec<String> = self.calls.iter().map(|kv| kv.key().clone()).collect();
+            if call_mints.is_empty() {
+                continue;
+            }
+
+            let mut has_updates = false;
+            for mint in call_mints {
+                // Only track tokens alerted in the last 30 days
+                let should_check = if let Some(c) = self.calls.get(&mint) {
+                    (chrono::Utc::now() - c.alert_timestamp).num_days() <= 30
+                } else {
+                    false
+                };
+
+                if !should_check {
+                    continue;
+                }
+
+                if let Ok(Some(metrics)) = self.dex_client.fetch_metrics(&mint).await {
+                    if metrics.market_cap_usd > 0.0 {
+                        let mut milestone_to_notify: Option<(CallRecord, f64)> = None;
+
+                        if let Some(mut record) = self.calls.get_mut(&mint) {
+                            record.current_market_cap_usd = metrics.market_cap_usd;
+                            record.current_volume_usd = metrics.total_volume_usd;
+                            record.current_volume_5m_usd = metrics.volume_5m_usd;
+                            record.current_liquidity_usd = metrics.liquidity_usd;
+                            record.last_refreshed = chrono::Utc::now();
+
+                            if let Some(ref sym) = metrics.base_token_symbol {
+                                if !sym.is_empty() && (record.symbol == "TOKEN" || record.symbol == "Token" || record.symbol.is_empty()) {
+                                    record.symbol = sym.clone();
+                                }
+                            }
+                            if let Some(ref name) = metrics.base_token_name {
+                                if !name.is_empty() && (record.name == "Token" || record.name.is_empty()) {
+                                    record.name = name.clone();
+                                }
+                            }
+
+                            if metrics.market_cap_usd > record.highest_market_cap_usd {
+                                record.highest_market_cap_usd = metrics.market_cap_usd;
+                                record.ath_timestamp = chrono::Utc::now();
+                            }
+
+                            let multiple = if record.initial_market_cap_usd > 0.0 {
+                                record.highest_market_cap_usd / record.initial_market_cap_usd
+                            } else {
+                                1.0
+                            };
+
+                            // Milestone ladder: 2x, 5x, 10x, 20x, 50x, 100x
+                            let milestones = [2.0, 5.0, 10.0, 20.0, 50.0, 100.0];
+                            for &m in &milestones {
+                                if multiple >= m && record.last_notified_milestone < m {
+                                    record.last_notified_milestone = m;
+                                    milestone_to_notify = Some((record.clone(), m));
+                                }
+                            }
+
+                            has_updates = true;
+                        }
+
+                        // Send punchy milestone alert if reached
+                        if let Some((rec, milestone)) = milestone_to_notify {
+                            info!("🚀 Call milestone reached: ${} hit {:.0}x ATH!", rec.symbol, milestone);
+                            let html = format_milestone_alert(&rec, milestone);
+                            let keyboard = Self::create_action_keyboard(&rec.mint);
+                            let _ = self.bot
+                                .send_message(teloxide::types::ChatId(self.allowed_user_id), html)
+                                .parse_mode(ParseMode::Html)
+                                .link_preview_options(disabled_link_preview())
+                                .reply_markup(keyboard)
+                                .await;
+                        }
+                    }
+                }
+
+                tokio::time::sleep(std::time::Duration::from_millis(300)).await;
+            }
+
+            if has_updates {
+                self.save_calls_to_disk();
+            }
         }
     }
 
@@ -88,6 +230,7 @@ impl TelegramBotService {
         }
 
         self.calls.insert(card.mint.clone(), CallRecord::from(card));
+        self.save_calls_to_disk();
 
         let html = format_alert_html(card);
         let keyboard = Self::create_action_keyboard(&card.mint);
@@ -107,6 +250,12 @@ impl TelegramBotService {
     /// Start listening to incoming callback queries and commands
     pub async fn start_event_handler(self: Arc<Self>) {
         info!("Starting Telegram interaction listener for User ID: {}", self.allowed_user_id);
+
+        // Spawn 24/7 background Call ATH & PnL tracker
+        let tracker_service = self.clone();
+        tokio::spawn(async move {
+            tracker_service.run_ath_tracker().await;
+        });
 
         // ── Callback query handler (inline buttons) ──────────────────────────
         let callback_handler = Update::filter_callback_query().endpoint({
@@ -268,6 +417,8 @@ impl TelegramBotService {
                                         top_10_pct: 0.0,
                                         clustered_wallets_count: 0,
                                         bubblemaps_url: format!("https://bubblemaps.io/solana/token/{}", mint),
+                                        ath_timestamp: now,
+                                        last_notified_milestone: 1.0,
                                     };
                                     service.calls.insert(mint.to_string(), rec.clone());
                                     format_refreshed_alert_html(&rec)
@@ -293,6 +444,26 @@ impl TelegramBotService {
                                     .answer_callback_query(q.id)
                                     .text(format!("Ignored token {}", mint))
                                     .await;
+                            }
+                            ["pnl_tf", days_str] => {
+                                let days: u32 = days_str.parse().unwrap_or(7);
+                                let call_list: Vec<CallRecord> = service.calls.iter().map(|kv| kv.value().clone()).collect();
+                                let tf_opt = if days == 0 { None } else { Some(days) };
+                                let pnl_html = format_pnl_analytics(&call_list, tf_opt);
+                                let keyboard = Self::create_pnl_keyboard(days);
+                                if let Some(maybe_msg) = q.message {
+                                    let (chat_id, msg_id) = match maybe_msg {
+                                        teloxide::types::MaybeInaccessibleMessage::Regular(m) => (m.chat.id, m.id),
+                                        teloxide::types::MaybeInaccessibleMessage::Inaccessible(m) => (m.chat.id, m.message_id),
+                                    };
+                                    let _ = bot
+                                        .edit_message_text(chat_id, msg_id, pnl_html)
+                                        .parse_mode(ParseMode::Html)
+                                        .link_preview_options(disabled_link_preview())
+                                        .reply_markup(keyboard)
+                                        .await;
+                                }
+                                let _ = bot.answer_callback_query(q.id).await;
                             }
                             _ => {
                                 let _ = bot.answer_callback_query(q.id).await;
@@ -334,6 +505,9 @@ I'm watching Pump.fun in real-time and will ping you the moment a new token pass
 /status — Bot status &amp; safety settings\n\
 /balance — Burner wallet balance\n\
 /calls — Track returns &amp; flip Xs of all alerted coins\n\
+/pnl — Wins, losses, win rate &amp; simulated PnL (24h, 7d, 30d, all-time)\n\
+/stats — Alias for /pnl\n\
+/testpnl — View sample multi-timeframe PnL analytics\n\
 /flips — Alias for /calls\n\
 /testalert — Send a sample alert card\n\
 /kill — 🚨 Emergency stop (blocks all buying)\n\
@@ -343,6 +517,159 @@ I'm watching Pump.fun in real-time and will ping you the moment a new token pass
                                 let _ = bot
                                     .send_message(msg.chat.id, welcome)
                                     .parse_mode(ParseMode::Html)
+                                    .await;
+                            }
+
+                            "/pnl" | "/stats" | "/winrate" => {
+                                let call_list: Vec<CallRecord> = service.calls.iter().map(|kv| kv.value().clone()).collect();
+                                let pnl_html = format_pnl_analytics(&call_list, Some(7));
+                                let keyboard = Self::create_pnl_keyboard(7);
+                                let _ = bot
+                                    .send_message(msg.chat.id, pnl_html)
+                                    .parse_mode(ParseMode::Html)
+                                    .link_preview_options(disabled_link_preview())
+                                    .reply_markup(keyboard)
+                                    .await;
+                            }
+
+                            "/testpnl" => {
+                                let now = chrono::Utc::now();
+                                let sample_calls = vec![
+                                    CallRecord {
+                                        alert_type: crate::models::alert::AlertType::EarlyLaunch,
+                                        mint: "DezXAZ8z7PnrnRJjz3wXBoRgixCa6xjnB7YaB1pPB263".to_string(),
+                                        name: "Bonk Doge".to_string(),
+                                        symbol: "BDOGE".to_string(),
+                                        initial_market_cap_usd: 24_500.0,
+                                        current_market_cap_usd: 88_200.0,
+                                        highest_market_cap_usd: 313_600.0, // 12.8x Peak runner
+                                        initial_volume_usd: 31_200.0,
+                                        current_volume_usd: 480_000.0,
+                                        current_volume_5m_usd: 35_000.0,
+                                        current_liquidity_usd: 55_000.0,
+                                        holder_count: 520,
+                                        dev_holding_pct: 0.0,
+                                        top_holder_pct: 4.2,
+                                        sniper_bundler_pct: 6.5,
+                                        lore_description: Some("Bonk Doge runner".to_string()),
+                                        alert_timestamp: now - chrono::Duration::hours(6),
+                                        last_refreshed: now,
+                                        bottom_market_cap_usd: 24_500.0,
+                                        surge_pct_from_bottom: 0.0,
+                                        is_cto: false,
+                                        cto_status_desc: "Dev Holds 0.0%".to_string(),
+                                        top_holders: Vec::new(),
+                                        top_10_pct: 18.0,
+                                        clustered_wallets_count: 2,
+                                        bubblemaps_url: "https://bubblemaps.io/solana/token/DezXAZ8z7PnrnRJjz3wXBoRgixCa6xjnB7YaB1pPB263".to_string(),
+                                        ath_timestamp: now - chrono::Duration::hours(2),
+                                        last_notified_milestone: 10.0,
+                                    },
+                                    CallRecord {
+                                        alert_type: crate::models::alert::AlertType::Revival,
+                                        mint: "7xKXtg2CW87d97TXJSDpbD5jBkheTqA83TZRuJosgAsU".to_string(),
+                                        name: "Pepe Revival".to_string(),
+                                        symbol: "PEPE".to_string(),
+                                        initial_market_cap_usd: 7_500.0,
+                                        current_market_cap_usd: 32_000.0,
+                                        highest_market_cap_usd: 40_500.0, // 5.4x Surge
+                                        initial_volume_usd: 15_000.0,
+                                        current_volume_usd: 120_000.0,
+                                        current_volume_5m_usd: 12_000.0,
+                                        current_liquidity_usd: 18_000.0,
+                                        holder_count: 310,
+                                        dev_holding_pct: 0.0,
+                                        top_holder_pct: 5.1,
+                                        sniper_bundler_pct: 4.0,
+                                        lore_description: Some("Clean CTO revival".to_string()),
+                                        alert_timestamp: now - chrono::Duration::days(2),
+                                        last_refreshed: now,
+                                        bottom_market_cap_usd: 3_200.0,
+                                        surge_pct_from_bottom: 134.0,
+                                        is_cto: true,
+                                        cto_status_desc: "Clean CTO (0.0%)".to_string(),
+                                        top_holders: Vec::new(),
+                                        top_10_pct: 22.0,
+                                        clustered_wallets_count: 1,
+                                        bubblemaps_url: "https://bubblemaps.io/solana/token/7xKXtg2CW87d97TXJSDpbD5jBkheTqA83TZRuJosgAsU".to_string(),
+                                        ath_timestamp: now - chrono::Duration::days(1),
+                                        last_notified_milestone: 5.0,
+                                    },
+                                    CallRecord {
+                                        alert_type: crate::models::alert::AlertType::EarlyLaunch,
+                                        mint: "9n4nbM75f5Ui33ZbPYXn59EwSgE8CGsHtAeTH5YFeJ9E".to_string(),
+                                        name: "Sol Dog".to_string(),
+                                        symbol: "SOLDOG".to_string(),
+                                        initial_market_cap_usd: 15_000.0,
+                                        current_market_cap_usd: 21_000.0,
+                                        highest_market_cap_usd: 36_000.0, // 2.4x Solid win
+                                        initial_volume_usd: 20_000.0,
+                                        current_volume_usd: 65_000.0,
+                                        current_volume_5m_usd: 4_500.0,
+                                        current_liquidity_usd: 14_000.0,
+                                        holder_count: 180,
+                                        dev_holding_pct: 2.1,
+                                        top_holder_pct: 6.0,
+                                        sniper_bundler_pct: 8.0,
+                                        lore_description: None,
+                                        alert_timestamp: now - chrono::Duration::days(4),
+                                        last_refreshed: now,
+                                        bottom_market_cap_usd: 15_000.0,
+                                        surge_pct_from_bottom: 0.0,
+                                        is_cto: false,
+                                        cto_status_desc: "Dev Holds 2.1%".to_string(),
+                                        top_holders: Vec::new(),
+                                        top_10_pct: 19.5,
+                                        clustered_wallets_count: 3,
+                                        bubblemaps_url: "https://bubblemaps.io/solana/token/9n4nbM75f5Ui33ZbPYXn59EwSgE8CGsHtAeTH5YFeJ9E".to_string(),
+                                        ath_timestamp: now - chrono::Duration::days(3),
+                                        last_notified_milestone: 2.0,
+                                    },
+                                    CallRecord {
+                                        alert_type: crate::models::alert::AlertType::EarlyLaunch,
+                                        mint: "4k3Dyjzvzp8eMZWUXbBCjEvwSkkk59S5iCNLY3QrkX6R".to_string(),
+                                        name: "Cat In Box".to_string(),
+                                        symbol: "BOXCAT".to_string(),
+                                        initial_market_cap_usd: 18_000.0,
+                                        current_market_cap_usd: 11_000.0,
+                                        highest_market_cap_usd: 14_500.0, // 0.8x Drawdown
+                                        initial_volume_usd: 22_000.0,
+                                        current_volume_usd: 28_000.0,
+                                        current_volume_5m_usd: 500.0,
+                                        current_liquidity_usd: 7_000.0,
+                                        holder_count: 75,
+                                        dev_holding_pct: 5.0,
+                                        top_holder_pct: 9.5,
+                                        sniper_bundler_pct: 11.0,
+                                        lore_description: None,
+                                        alert_timestamp: now - chrono::Duration::days(12),
+                                        last_refreshed: now,
+                                        bottom_market_cap_usd: 9_000.0,
+                                        surge_pct_from_bottom: 0.0,
+                                        is_cto: false,
+                                        cto_status_desc: "Dev Holds 5.0%".to_string(),
+                                        top_holders: Vec::new(),
+                                        top_10_pct: 26.0,
+                                        clustered_wallets_count: 4,
+                                        bubblemaps_url: "https://bubblemaps.io/solana/token/4k3Dyjzvzp8eMZWUXbBCjEvwSkkk59S5iCNLY3QrkX6R".to_string(),
+                                        ath_timestamp: now - chrono::Duration::days(12),
+                                        last_notified_milestone: 0.0,
+                                    },
+                                ];
+
+                                for c in sample_calls {
+                                    service.calls.insert(c.mint.clone(), c);
+                                }
+                                service.save_calls_to_disk();
+
+                                let call_list: Vec<CallRecord> = service.calls.iter().map(|kv| kv.value().clone()).collect();
+                                let pnl_html = format_pnl_analytics(&call_list, Some(7));
+                                let keyboard = Self::create_pnl_keyboard(7);
+                                let _ = bot
+                                    .send_message(msg.chat.id, pnl_html)
+                                    .parse_mode(ParseMode::Html)
+                                    .link_preview_options(disabled_link_preview())
+                                    .reply_markup(keyboard)
                                     .await;
                             }
 
@@ -367,6 +694,9 @@ I'm watching Pump.fun in real-time and will ping you the moment a new token pass
 /status — Bot status &amp; safety guard state\n\
 /balance — Burner wallet SOL balance &amp; pubkey\n\
 /calls — Track returns &amp; flip Xs of all alerted coins\n\
+/pnl — Track wins, losses, win rate &amp; simulated PnL\n\
+/stats — Alias for /pnl\n\
+/testpnl — View sample multi-timeframe PnL analytics\n\
 /flips — Alias for /calls\n\
 /testalert — Fire a sample early coin alert card\n\
 /testrevival — Fire a sample dormant CTO revival alert card\n\

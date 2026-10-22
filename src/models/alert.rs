@@ -161,6 +161,12 @@ pub struct CallRecord {
     pub top_10_pct: f64,
     pub clustered_wallets_count: usize,
     pub bubblemaps_url: String,
+
+    // Continuous ATH & Milestone tracking
+    #[serde(default = "chrono::Utc::now")]
+    pub ath_timestamp: chrono::DateTime<chrono::Utc>,
+    #[serde(default)]
+    pub last_notified_milestone: f64,
 }
 
 impl From<&AlertCard> for CallRecord {
@@ -193,6 +199,8 @@ impl From<&AlertCard> for CallRecord {
             top_10_pct: card.top_10_pct,
             clustered_wallets_count: card.clustered_wallets_count,
             bubblemaps_url: card.bubblemaps_url.clone(),
+            ath_timestamp: now,
+            last_notified_milestone: 1.0,
         }
     }
 }
