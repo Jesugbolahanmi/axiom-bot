@@ -72,10 +72,11 @@ impl DexScreenerClient {
         }
     }
 
-    /// Queries GeckoTerminal 24h OHLCV hourly candles for the pool address to get the exact highest price traded.
-    pub async fn fetch_pool_candle_peak_mcap(&self, pool_address: &str) -> Option<f64> {
+    /// Queries GeckoTerminal 5-minute OHLCV candles for the pool address strictly AFTER alert_epoch.
+    /// This prevents attributing price action that occurred before the call to the token's ATH.
+    pub async fn fetch_pool_candle_peak_after(&self, pool_address: &str, alert_epoch: i64) -> Option<f64> {
         let url = format!(
-            "https://api.geckoterminal.com/api/v2/networks/solana/pools/{}/ohlcv/hour?aggregate=1&limit=24",
+            "https://api.geckoterminal.com/api/v2/networks/solana/pools/{}/ohlcv/minute?aggregate=5&limit=288",
             pool_address
         );
         let resp = self
@@ -93,6 +94,12 @@ impl DexScreenerClient {
         let candles = body.get("data")?.get("attributes")?.get("ohlcv_list")?.as_array()?;
         let mut max_high = 0.0;
         for c in candles {
+            // Candle format: [timestamp, open, high, low, close, volume]
+            let ts = c.get(0).and_then(|v| v.as_i64()).unwrap_or(0);
+            // STRICT FILTER: Only consider candles that started at or after the call time
+            if ts < (alert_epoch - 300) {
+                continue;
+            }
             if let Some(h) = c.get(2).and_then(|v| v.as_f64()) {
                 if h > max_high {
                     max_high = h;
@@ -101,7 +108,7 @@ impl DexScreenerClient {
         }
 
         if max_high > 0.0 {
-            // Pump tokens standard 1,000,000,000 supply
+            // Pump.fun standard supply 1,000,000,000 tokens
             Some(max_high * 1_000_000_000.0)
         } else {
             None
@@ -165,27 +172,11 @@ impl DexScreenerClient {
             .copied()
             .unwrap_or(valid_pairs[0]);
 
-        // Current market cap of the primary active trading pair
-        let active_mcap = best_pair
+        // Current live market cap of the primary active trading pair
+        let mcap = best_pair
             .market_cap
             .or(best_pair.fdv)
             .unwrap_or(0.0);
-
-        // Peak market cap across all active pairs
-        let max_pair_mcap = valid_pairs
-            .iter()
-            .filter_map(|p| p.market_cap.or(p.fdv))
-            .fold(0.0, f64::max);
-
-        // Query GeckoTerminal 24h OHLCV candles to recover the true peak ATH even if the coin dumped
-        let candle_peak = if let Some(ref addr) = best_pair.pair_address {
-            self.fetch_pool_candle_peak_mcap(addr).await
-        } else {
-            None
-        };
-
-        let peak_mcap = candle_peak.unwrap_or(0.0).max(max_pair_mcap);
-        let mcap = if active_mcap > 0.0 { active_mcap } else { max_pair_mcap };
 
         // Liquidity: use pair liquidity if available, otherwise virtual bonding curve (~40% of mcap)
         let liq = best_pair
@@ -217,7 +208,7 @@ impl DexScreenerClient {
             total_volume_usd: vol_24h,
             volume_5m_usd: vol_5m,
             pair_address: best_pair.pair_address.clone(),
-            peak_candle_mcap_usd: if peak_mcap > 0.0 { Some(peak_mcap) } else { None },
+            peak_candle_mcap_usd: None,
         }))
     }
 }

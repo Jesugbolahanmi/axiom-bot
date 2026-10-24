@@ -142,7 +142,12 @@ impl TelegramBotService {
                                 }
                             }
 
-                            let peak = metrics.peak_candle_mcap_usd.unwrap_or(0.0).max(metrics.market_cap_usd);
+                            let mut peak = metrics.market_cap_usd;
+                            if let Some(ref paddr) = metrics.pair_address {
+                                if let Some(candle_peak) = self.dex_client.fetch_pool_candle_peak_after(paddr, record.alert_timestamp.timestamp()).await {
+                                    peak = peak.max(candle_peak);
+                                }
+                            }
                             if peak > record.highest_market_cap_usd {
                                 record.highest_market_cap_usd = peak;
                                 record.ath_timestamp = chrono::Utc::now();
@@ -256,7 +261,12 @@ impl TelegramBotService {
                 rec.current_volume_usd = metrics.total_volume_usd;
                 rec.current_volume_5m_usd = metrics.volume_5m_usd;
                 rec.current_liquidity_usd = metrics.liquidity_usd;
-                let peak = metrics.peak_candle_mcap_usd.unwrap_or(0.0).max(metrics.market_cap_usd);
+                let mut peak = metrics.market_cap_usd;
+                if let Some(ref paddr) = metrics.pair_address {
+                    if let Some(candle_peak) = service.dex_client.fetch_pool_candle_peak_after(paddr, rec.alert_timestamp.timestamp()).await {
+                        peak = peak.max(candle_peak);
+                    }
+                }
                 if peak > rec.highest_market_cap_usd {
                     rec.highest_market_cap_usd = peak;
                     rec.ath_timestamp = chrono::Utc::now();
@@ -287,7 +297,7 @@ impl TelegramBotService {
                     symbol,
                     initial_market_cap_usd: metrics.market_cap_usd,
                     current_market_cap_usd: metrics.market_cap_usd,
-                    highest_market_cap_usd: metrics.peak_candle_mcap_usd.unwrap_or(metrics.market_cap_usd),
+                    highest_market_cap_usd: metrics.market_cap_usd,
                     initial_volume_usd: metrics.total_volume_usd,
                     current_volume_usd: metrics.total_volume_usd,
                     current_volume_5m_usd: metrics.volume_5m_usd,
@@ -449,7 +459,12 @@ impl TelegramBotService {
                                                     record.name = n.clone();
                                                 }
                                             }
-                                            let peak = m.peak_candle_mcap_usd.unwrap_or(0.0).max(m.market_cap_usd);
+                                            let mut peak = m.market_cap_usd;
+                                            if let Some(ref paddr) = m.pair_address {
+                                                if let Some(candle_peak) = service.dex_client.fetch_pool_candle_peak_after(paddr, record.alert_timestamp.timestamp()).await {
+                                                    peak = peak.max(candle_peak);
+                                                }
+                                            }
                                             if peak > record.highest_market_cap_usd {
                                                 record.highest_market_cap_usd = peak;
                                                 record.ath_timestamp = chrono::Utc::now();
