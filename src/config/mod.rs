@@ -5,7 +5,7 @@ use std::fs;
 use std::path::Path;
 use anyhow::{Context, Result};
 use serde::Deserialize;
-use thresholds::{FilterThresholds, RevivalThresholds};
+use thresholds::{FilterThresholds, RevivalThresholds, MultiChainRevivalConfig};
 use safety::SafetySettings;
 
 #[derive(Debug, Clone, Deserialize)]
@@ -74,6 +74,8 @@ pub struct AppConfig {
     pub filters: FilterThresholds,
     #[serde(default)]
     pub revival_filters: RevivalThresholds,
+    #[serde(default)]
+    pub multi_chain_revival: MultiChainRevivalConfig,
     pub heuristics: HeuristicsConfig,
     pub safety: SafetySettings,
     pub sources: SourcesConfig,

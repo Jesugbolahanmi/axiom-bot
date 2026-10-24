@@ -92,9 +92,10 @@ pub fn format_alert_html(card: &AlertCard) -> String {
     };
 
     let axiom_link = format!("https://axiom.trade/token/{}", mint);
-    let dexscreener_link = format!("https://dexscreener.com/solana/{}", mint);
-    let solscan_link = format!("https://solscan.io/token/{}", mint);
-    let bubblemaps_link = format!("https://bubblemaps.io/solana/token/{}", mint);
+    let dexscreener_link = format!("https://dexscreener.com/{}/{}", card.chain, mint);
+    let bm_chain = match card.chain.as_str() { "base" => "base", "bsc" => "bsc", "ethereum" => "eth", _ => "solana" };
+    let bubblemaps_link = format!("https://bubblemaps.io/{}/token/{}", bm_chain, mint);
+    let solscan_link = if card.chain == "solana" { format!("https://solscan.io/token/{}", mint) } else { format!("https://dexscreener.com/{}/{}", card.chain, mint) };
 
     let mc_k = card.market_cap_usd / 1000.0;
     let liq_k = card.liquidity_usd / 1000.0;
@@ -239,9 +240,10 @@ pub fn format_refreshed_alert_html(record: &CallRecord) -> String {
     };
 
     let axiom_link = format!("https://axiom.trade/token/{}", mint);
-    let dexscreener_link = format!("https://dexscreener.com/solana/{}", mint);
-    let solscan_link = format!("https://solscan.io/token/{}", mint);
-    let bubblemaps_link = format!("https://bubblemaps.io/solana/token/{}", mint);
+    let _dexscreener_link = format!("https://dexscreener.com/{}/{}", record.chain, mint);
+    let bm_chain = match record.chain.as_str() { "base" => "base", "bsc" => "bsc", "ethereum" => "eth", _ => "solana" };
+    let bubblemaps_link = format!("https://bubblemaps.io/{}/token/{}", bm_chain, mint);
+    let _solscan_link = if record.chain == "solana" { format!("https://solscan.io/token/{}", mint) } else { format!("https://dexscreener.com/{}/{}", record.chain, mint) };
 
     let mc_k = record.current_market_cap_usd / 1000.0;
     let call_mc_k = record.initial_market_cap_usd / 1000.0;
@@ -261,10 +263,10 @@ pub fn format_refreshed_alert_html(record: &CallRecord) -> String {
         format!("{:.0}m ago", ath_elapsed_mins)
     };
 
-    let revival_badge = if record.alert_type == AlertType::Revival {
-        " [REVIVAL]"
-    } else {
-        ""
+    let revival_badge = match record.alert_type {
+        AlertType::Revival => " [REVIVAL]".to_string(),
+        AlertType::MultiChainRevival => format!(" [{}]", record.chain.to_uppercase()),
+        _ => String::new(),
     };
 
     format!(
@@ -290,7 +292,7 @@ pub fn format_refreshed_alert_html(record: &CallRecord) -> String {
         <b>Top Holders (excl. curve)</b>\n\
         {}\n\
         {}\
-        <a href=\"{}\">Axiom</a> • <a href=\"{}\">DexScreener</a> • <a href=\"{}\">Bubblemaps</a> • <a href=\"{}\">Solscan</a>\n\
+        {}\n\
         <i>Refreshed at {}</i>",
         name_escaped,
         symbol_escaped,
@@ -320,10 +322,12 @@ pub fn format_refreshed_alert_html(record: &CallRecord) -> String {
         bubblemaps_link,
         holders_tree,
         lore_section,
-        axiom_link,
-        dexscreener_link,
-        bubblemaps_link,
-        solscan_link,
+        if record.chain == "solana" {
+            format!("<a href=\"{}\">Axiom</a> • <a href=\"https://dexscreener.com/solana/{}\">DexScreener</a> • <a href=\"https://bubblemaps.io/solana/token/{}\">Bubblemaps</a> • <a href=\"https://solscan.io/token/{}\">Solscan</a>", axiom_link, mint, mint, mint)
+        } else {
+            let bm_chain = match record.chain.as_str() { "base" => "base", "bsc" => "bsc", "ethereum" => "eth", _ => "solana" };
+            format!("<a href=\"https://dexscreener.com/{}/{}\">DexScreener</a> • <a href=\"https://bubblemaps.io/{}/token/{}\">Bubblemaps</a>", record.chain, mint, bm_chain, mint)
+        },
         record.last_refreshed.format("%H:%M:%S UTC")
     )
 }
@@ -359,7 +363,11 @@ pub fn format_calls_summary(calls: &[CallRecord]) -> String {
         let call_mc = call.initial_market_cap_usd / 1000.0;
         let now_mc = call.current_market_cap_usd / 1000.0;
 
-        let tag = if call.alert_type == AlertType::Revival { " [REVIVAL]" } else { "" };
+        let tag = match call.alert_type {
+            AlertType::Revival => " [REVIVAL]".to_string(),
+            AlertType::MultiChainRevival => format!(" [{}]", call.chain.to_uppercase()),
+            _ => String::new(),
+        };
 
         out.push_str(&format!(
             "{}. <b>${}</b>{} (<code>{}</code>)\n\
@@ -550,7 +558,11 @@ pub fn format_milestone_alert(call: &CallRecord, milestone: f64) -> String {
         call.mint.clone()
     };
 
-    let tag = if call.alert_type == AlertType::Revival { " [REVIVAL]" } else { "" };
+    let tag = match call.alert_type {
+            AlertType::Revival => " [REVIVAL]".to_string(),
+            AlertType::MultiChainRevival => format!(" [{}]", call.chain.to_uppercase()),
+            _ => String::new(),
+        };
 
     format!(
         "🎯 <b>CALL ATH UPDATE: ${}{} ({:.0}x Milestone Reached!)</b>\n\n        <b>Performance Metrics</b>\n        ├ Peak ATH:  <b>{:.2}x</b> (${:.1}K —&gt; <b>${:.1}K</b>)\n        ├ Current:   <b>{:.2}x</b> (${:.1}K)\n        ├ Mint:      <code>{}</code>\n        └ Alerted:   <b>{:.1}m ago</b>\n\n        <a href=\"https://dexscreener.com/solana/{}\">DexScreener</a> • <a href=\"https://bubblemaps.io/solana/token/{}\">Bubblemaps</a> • <a href=\"https://axiom.trade/token/{}\">Axiom</a>",

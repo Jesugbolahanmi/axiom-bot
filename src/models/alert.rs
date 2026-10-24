@@ -1,3 +1,7 @@
+fn default_chain_solana() -> String {
+    "solana".to_string()
+}
+
 use serde::{Deserialize, Serialize};
 use super::token::TokenState;
 
@@ -5,6 +9,7 @@ use super::token::TokenState;
 pub enum AlertType {
     EarlyLaunch,
     Revival,
+    MultiChainRevival,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -48,9 +53,80 @@ pub struct AlertCard {
     pub top_10_pct: f64,
     pub clustered_wallets_count: usize,
     pub bubblemaps_url: String,
+
+    // Multi-chain fields
+    #[serde(default = "default_chain_solana")]
+    pub chain: String,
+    #[serde(default)]
+    pub sustained_secs: u64,
+    #[serde(default)]
+    pub buys_5m: u64,
+    #[serde(default)]
+    pub sells_5m: u64,
 }
 
 impl AlertCard {
+    pub fn new_multi_chain_revival(
+        chain: String,
+        token_address: String,
+        name: String,
+        symbol: String,
+        age_mins: f64,
+        market_cap_usd: f64,
+        rolling_5m_volume_usd: f64,
+        total_volume_usd: f64,
+        buys_5m: u64,
+        sells_5m: u64,
+        sustained_secs: u64,
+        _dex_url: String,
+        description: Option<String>,
+    ) -> Self {
+        let bubblemaps_url = if chain == "solana" {
+            format!("https://bubblemaps.io/solana/token/{}", token_address)
+        } else if chain == "bsc" {
+            format!("https://bubblemaps.io/bsc/token/{}", token_address)
+        } else if chain == "base" {
+            format!("https://bubblemaps.io/base/token/{}", token_address)
+        } else {
+            format!("https://bubblemaps.io/eth/token/{}", token_address)
+        };
+
+        let has_lore = description.as_ref().map(|d| !d.is_empty()).unwrap_or(false);
+
+        Self {
+            alert_type: AlertType::MultiChainRevival,
+            mint: token_address,
+            name,
+            symbol,
+            age_mins,
+            market_cap_usd,
+            total_volume_usd,
+            rolling_5m_volume_usd,
+            volume_to_mc_ratio: if market_cap_usd > 0.0 { total_volume_usd / market_cap_usd } else { 0.0 },
+            volume_5m_to_mc_ratio: if market_cap_usd > 0.0 { rolling_5m_volume_usd / market_cap_usd } else { 0.0 },
+            liquidity_usd: market_cap_usd * 0.20,
+            liquidity_ratio: 0.20,
+            holder_count: (buys_5m + sells_5m).max(20),
+            dev_holding_pct: 0.0,
+            top_holder_pct: 0.0,
+            sniper_bundler_pct: 0.0,
+            lore_description: description,
+            has_lore,
+            bottom_market_cap_usd: 0.0,
+            surge_pct_from_bottom: 0.0,
+            is_cto: true,
+            cto_status_desc: "Community Active / Multi-Chain".to_string(),
+            top_holders: vec![],
+            top_10_pct: 0.0,
+            clustered_wallets_count: 0,
+            bubblemaps_url,
+            chain,
+            sustained_secs,
+            buys_5m,
+            sells_5m,
+        }
+    }
+
     pub fn new_revival(token: &TokenState) -> Self {
         let mut card = Self::from(token);
         card.alert_type = AlertType::Revival;
@@ -125,6 +201,10 @@ impl From<&TokenState> for AlertCard {
             top_10_pct: token.top_10_pct,
             clustered_wallets_count: token.clustered_wallets_count,
             bubblemaps_url,
+            chain: "solana".to_string(),
+            sustained_secs: 0,
+            buys_5m: 0,
+            sells_5m: 0,
         }
     }
 }
@@ -167,6 +247,16 @@ pub struct CallRecord {
     pub ath_timestamp: chrono::DateTime<chrono::Utc>,
     #[serde(default)]
     pub last_notified_milestone: f64,
+
+    // Multi-chain fields
+    #[serde(default = "default_chain_solana")]
+    pub chain: String,
+    #[serde(default)]
+    pub sustained_secs: u64,
+    #[serde(default)]
+    pub buys_5m: u64,
+    #[serde(default)]
+    pub sells_5m: u64,
 }
 
 impl From<&AlertCard> for CallRecord {
@@ -201,6 +291,10 @@ impl From<&AlertCard> for CallRecord {
             bubblemaps_url: card.bubblemaps_url.clone(),
             ath_timestamp: now,
             last_notified_milestone: 1.0,
+            chain: card.chain.clone(),
+            sustained_secs: card.sustained_secs,
+            buys_5m: card.buys_5m,
+            sells_5m: card.sells_5m,
         }
     }
 }

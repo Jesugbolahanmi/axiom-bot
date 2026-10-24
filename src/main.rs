@@ -194,6 +194,20 @@ async fn main() -> Result<()> {
         }
     });
 
+    // 3. Multi-Chain Revival Scanner Worker (Solana, Base, Ethereum, BSC)
+    if config.multi_chain_revival.enabled {
+        let multi_chain_scanner = Arc::new(axiom_bot::enrichment::MultiChainRevivalScanner::new(
+            config.multi_chain_revival.clone(),
+            telegram_service.clone(),
+        ));
+
+        let scanner_worker = multi_chain_scanner.clone();
+        tokio::spawn(async move {
+            scanner_worker.run().await;
+        });
+        info!("Spawned Multi-Chain Revival Scanner daemon across chains {:?}", config.multi_chain_revival.chains);
+    }
+
     info!("Bot is fully operational. Press Ctrl+C to terminate.");
     tokio::signal::ctrl_c().await?;
     info!("Shutting down bot gracefully...");

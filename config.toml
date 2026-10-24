@@ -81,3 +81,20 @@ pumpportal_ws_url = "wss://pumpportal.fun/api/data"
 pumpportal_trade_api = "https://pumpportal.fun/api/trade-local"
 helius_rpc_url_env = "HELIUS_RPC_URL"
 solana_private_key_env = "SOLANA_PRIVATE_KEY"
+
+[multi_chain_revival]
+# Robust multi-chain revival scanner across all chains
+enabled = true
+chains = ["solana", "base", "ethereum", "bsc"]
+# Only target established/dormant meme tokens older than 60 minutes
+min_age_mins = 60
+# Minimum 5-minute surge volume required to be flagged as active
+min_5m_volume_usd = 1500.0
+# Minimum buy ratio (> 60% buys)
+min_buy_ratio = 0.60
+# Sustained volume confirmation: volume must stay alive for at least 120 seconds (2 mins)
+min_sustained_secs = 120
+# Candidate retention TTL before pruning if volume dies (5 mins)
+candidate_ttl_secs = 300
+# Scanner polling interval in seconds
+poll_interval_secs = 20

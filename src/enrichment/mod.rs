@@ -1,3 +1,4 @@
+pub mod multi_chain_revival;
 pub mod dex_screener;
 pub mod helius_das;
 pub mod sniper_bundler;
@@ -9,6 +10,7 @@ use tracing::{debug, info, warn};
 pub use dex_screener::DexScreenerClient;
 pub use helius_das::HeliusDasClient;
 pub use sniper_bundler::SniperBundlerAnalyzer;
+pub use multi_chain_revival::MultiChainRevivalScanner;
 use crate::models::token::TokenState;
 
 #[derive(Clone)]

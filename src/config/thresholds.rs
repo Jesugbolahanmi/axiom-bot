@@ -112,3 +112,50 @@ impl Default for RevivalThresholds {
         }
     }
 }
+
+
+#[derive(Debug, Clone, Deserialize)]
+pub struct MultiChainRevivalConfig {
+    #[serde(default = "default_mcr_enabled")]
+    pub enabled: bool,
+    #[serde(default = "default_mcr_chains")]
+    pub chains: Vec<String>,
+    #[serde(default = "default_mcr_min_age_mins")]
+    pub min_age_mins: u64,
+    #[serde(default = "default_mcr_min_5m_volume_usd")]
+    pub min_5m_volume_usd: f64,
+    #[serde(default = "default_mcr_min_buy_ratio")]
+    pub min_buy_ratio: f64,
+    #[serde(default = "default_mcr_min_sustained_secs")]
+    pub min_sustained_secs: u64,
+    #[serde(default = "default_mcr_candidate_ttl_secs")]
+    pub candidate_ttl_secs: u64,
+    #[serde(default = "default_mcr_poll_interval_secs")]
+    pub poll_interval_secs: u64,
+}
+
+fn default_mcr_enabled() -> bool { true }
+fn default_mcr_chains() -> Vec<String> {
+    vec!["solana".to_string(), "base".to_string(), "ethereum".to_string(), "bsc".to_string()]
+}
+fn default_mcr_min_age_mins() -> u64 { 60 }
+fn default_mcr_min_5m_volume_usd() -> f64 { 1500.0 }
+fn default_mcr_min_buy_ratio() -> f64 { 0.60 }
+fn default_mcr_min_sustained_secs() -> u64 { 120 }
+fn default_mcr_candidate_ttl_secs() -> u64 { 300 }
+fn default_mcr_poll_interval_secs() -> u64 { 20 }
+
+impl Default for MultiChainRevivalConfig {
+    fn default() -> Self {
+        Self {
+            enabled: default_mcr_enabled(),
+            chains: default_mcr_chains(),
+            min_age_mins: default_mcr_min_age_mins(),
+            min_5m_volume_usd: default_mcr_min_5m_volume_usd(),
+            min_buy_ratio: default_mcr_min_buy_ratio(),
+            min_sustained_secs: default_mcr_min_sustained_secs(),
+            candidate_ttl_secs: default_mcr_candidate_ttl_secs(),
+            poll_interval_secs: default_mcr_poll_interval_secs(),
+        }
+    }
+}

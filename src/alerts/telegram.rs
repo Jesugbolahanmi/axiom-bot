@@ -196,25 +196,52 @@ impl TelegramBotService {
     }
 
     /// Build inline keyboard: [ 🔄 Refresh Stats & Xs ] / [ 🛒 Buy 0.1 SOL ] [ 🛒 Buy 0.5 SOL ] [ ❌ Ignore ]
-    fn create_action_keyboard(mint: &str) -> InlineKeyboardMarkup {
-        InlineKeyboardMarkup::new(vec![
-            vec![
+            pub fn create_action_keyboard(mint: &str) -> InlineKeyboardMarkup {
+        Self::create_action_keyboard_for_chain(mint, "solana")
+    }
+
+    pub fn create_action_keyboard_for_chain(mint: &str, chain: &str) -> InlineKeyboardMarkup {
+        if chain.to_lowercase() == "solana" {
+            InlineKeyboardMarkup::new(vec![
+                vec![
+                    InlineKeyboardButton::callback(
+                        "🔄 Refresh Stats",
+                        format!("refresh:{}", mint),
+                    ),
+                    InlineKeyboardButton::callback(
+                        "⚡ Buy 0.5 SOL",
+                        format!("buy:0.5:{}", mint),
+                    ),
+                ],
+                vec![
+                    InlineKeyboardButton::callback(
+                        "Dismiss",
+                        format!("ignore:{}", mint),
+                    ),
+                ],
+            ])
+        } else {
+            let chart_url = reqwest::Url::parse(&format!("https://dexscreener.com/{}/{}", chain, mint)).ok();
+            let mut row1 = vec![
                 InlineKeyboardButton::callback(
                     "🔄 Refresh Stats",
                     format!("refresh:{}", mint),
                 ),
-                InlineKeyboardButton::callback(
-                    "🛒 Buy 0.5 SOL",
-                    format!("buy:0.5:{}", mint),
-                ),
-            ],
-            vec![
-                InlineKeyboardButton::callback(
-                    "Dismiss",
-                    format!("ignore:{}", mint),
-                ),
-            ],
-        ])
+            ];
+            if let Some(url) = chart_url {
+                row1.push(InlineKeyboardButton::url("📈 Chart", url));
+            }
+
+            InlineKeyboardMarkup::new(vec![
+                row1,
+                vec![
+                    InlineKeyboardButton::callback(
+                        "Dismiss",
+                        format!("ignore:{}", mint),
+                    ),
+                ],
+            ])
+        }
     }
 
     /// Send an alert card to the configured user
@@ -228,7 +255,7 @@ impl TelegramBotService {
         self.save_calls_to_disk();
 
         let html = format_alert_html(card);
-        let keyboard = Self::create_action_keyboard(&card.mint);
+        let keyboard = Self::create_action_keyboard_for_chain(&card.mint, &card.chain);
 
         self.bot
             .send_message(ChatId(self.allowed_user_id), html)
@@ -277,7 +304,7 @@ impl TelegramBotService {
             }
 
             let pnl_token_html = format_token_pnl_html(&rec);
-            let keyboard = Self::create_action_keyboard(&rec.mint);
+            let keyboard = Self::create_action_keyboard_for_chain(&rec.mint, &rec.chain);
             let _ = bot
                 .send_message(chat_id, pnl_token_html)
                 .parse_mode(ParseMode::Html)
@@ -319,12 +346,16 @@ impl TelegramBotService {
                     bubblemaps_url: format!("https://bubblemaps.io/solana/token/{}", target_clean),
                     ath_timestamp: now,
                     last_notified_milestone: 1.0,
+                    chain: "solana".to_string(),
+                    sustained_secs: 0,
+                    buys_5m: 0,
+                    sells_5m: 0,
                 };
                 service.calls.insert(target_clean.to_string(), rec.clone());
                 service.save_calls_to_disk();
 
                 let pnl_token_html = format_token_pnl_html(&rec);
-                let keyboard = Self::create_action_keyboard(&rec.mint);
+                let keyboard = Self::create_action_keyboard_for_chain(&rec.mint, &rec.chain);
                 let _ = bot
                     .send_message(chat_id, pnl_token_html)
                     .parse_mode(ParseMode::Html)
@@ -344,7 +375,7 @@ impl TelegramBotService {
         }
     }
 
-    /// Start listening to incoming callback queries and commands
+
     pub async fn start_event_handler(self: Arc<Self>) {
         info!("Starting Telegram interaction listener for User ID: {}", self.allowed_user_id);
 
@@ -524,6 +555,10 @@ impl TelegramBotService {
                                         bubblemaps_url: format!("https://bubblemaps.io/solana/token/{}", mint),
                                         ath_timestamp: now,
                                         last_notified_milestone: 1.0,
+                                        chain: "solana".to_string(),
+                                        sustained_secs: 0,
+                                        buys_5m: 0,
+                                        sells_5m: 0,
                                     };
                                     service.calls.insert(mint.to_string(), rec.clone());
                                     format_refreshed_alert_html(&rec)
@@ -695,6 +730,10 @@ I'm watching Pump.fun in real-time and will ping you the moment a new token pass
                                         bubblemaps_url: "https://bubblemaps.io/solana/token/DezXAZ8z7PnrnRJjz3wXBoRgixCa6xjnB7YaB1pPB263".to_string(),
                                         ath_timestamp: now - chrono::Duration::hours(2),
                                         last_notified_milestone: 10.0,
+                                        chain: "solana".to_string(),
+                                        sustained_secs: 0,
+                                        buys_5m: 0,
+                                        sells_5m: 0,
                                     },
                                     CallRecord {
                                         alert_type: crate::models::alert::AlertType::Revival,
@@ -725,6 +764,10 @@ I'm watching Pump.fun in real-time and will ping you the moment a new token pass
                                         bubblemaps_url: "https://bubblemaps.io/solana/token/7xKXtg2CW87d97TXJSDpbD5jBkheTqA83TZRuJosgAsU".to_string(),
                                         ath_timestamp: now - chrono::Duration::days(1),
                                         last_notified_milestone: 5.0,
+                                        chain: "solana".to_string(),
+                                        sustained_secs: 0,
+                                        buys_5m: 0,
+                                        sells_5m: 0,
                                     },
                                     CallRecord {
                                         alert_type: crate::models::alert::AlertType::EarlyLaunch,
@@ -755,6 +798,10 @@ I'm watching Pump.fun in real-time and will ping you the moment a new token pass
                                         bubblemaps_url: "https://bubblemaps.io/solana/token/9n4nbM75f5Ui33ZbPYXn59EwSgE8CGsHtAeTH5YFeJ9E".to_string(),
                                         ath_timestamp: now - chrono::Duration::days(3),
                                         last_notified_milestone: 2.0,
+                                        chain: "solana".to_string(),
+                                        sustained_secs: 0,
+                                        buys_5m: 0,
+                                        sells_5m: 0,
                                     },
                                     CallRecord {
                                         alert_type: crate::models::alert::AlertType::EarlyLaunch,
@@ -785,6 +832,10 @@ I'm watching Pump.fun in real-time and will ping you the moment a new token pass
                                         bubblemaps_url: "https://bubblemaps.io/solana/token/4k3Dyjzvzp8eMZWUXbBCjEvwSkkk59S5iCNLY3QrkX6R".to_string(),
                                         ath_timestamp: now - chrono::Duration::days(12),
                                         last_notified_milestone: 0.0,
+                                        chain: "solana".to_string(),
+                                        sustained_secs: 0,
+                                        buys_5m: 0,
+                                        sells_5m: 0,
                                     },
                                 ];
 
@@ -1020,6 +1071,10 @@ I'm watching Pump.fun in real-time and will ping you the moment a new token pass
                                     top_10_pct: 22.4,
                                     clustered_wallets_count: 4,
                                     bubblemaps_url: "https://bubblemaps.io/solana/token/DezXAZ8z7PnrnRJjz3wXBoRgixCa6xjnB7YaB1pPB263".to_string(),
+                                    chain: "solana".to_string(),
+                                    sustained_secs: 0,
+                                    buys_5m: 0,
+                                    sells_5m: 0,
                                 };
                                 let _ = service.send_alert(&sample_card).await;
                             }
@@ -1092,6 +1147,10 @@ I'm watching Pump.fun in real-time and will ping you the moment a new token pass
                                     top_10_pct: 18.2,
                                     clustered_wallets_count: 3,
                                     bubblemaps_url: "https://bubblemaps.io/solana/token/DezXAZ8z7PnrnRJjz3wXBoRgixCa6xjnB7YaB1pPB263".to_string(),
+                                    chain: "solana".to_string(),
+                                    sustained_secs: 0,
+                                    buys_5m: 0,
+                                    sells_5m: 0,
                                 };
                                 let _ = service.send_alert(&sample_card).await;
                             }
