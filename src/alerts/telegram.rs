@@ -131,6 +131,16 @@ impl TelegramBotService {
                     if metrics.market_cap_usd > 0.0 {
                         let mut milestone_to_notify: Option<(CallRecord, f64)> = None;
 
+                        let alert_ts = self.calls.get(&mint).map(|c| c.alert_timestamp.timestamp());
+                        let mut peak = metrics.market_cap_usd;
+                        if let (Some(ts), Some(ref paddr)) = (alert_ts, metrics.pair_address.as_ref()) {
+                            if !paddr.ends_with("pump") {
+                                if let Some(candle_peak) = self.dex_client.fetch_pool_candle_peak_after(paddr, ts).await {
+                                    peak = peak.max(candle_peak);
+                                }
+                            }
+                        }
+
                         if let Some(mut record) = self.calls.get_mut(&mint) {
                             record.current_market_cap_usd = metrics.market_cap_usd;
                             record.current_volume_usd = metrics.total_volume_usd;
@@ -149,12 +159,6 @@ impl TelegramBotService {
                                 }
                             }
 
-                            let mut peak = metrics.market_cap_usd;
-                            if let Some(ref paddr) = metrics.pair_address {
-                                if let Some(candle_peak) = self.dex_client.fetch_pool_candle_peak_after(paddr, record.alert_timestamp.timestamp()).await {
-                                    peak = peak.max(candle_peak);
-                                }
-                            }
                             if peak > record.highest_market_cap_usd {
                                 record.highest_market_cap_usd = peak;
                                 record.ath_timestamp = chrono::Utc::now();
@@ -182,7 +186,7 @@ impl TelegramBotService {
                         if let Some((rec, milestone)) = milestone_to_notify {
                             info!("🚀 Call milestone reached: ${} hit {:.0}x ATH!", rec.symbol, milestone);
                             let html = format_milestone_alert(&rec, milestone);
-                            let keyboard = Self::create_action_keyboard(&rec.mint);
+                            let keyboard = Self::create_action_keyboard_for_chain(&rec.mint, &rec.chain);
                             let _ = self.bot
                                 .send_message(teloxide::types::ChatId(self.allowed_user_id), html)
                                 .parse_mode(ParseMode::Html)
@@ -538,14 +542,23 @@ impl TelegramBotService {
                             }
                             ["refresh", mint] => {
                                 info!("Refresh stats button clicked on mint {}", mint);
-                                let _ = bot
-                                    .answer_callback_query(q.id)
-                                    .text("🔄 Fetching live DexScreener stats...")
-                                    .await;
 
                                 let metrics_opt = service.dex_client.fetch_metrics(mint).await.unwrap_or(None);
 
-                                let refreshed_html = if let Some(mut record) = service.calls.get_mut(*mint) {
+                                let alert_ts = service.calls.get(*mint).map(|c| c.alert_timestamp.timestamp());
+                                let mut peak = metrics_opt.as_ref().map(|m| m.market_cap_usd).unwrap_or(0.0);
+                                if let (Some(ts), Some(ref m)) = (alert_ts, metrics_opt.as_ref()) {
+                                    if let Some(ref paddr) = m.pair_address {
+                                        if !paddr.ends_with("pump") {
+                                            if let Some(candle_peak) = service.dex_client.fetch_pool_candle_peak_after(paddr, ts).await {
+                                                peak = peak.max(candle_peak);
+                                            }
+                                        }
+                                    }
+                                }
+
+                                let mut updated_rec: Option<CallRecord> = None;
+                                if let Some(mut record) = service.calls.get_mut(*mint) {
                                     if let Some(ref m) = metrics_opt {
                                         if m.market_cap_usd > 0.0 {
                                             record.current_market_cap_usd = m.market_cap_usd;
@@ -562,12 +575,6 @@ impl TelegramBotService {
                                                     record.name = n.clone();
                                                 }
                                             }
-                                            let mut peak = m.market_cap_usd;
-                                            if let Some(ref paddr) = m.pair_address {
-                                                if let Some(candle_peak) = service.dex_client.fetch_pool_candle_peak_after(paddr, record.alert_timestamp.timestamp()).await {
-                                                    peak = peak.max(candle_peak);
-                                                }
-                                            }
                                             if peak > record.highest_market_cap_usd {
                                                 record.highest_market_cap_usd = peak;
                                                 record.ath_timestamp = chrono::Utc::now();
@@ -575,99 +582,141 @@ impl TelegramBotService {
                                         }
                                     }
                                     record.last_refreshed = chrono::Utc::now();
-                                    service.save_calls_to_disk();
-                                    format_refreshed_alert_html(&record)
-                                } else {
-                                    let now = chrono::Utc::now();
-                                    let (mcap, vol, vol5m, liq, name, symbol) = if let Some(ref m) = metrics_opt {
-                                        let name = m.base_token_name.clone().unwrap_or_else(|| {
-                                            if mint.len() > 8 {
-                                                format!("${}...", &mint[..4])
-                                            } else {
-                                                "Token".to_string()
-                                            }
-                                        });
-                                        let sym = m.base_token_symbol.clone().unwrap_or_else(|| {
-                                            if mint.len() > 6 {
-                                                mint[..4].to_uppercase()
-                                            } else {
-                                                "TOKEN".to_string()
-                                            }
-                                        });
-                                        (m.market_cap_usd, m.total_volume_usd, m.volume_5m_usd, m.liquidity_usd, name, sym)
-                                    } else {
-                                        (24_500.0, 31_200.0, 4_800.0, 11_000.0, "Token".to_string(), "TOKEN".to_string())
-                                    };
-                                    let rec = CallRecord {
-                                        alert_type: crate::models::alert::AlertType::EarlyLaunch,
-                                        mint: mint.to_string(),
-                                        name,
-                                        symbol,
-                                        initial_market_cap_usd: 24_500.0,
-                                        current_market_cap_usd: mcap,
-                                        highest_market_cap_usd: mcap.max(24_500.0),
-                                        initial_volume_usd: vol,
-                                        current_volume_usd: vol,
-                                        current_volume_5m_usd: vol5m,
-                                        current_liquidity_usd: liq,
-                                        holder_count: 82,
-                                        dev_holding_pct: 3.5,
-                                        top_holder_pct: 6.8,
-                                        sniper_bundler_pct: 7.2,
-                                        lore_description: None,
-                                        alert_timestamp: now,
-                                        last_refreshed: now,
-                                        bottom_market_cap_usd: 24_500.0,
-                                        surge_pct_from_bottom: 0.0,
-                                        is_cto: false,
-                                        cto_status_desc: "Dev Holds 3.5%".to_string(),
-                                        top_holders: Vec::new(),
-                                        top_10_pct: 0.0,
-                                        clustered_wallets_count: 0,
-                                        bubblemaps_url: format!("https://bubblemaps.io/solana/token/{}", mint),
-                                        ath_timestamp: now,
-                                        last_notified_milestone: 1.0,
-                                        chain: "solana".to_string(),
-                                        sustained_secs: 0,
-                                        buys_5m: 0,
-                                        sells_5m: 0,
-                                    };
-                                    service.calls.insert(mint.to_string(), rec.clone());
-                                    format_refreshed_alert_html(&rec)
+                                    updated_rec = Some(record.clone());
+                                } // DashMap lock dropped here
+
+                                let rec_for_display = match updated_rec {
+                                    Some(rec) => {
+                                        service.save_calls_to_disk();
+                                        rec
+                                    }
+                                    None => {
+                                        let now = chrono::Utc::now();
+                                        let (mcap, vol, vol5m, liq, name, symbol) = if let Some(ref m) = metrics_opt {
+                                            let name = m.base_token_name.clone().unwrap_or_else(|| {
+                                                if mint.len() > 8 {
+                                                    format!("${}...", &mint[..4])
+                                                } else {
+                                                    "Token".to_string()
+                                                }
+                                            });
+                                            let sym = m.base_token_symbol.clone().unwrap_or_else(|| {
+                                                if mint.len() > 6 {
+                                                    mint[..4].to_uppercase()
+                                                } else {
+                                                    "TOKEN".to_string()
+                                                }
+                                            });
+                                            (m.market_cap_usd, m.total_volume_usd, m.volume_5m_usd, m.liquidity_usd, name, sym)
+                                        } else {
+                                            (24_500.0, 31_200.0, 4_800.0, 11_000.0, "Token".to_string(), "TOKEN".to_string())
+                                        };
+                                        let rec = CallRecord {
+                                            alert_type: crate::models::alert::AlertType::EarlyLaunch,
+                                            mint: mint.to_string(),
+                                            name,
+                                            symbol,
+                                            initial_market_cap_usd: 24_500.0,
+                                            current_market_cap_usd: mcap,
+                                            highest_market_cap_usd: mcap.max(24_500.0),
+                                            initial_volume_usd: vol,
+                                            current_volume_usd: vol,
+                                            current_volume_5m_usd: vol5m,
+                                            current_liquidity_usd: liq,
+                                            holder_count: 82,
+                                            dev_holding_pct: 3.5,
+                                            top_holder_pct: 6.8,
+                                            sniper_bundler_pct: 7.2,
+                                            lore_description: None,
+                                            alert_timestamp: now,
+                                            last_refreshed: now,
+                                            bottom_market_cap_usd: 24_500.0,
+                                            surge_pct_from_bottom: 0.0,
+                                            is_cto: false,
+                                            cto_status_desc: "Dev Holds 3.5%".to_string(),
+                                            top_holders: Vec::new(),
+                                            top_10_pct: 0.0,
+                                            clustered_wallets_count: 0,
+                                            bubblemaps_url: format!("https://bubblemaps.io/solana/token/{}", mint),
+                                            ath_timestamp: now,
+                                            last_notified_milestone: 1.0,
+                                            chain: "solana".to_string(),
+                                            sustained_secs: 0,
+                                            buys_5m: 0,
+                                            sells_5m: 0,
+                                        };
+                                        service.calls.insert(mint.to_string(), rec.clone());
+                                        service.save_calls_to_disk();
+                                        rec
+                                    }
                                 };
+
+                                let refreshed_html = format_refreshed_alert_html(&rec_for_display);
+                                let keyboard = Self::create_action_keyboard_for_chain(mint, &rec_for_display.chain);
 
                                 if let Some(maybe_msg) = q.message {
                                     let (chat_id, msg_id) = match maybe_msg {
                                         teloxide::types::MaybeInaccessibleMessage::Regular(m) => (m.chat.id, m.id),
                                         teloxide::types::MaybeInaccessibleMessage::Inaccessible(m) => (m.chat.id, m.message_id),
                                     };
-                                    let keyboard = Self::create_action_keyboard(mint);
-                                    let _ = bot
+                                    let res = bot
                                         .edit_message_text(chat_id, msg_id, refreshed_html)
                                         .parse_mode(ParseMode::Html)
                                         .link_preview_options(disabled_link_preview())
                                         .reply_markup(keyboard)
                                         .await;
+
+                                    match res {
+                                        Ok(_) => {
+                                            let _ = bot.answer_callback_query(q.id).text("✅ Stats refreshed!").await;
+                                        }
+                                        Err(e) => {
+                                            let err_str = e.to_string();
+                                            if err_str.contains("message is not modified") {
+                                                let _ = bot.answer_callback_query(q.id).text("✅ Stats are already up to date!").await;
+                                            } else {
+                                                warn!("Failed to edit message for mint {}: {:?}", mint, e);
+                                                let _ = bot.answer_callback_query(q.id).text("⚠️ Refresh completed").await;
+                                            }
+                                        }
+                                    }
+                                } else {
+                                    let _ = bot.answer_callback_query(q.id).await;
                                 }
                             }
                             ["ca", mint] => {
-                                let _ = bot
-                                    .answer_callback_query(q.id)
-                                    .text("🔄 Refreshing live data...")
-                                    .await;
                                 if let Some((html, keyboard)) = service.build_ca_report(mint).await {
                                     if let Some(maybe_msg) = q.message {
                                         let (chat_id, msg_id) = match maybe_msg {
                                             teloxide::types::MaybeInaccessibleMessage::Regular(m) => (m.chat.id, m.id),
                                             teloxide::types::MaybeInaccessibleMessage::Inaccessible(m) => (m.chat.id, m.message_id),
                                         };
-                                        let _ = bot
+                                        let res = bot
                                             .edit_message_text(chat_id, msg_id, html)
                                             .parse_mode(ParseMode::Html)
                                             .link_preview_options(disabled_link_preview())
                                             .reply_markup(keyboard)
                                             .await;
+
+                                        match res {
+                                            Ok(_) => {
+                                                let _ = bot.answer_callback_query(q.id).text("✅ Token details refreshed!").await;
+                                            }
+                                            Err(e) => {
+                                                let err_str = e.to_string();
+                                                if err_str.contains("message is not modified") {
+                                                    let _ = bot.answer_callback_query(q.id).text("✅ Stats are already up to date!").await;
+                                                } else {
+                                                    warn!("Failed to edit message for CA {}: {:?}", mint, e);
+                                                    let _ = bot.answer_callback_query(q.id).text("⚠️ Refresh completed").await;
+                                                }
+                                            }
+                                        }
+                                    } else {
+                                        let _ = bot.answer_callback_query(q.id).await;
                                     }
+                                } else {
+                                    let _ = bot.answer_callback_query(q.id).text("⚠️ Could not fetch token metrics").await;
                                 }
                             }
                             ["ignore", mint] => {
