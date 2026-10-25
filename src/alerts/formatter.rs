@@ -646,3 +646,202 @@ pub fn format_token_pnl_html(record: &CallRecord) -> String {
         record.mint
     )
 }
+
+
+fn plain_usd(v: f64) -> String {
+    if v >= 1_000_000_000.0 {
+        format!("${:.2}B", v / 1_000_000_000.0)
+    } else if v >= 1_000_000.0 {
+        format!("${:.2}M", v / 1_000_000.0)
+    } else if v >= 1_000.0 {
+        format!("${:.1}K", v / 1_000.0)
+    } else {
+        format!("${:.0}", v)
+    }
+}
+
+fn format_price(p: f64) -> String {
+    if p <= 0.0 {
+        return "n/a".to_string();
+    }
+    if p >= 1.0 {
+        return format!("${:.4}", p);
+    }
+    let decimals = ((-p.log10()).ceil() as usize + 3).min(14);
+    format!("${:.*}", decimals, p)
+}
+
+fn format_age_mins(mins: f64) -> String {
+    if mins >= 1440.0 {
+        format!("{:.1}d", mins / 1440.0)
+    } else if mins >= 60.0 {
+        format!("{:.1}h", mins / 60.0)
+    } else {
+        format!("{:.0}m", mins)
+    }
+}
+
+fn signed_pct(v: f64) -> String {
+    format!("{}{:.1}%", if v >= 0.0 { "+" } else { "" }, v)
+}
+
+/// Live coin details card for any pasted contract address (all DexScreener chains).
+pub fn format_token_details_html(
+    ov: &crate::enrichment::dex_screener::TokenOverview,
+    holders: Option<&crate::enrichment::helius_das::TokenMetrics>,
+    call: Option<&CallRecord>,
+) -> String {
+    let chain_uc = ov.chain.to_uppercase();
+    let addr = &ov.token_address;
+    let mut out = String::new();
+
+    out.push_str(&format!(
+        "🔎 <b>{}</b> (<code>${}</code>) • <b>{}</b>\n<code>{}</code>\n\n",
+        encode_text(&ov.name),
+        encode_text(&ov.symbol),
+        encode_text(&chain_uc),
+        addr
+    ));
+
+    // Market
+    let age = ov
+        .pair_created_at_ms
+        .map(|ms| format_age_mins((chrono::Utc::now().timestamp_millis() - ms).max(0) as f64 / 60_000.0))
+        .unwrap_or_else(|| "unknown".to_string());
+    out.push_str("<b>Market</b>\n");
+    out.push_str(&format!("├ Price: <b>{}</b>\n", format_price(ov.price_usd)));
+    out.push_str(&format!("├ MC:    <b>{}</b> (FDV {})\n", plain_usd(ov.market_cap_usd), plain_usd(ov.fdv_usd)));
+    if ov.liquidity_usd > 0.0 {
+        let liq_pct = if ov.market_cap_usd > 0.0 { ov.liquidity_usd / ov.market_cap_usd * 100.0 } else { 0.0 };
+        out.push_str(&format!("├ LIQ:   <b>{}</b> ({:.1}% MC)\n", plain_usd(ov.liquidity_usd), liq_pct));
+    } else {
+        out.push_str("├ LIQ:   <i>bonding curve / not reported</i>\n");
+    }
+    out.push_str(&format!("├ Age:   <b>{}</b>\n", age));
+    out.push_str(&format!(
+        "└ DEX:   {} ({} pair{})\n\n",
+        encode_text(&ov.dex_id),
+        ov.pair_count,
+        if ov.pair_count == 1 { "" } else { "s" }
+    ));
+
+    // Price change
+    out.push_str(&format!(
+        "<b>Price Change</b>\n5m <b>{}</b> │ 1h <b>{}</b> │ 6h <b>{}</b> │ 24h <b>{}</b>\n\n",
+        signed_pct(ov.chg_5m),
+        signed_pct(ov.chg_1h),
+        signed_pct(ov.chg_6h),
+        signed_pct(ov.chg_24h)
+    ));
+
+    // Volume & flow
+    let buy_pct = |b: u64, s: u64| if b + s > 0 { b as f64 / (b + s) as f64 * 100.0 } else { 0.0 };
+    out.push_str("<b>Volume &amp; Flow</b>\n");
+    out.push_str(&format!(
+        "├ 5m:  <b>{}</b> — {} buys / {} sells ({:.0}% buys)\n",
+        plain_usd(ov.vol_5m), ov.buys_5m, ov.sells_5m, buy_pct(ov.buys_5m, ov.sells_5m)
+    ));
+    out.push_str(&format!(
+        "├ 1h:  <b>{}</b> — {} buys / {} sells\n",
+        plain_usd(ov.vol_1h), ov.buys_1h, ov.sells_1h
+    ));
+    out.push_str(&format!(
+        "└ 24h: <b>{}</b> — {} buys / {} sells\n\n",
+        plain_usd(ov.vol_24h), ov.buys_24h, ov.sells_24h
+    ));
+
+    // Holders
+    match holders {
+        Some(h) => {
+            out.push_str("<b>Holders</b>\n");
+            out.push_str(&format!("├ Holders:    <b>{}</b>\n", h.holder_count));
+            out.push_str(&format!("├ Top 10:     <b>{:.1}%</b>\n", h.top_10_pct));
+            out.push_str(&format!("└ Top Holder: <b>{:.1}%</b>\n\n", h.top_holder_pct));
+            if !h.top_holders.is_empty() {
+                out.push_str("<b>Top Holders (excl. curve)</b>\n");
+                out.push_str(&format_top_holders_tree(&h.top_holders, ov.market_cap_usd));
+                out.push('\n');
+            }
+        }
+        None if ov.chain == "solana" => {
+            out.push_str("<b>Holders</b>\n└ <i>Unavailable right now (Helius RPC slow or not configured)</i>\n\n");
+        }
+        None => {
+            out.push_str(&format!(
+                "<b>Holders</b>\n└ <i>Not indexed for {} — check Bubblemaps below</i>\n\n",
+                encode_text(&chain_uc)
+            ));
+        }
+    }
+
+    // Bot call performance (only if this token was actually alerted by the bot)
+    if let Some(c) = call {
+        if c.initial_market_cap_usd > 0.0 {
+            let peak = c.highest_market_cap_usd.max(ov.market_cap_usd);
+            let elapsed = (chrono::Utc::now() - c.alert_timestamp).num_seconds().max(0) as f64 / 60.0;
+            out.push_str("<b>Bot Call</b>\n");
+            out.push_str(&format!(
+                "├ Called at: <b>{}</b> ({} ago)\n",
+                plain_usd(c.initial_market_cap_usd),
+                format_age_mins(elapsed)
+            ));
+            out.push_str(&format!(
+                "├ Peak ATH:  <b>{:.2}x</b> ({})\n",
+                peak / c.initial_market_cap_usd,
+                plain_usd(peak)
+            ));
+            out.push_str(&format!(
+                "└ Now:       <b>{:.2}x</b>\n\n",
+                ov.market_cap_usd / c.initial_market_cap_usd
+            ));
+        }
+    }
+
+    // Socials
+    let mut social_links: Vec<String> = Vec::new();
+    for w in ov.websites.iter().filter(|u| u.starts_with("http")).take(2) {
+        social_links.push(format!("<a href=\"{}\">Website</a>", html_escape::encode_double_quoted_attribute(w)));
+    }
+    for (kind, url) in ov.socials.iter().filter(|(_, u)| u.starts_with("http")) {
+        let label = match kind.as_str() {
+            "twitter" => "X".to_string(),
+            "telegram" => "Telegram".to_string(),
+            "discord" => "Discord".to_string(),
+            other => encode_text(other).to_string(),
+        };
+        social_links.push(format!("<a href=\"{}\">{}</a>", html_escape::encode_double_quoted_attribute(url), label));
+    }
+    if !social_links.is_empty() {
+        out.push_str(&format!("<b>Socials:</b> {}\n\n", social_links.join(" • ")));
+    }
+
+    // Links
+    let dex_url = if ov.url.is_empty() {
+        format!("https://dexscreener.com/{}/{}", ov.chain, addr)
+    } else {
+        ov.url.clone()
+    };
+    let bm_chain = match ov.chain.as_str() {
+        "ethereum" => "eth",
+        "bsc" => "bsc",
+        "base" => "base",
+        _ => "solana",
+    };
+    let mut links = vec![
+        format!("<a href=\"{}\">DexScreener</a>", html_escape::encode_double_quoted_attribute(&dex_url)),
+        format!("<a href=\"https://bubblemaps.io/{}/token/{}\">Bubblemaps</a>", bm_chain, addr),
+    ];
+    match ov.chain.as_str() {
+        "solana" => {
+            links.push(format!("<a href=\"https://axiom.trade/token/{}\">Axiom</a>", addr));
+            links.push(format!("<a href=\"https://solscan.io/token/{}\">Solscan</a>", addr));
+        }
+        "ethereum" => links.push(format!("<a href=\"https://etherscan.io/token/{}\">Etherscan</a>", addr)),
+        "base" => links.push(format!("<a href=\"https://basescan.org/token/{}\">Basescan</a>", addr)),
+        "bsc" => links.push(format!("<a href=\"https://bscscan.com/token/{}\">BscScan</a>", addr)),
+        _ => {}
+    }
+    out.push_str(&links.join(" • "));
+    out.push_str(&format!("\n<i>Live data • {}</i>", chrono::Utc::now().format("%H:%M:%S UTC")));
+    out
+}

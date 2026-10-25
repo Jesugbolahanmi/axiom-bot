@@ -15,7 +15,7 @@ fn disabled_link_preview() -> LinkPreviewOptions {
 }
 use tracing::{info, warn};
 
-use super::formatter::{format_alert_html, format_calls_summary, format_milestone_alert, format_pnl_analytics, format_refreshed_alert_html, format_token_pnl_html};
+use super::formatter::{format_alert_html, format_calls_summary, format_milestone_alert, format_pnl_analytics, format_refreshed_alert_html, format_token_details_html, format_token_pnl_html};
 use crate::enrichment::DexScreenerClient;
 use crate::execution::ExecutionEngine;
 use crate::models::alert::{AlertCard, CallRecord};
@@ -27,6 +27,7 @@ pub struct TelegramBotService {
     execution_engine: Option<Arc<ExecutionEngine>>,
     dex_client: Arc<DexScreenerClient>,
     calls: Arc<dashmap::DashMap<String, CallRecord>>,
+    helius: Option<Arc<crate::enrichment::HeliusDasClient>>,
 }
 
 impl TelegramBotService {
@@ -52,12 +53,18 @@ impl TelegramBotService {
             }
         }
 
+        let helius = std::env::var("HELIUS_RPC_URL")
+            .ok()
+            .filter(|u| !u.trim().is_empty())
+            .map(|u| Arc::new(crate::enrichment::HeliusDasClient::new(u)));
+
         Self {
             bot,
             allowed_user_id,
             execution_engine,
             dex_client,
             calls,
+            helius,
         }
     }
 
@@ -312,69 +319,134 @@ impl TelegramBotService {
                 .reply_markup(keyboard)
                 .await;
         } else {
-            // Check DexScreener on demand for arbitrary mint
-            if let Ok(Some(metrics)) = service.dex_client.fetch_metrics(target_clean).await {
-                let now = chrono::Utc::now();
-                let name = metrics.base_token_name.clone().unwrap_or_else(|| "Token".to_string());
-                let symbol = metrics.base_token_symbol.clone().unwrap_or_else(|| "TOKEN".to_string());
-                let rec = CallRecord {
-                    alert_type: crate::models::alert::AlertType::EarlyLaunch,
-                    mint: target_clean.to_string(),
-                    name,
-                    symbol,
-                    initial_market_cap_usd: metrics.market_cap_usd,
-                    current_market_cap_usd: metrics.market_cap_usd,
-                    highest_market_cap_usd: metrics.market_cap_usd,
-                    initial_volume_usd: metrics.total_volume_usd,
-                    current_volume_usd: metrics.total_volume_usd,
-                    current_volume_5m_usd: metrics.volume_5m_usd,
-                    current_liquidity_usd: metrics.liquidity_usd,
-                    holder_count: 50,
-                    dev_holding_pct: 0.0,
-                    top_holder_pct: 5.0,
-                    sniper_bundler_pct: 5.0,
-                    lore_description: None,
-                    alert_timestamp: now,
-                    last_refreshed: now,
-                    bottom_market_cap_usd: metrics.market_cap_usd,
-                    surge_pct_from_bottom: 0.0,
-                    is_cto: false,
-                    cto_status_desc: "Tracked on demand".to_string(),
-                    top_holders: Vec::new(),
-                    top_10_pct: 0.0,
-                    clustered_wallets_count: 0,
-                    bubblemaps_url: format!("https://bubblemaps.io/solana/token/{}", target_clean),
-                    ath_timestamp: now,
-                    last_notified_milestone: 1.0,
-                    chain: "solana".to_string(),
-                    sustained_secs: 0,
-                    buys_5m: 0,
-                    sells_5m: 0,
-                };
-                service.calls.insert(target_clean.to_string(), rec.clone());
-                service.save_calls_to_disk();
-
-                let pnl_token_html = format_token_pnl_html(&rec);
-                let keyboard = Self::create_action_keyboard_for_chain(&rec.mint, &rec.chain);
-                let _ = bot
-                    .send_message(chat_id, pnl_token_html)
-                    .parse_mode(ParseMode::Html)
-                    .link_preview_options(disabled_link_preview())
-                    .reply_markup(keyboard)
-                    .await;
-            } else {
-                let not_found = format!(
-                    "⚠️ <b>Token Not Found</b>\n\nNo active DexScreener pair or alert record found for: <code>{}</code>\n\n• Type <b>/pnl</b> to view overall 24h / 7d / 30d win rate &amp; PnL.\n• Type <b>/calls</b> to list all active alerted coins.",
-                    html_escape::encode_text(target_clean)
-                );
-                let _ = bot
-                    .send_message(chat_id, not_found)
-                    .parse_mode(ParseMode::Html)
-                    .await;
-            }
+            // Not a bot call: show live coin details instead of fabricating a call record
+            Self::handle_ca_lookup(bot, chat_id, service, target_clean).await;
         }
     }
 
+    /// Extract a Solana (base58) or EVM (0x...) contract address from free text or a URL.
+    pub fn extract_contract_address(text: &str) -> Option<String> {
+        for raw in text.split(|c: char| c.is_whitespace() || matches!(c, '/' | '?' | '&' | '=' | '#' | ',')) {
+            let t = raw.trim_matches(|c: char| !c.is_ascii_alphanumeric());
+            if t.len() == 42
+                && (t.starts_with("0x") || t.starts_with("0X"))
+                && t[2..].chars().all(|c| c.is_ascii_hexdigit())
+            {
+                return Some(t.to_string());
+            }
+            if (32..=44).contains(&t.len())
+                && t.chars().all(|c| c.is_ascii_alphanumeric() && !matches!(c, '0' | 'O' | 'I' | 'l'))
+            {
+                return Some(t.to_string());
+            }
+        }
+        None
+    }
+
+    fn create_details_keyboard(addr: &str, chain: &str, dex_url: &str) -> InlineKeyboardMarkup {
+        let mut row1 = vec![InlineKeyboardButton::callback("🔄 Refresh", format!("ca:{}", addr))];
+        if chain == "solana" {
+            row1.push(InlineKeyboardButton::callback("⚡ Buy 0.5 SOL", format!("buy:0.5:{}", addr)));
+        }
+        let mut rows = vec![row1];
+        if let Ok(url) = reqwest::Url::parse(dex_url) {
+            rows.push(vec![InlineKeyboardButton::url("📈 Chart", url)]);
+        }
+        InlineKeyboardMarkup::new(rows)
+    }
+
+    /// Build the live details card + keyboard for any contract address.
+    pub async fn build_ca_report(&self, address: &str) -> Option<(String, InlineKeyboardMarkup)> {
+        let ov = self.dex_client.fetch_token_overview(address).await?;
+
+        let holders = if ov.chain == "solana" {
+            match &self.helius {
+                Some(h) => tokio::time::timeout(
+                    std::time::Duration::from_secs(10),
+                    h.fetch_token_metrics(&ov.token_address, None),
+                )
+                .await
+                .ok()
+                .and_then(|r| r.ok()),
+                None => None,
+            }
+        } else {
+            None
+        };
+
+        // If the bot actually called this coin, refresh + show the real call performance
+        let key = self
+            .calls
+            .iter()
+            .find(|kv| kv.key().eq_ignore_ascii_case(&ov.token_address))
+            .map(|kv| kv.key().clone());
+        let call = match key {
+            Some(k) => {
+                let mut snapshot = None;
+                if let Some(mut rec) = self.calls.get_mut(&k) {
+                    if ov.market_cap_usd > 0.0 {
+                        rec.current_market_cap_usd = ov.market_cap_usd;
+                        rec.current_volume_5m_usd = ov.vol_5m;
+                        rec.current_volume_usd = ov.vol_24h;
+                        if ov.liquidity_usd > 0.0 {
+                            rec.current_liquidity_usd = ov.liquidity_usd;
+                        }
+                        rec.last_refreshed = chrono::Utc::now();
+                        if ov.market_cap_usd > rec.highest_market_cap_usd {
+                            rec.highest_market_cap_usd = ov.market_cap_usd;
+                            rec.ath_timestamp = chrono::Utc::now();
+                        }
+                    }
+                    snapshot = Some(rec.clone());
+                }
+                if snapshot.is_some() {
+                    self.save_calls_to_disk();
+                }
+                snapshot
+            }
+            None => None,
+        };
+
+        let html = format_token_details_html(&ov, holders.as_ref(), call.as_ref());
+        let dex_url = if ov.url.is_empty() {
+            format!("https://dexscreener.com/{}/{}", ov.chain, ov.token_address)
+        } else {
+            ov.url.clone()
+        };
+        let keyboard = Self::create_details_keyboard(&ov.token_address, &ov.chain, &dex_url);
+        Some((html, keyboard))
+    }
+
+    /// Reply to a pasted contract address with live coin details.
+    pub async fn handle_ca_lookup(
+        bot: &Bot,
+        chat_id: teloxide::types::ChatId,
+        service: &TelegramBotService,
+        address: &str,
+    ) {
+        info!("CA lookup requested: {}", address);
+        let _ = bot.send_chat_action(chat_id, teloxide::types::ChatAction::Typing).await;
+        match service.build_ca_report(address).await {
+            Some((html, keyboard)) => {
+                if let Err(e) = bot
+                    .send_message(chat_id, html)
+                    .parse_mode(ParseMode::Html)
+                    .link_preview_options(disabled_link_preview())
+                    .reply_markup(keyboard)
+                    .await
+                {
+                    warn!("Failed to send CA details for {}: {:?}", address, e);
+                }
+            }
+            None => {
+                let not_found = format!(
+                    "⚠️ <b>Token Not Found</b>\n\nNo DexScreener pair found for: <code>{}</code>\n\nIt may be too new to be indexed, or the address is wrong.",
+                    html_escape::encode_text(address)
+                );
+                let _ = bot.send_message(chat_id, not_found).parse_mode(ParseMode::Html).await;
+            }
+        }
+    }
 
     pub async fn start_event_handler(self: Arc<Self>) {
         info!("Starting Telegram interaction listener for User ID: {}", self.allowed_user_id);
@@ -576,6 +648,26 @@ impl TelegramBotService {
                                         .link_preview_options(disabled_link_preview())
                                         .reply_markup(keyboard)
                                         .await;
+                                }
+                            }
+                            ["ca", mint] => {
+                                let _ = bot
+                                    .answer_callback_query(q.id)
+                                    .text("🔄 Refreshing live data...")
+                                    .await;
+                                if let Some((html, keyboard)) = service.build_ca_report(mint).await {
+                                    if let Some(maybe_msg) = q.message {
+                                        let (chat_id, msg_id) = match maybe_msg {
+                                            teloxide::types::MaybeInaccessibleMessage::Regular(m) => (m.chat.id, m.id),
+                                            teloxide::types::MaybeInaccessibleMessage::Inaccessible(m) => (m.chat.id, m.message_id),
+                                        };
+                                        let _ = bot
+                                            .edit_message_text(chat_id, msg_id, html)
+                                            .parse_mode(ParseMode::Html)
+                                            .link_preview_options(disabled_link_preview())
+                                            .reply_markup(keyboard)
+                                            .await;
+                                    }
                                 }
                             }
                             ["ignore", mint] => {
@@ -1155,8 +1247,26 @@ I'm watching Pump.fun in real-time and will ping you the moment a new token pass
                                 let _ = service.send_alert(&sample_card).await;
                             }
 
+                            "/ca" | "/token" | "/check" | "/info" => {
+                                match arg.as_deref().and_then(Self::extract_contract_address) {
+                                    Some(ca) => Self::handle_ca_lookup(&bot, msg.chat.id, &service, &ca).await,
+                                    None => {
+                                        let _ = bot
+                                            .send_message(msg.chat.id, "Usage: <code>/ca &lt;contract address&gt;</code>\n\nOr just paste the CA directly.")
+                                            .parse_mode(ParseMode::Html)
+                                            .await;
+                                    }
+                                }
+                            }
+
                             _ => {
-                                // Reply to unknown slash commands; silently ignore plain text
+                                // Pasted contract address (or DexScreener/pump.fun link) -> live coin details
+                                if !cmd.starts_with('/') {
+                                    if let Some(ca) = Self::extract_contract_address(text) {
+                                        Self::handle_ca_lookup(&bot, msg.chat.id, &service, &ca).await;
+                                    }
+                                }
+                                // Reply to unknown slash commands; other plain text is ignored
                                 if cmd.starts_with('/') {
                                     let unknown = format!(
                                         "❓ Unknown command: <code>{}</code>\n\nType /help to see all available commands.",

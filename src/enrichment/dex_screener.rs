@@ -212,3 +212,174 @@ impl DexScreenerClient {
         }))
     }
 }
+
+
+/// Full live snapshot of a token on any DexScreener-supported chain (used for CA lookups).
+#[derive(Debug, Clone, Default)]
+pub struct TokenOverview {
+    pub chain: String,
+    pub token_address: String,
+    pub dex_id: String,
+    pub pair_address: String,
+    pub url: String,
+    pub name: String,
+    pub symbol: String,
+    pub price_usd: f64,
+    pub market_cap_usd: f64,
+    pub fdv_usd: f64,
+    pub liquidity_usd: f64,
+    pub vol_5m: f64,
+    pub vol_1h: f64,
+    pub vol_6h: f64,
+    pub vol_24h: f64,
+    pub buys_5m: u64,
+    pub sells_5m: u64,
+    pub buys_1h: u64,
+    pub sells_1h: u64,
+    pub buys_24h: u64,
+    pub sells_24h: u64,
+    pub chg_5m: f64,
+    pub chg_1h: f64,
+    pub chg_6h: f64,
+    pub chg_24h: f64,
+    pub pair_created_at_ms: Option<i64>,
+    pub websites: Vec<String>,
+    pub socials: Vec<(String, String)>,
+    pub pair_count: usize,
+}
+
+fn jf(v: &serde_json::Value, ptr: &str) -> f64 {
+    match v.pointer(ptr) {
+        Some(x) => x.as_f64().or_else(|| x.as_str().and_then(|s| s.parse::<f64>().ok())).unwrap_or(0.0),
+        None => 0.0,
+    }
+}
+
+fn ju(v: &serde_json::Value, ptr: &str) -> u64 {
+    v.pointer(ptr).and_then(|x| x.as_u64()).unwrap_or(0)
+}
+
+fn js(v: &serde_json::Value, ptr: &str) -> String {
+    v.pointer(ptr).and_then(|x| x.as_str()).unwrap_or("").to_string()
+}
+
+impl DexScreenerClient {
+    async fn get_pairs_json(&self, url: &str) -> Vec<serde_json::Value> {
+        let resp = match self.http_client.get(url).send().await {
+            Ok(r) if r.status().is_success() => r,
+            _ => return Vec::new(),
+        };
+        match resp.json::<serde_json::Value>().await {
+            Ok(body) => body.get("pairs").and_then(|p| p.as_array()).cloned().unwrap_or_default(),
+            Err(_) => Vec::new(),
+        }
+    }
+
+    /// Resolve any contract address (token or pair, any chain) into a live token overview.
+    pub async fn fetch_token_overview(&self, address: &str) -> Option<TokenOverview> {
+        let addr = address.trim();
+        let mut pairs = self
+            .get_pairs_json(&format!("https://api.dexscreener.com/latest/dex/tokens/{}", addr))
+            .await;
+
+        // Fallback: the address may be a pair/pool address (e.g. pasted from a DexScreener URL)
+        if pairs.is_empty() {
+            pairs = self
+                .get_pairs_json(&format!("https://api.dexscreener.com/latest/dex/search?q={}", addr))
+                .await
+                .into_iter()
+                .filter(|p| {
+                    js(p, "/pairAddress").eq_ignore_ascii_case(addr)
+                        || js(p, "/baseToken/address").eq_ignore_ascii_case(addr)
+                })
+                .collect();
+        }
+        if pairs.is_empty() {
+            return None;
+        }
+
+        // Which token are we describing? Prefer the queried address as base token,
+        // otherwise (pair address pasted) use that pair's base token.
+        let token_address = pairs
+            .iter()
+            .map(|p| js(p, "/baseToken/address"))
+            .find(|a| a.eq_ignore_ascii_case(addr))
+            .unwrap_or_else(|| js(&pairs[0], "/baseToken/address"));
+
+        let token_pairs: Vec<&serde_json::Value> = pairs
+            .iter()
+            .filter(|p| js(p, "/baseToken/address").eq_ignore_ascii_case(&token_address))
+            .collect();
+        let token_pairs = if token_pairs.is_empty() { pairs.iter().collect() } else { token_pairs };
+
+        let best = token_pairs
+            .iter()
+            .max_by(|a, b| {
+                let va = jf(a, "/volume/h24");
+                let vb = jf(b, "/volume/h24");
+                match va.partial_cmp(&vb) {
+                    Some(std::cmp::Ordering::Equal) | None => jf(a, "/liquidity/usd")
+                        .partial_cmp(&jf(b, "/liquidity/usd"))
+                        .unwrap_or(std::cmp::Ordering::Equal),
+                    Some(o) => o,
+                }
+            })
+            .copied()?;
+
+        let mcap = {
+            let m = jf(best, "/marketCap");
+            if m > 0.0 { m } else { jf(best, "/fdv") }
+        };
+
+        let websites = best
+            .pointer("/info/websites")
+            .and_then(|w| w.as_array())
+            .map(|arr| arr.iter().filter_map(|x| x.get("url").and_then(|u| u.as_str()).map(String::from)).collect())
+            .unwrap_or_default();
+        let socials = best
+            .pointer("/info/socials")
+            .and_then(|w| w.as_array())
+            .map(|arr| {
+                arr.iter()
+                    .filter_map(|x| {
+                        let url = x.get("url").and_then(|u| u.as_str())?;
+                        let kind = x.get("type").and_then(|t| t.as_str()).unwrap_or("link");
+                        Some((kind.to_string(), url.to_string()))
+                    })
+                    .collect()
+            })
+            .unwrap_or_default();
+
+        Some(TokenOverview {
+            chain: js(best, "/chainId").to_lowercase(),
+            token_address: if token_address.is_empty() { addr.to_string() } else { token_address },
+            dex_id: js(best, "/dexId"),
+            pair_address: js(best, "/pairAddress"),
+            url: js(best, "/url"),
+            name: js(best, "/baseToken/name"),
+            symbol: js(best, "/baseToken/symbol"),
+            price_usd: jf(best, "/priceUsd"),
+            market_cap_usd: mcap,
+            fdv_usd: jf(best, "/fdv"),
+            liquidity_usd: jf(best, "/liquidity/usd"),
+            vol_5m: jf(best, "/volume/m5"),
+            vol_1h: jf(best, "/volume/h1"),
+            vol_6h: jf(best, "/volume/h6"),
+            vol_24h: jf(best, "/volume/h24"),
+            buys_5m: ju(best, "/txns/m5/buys"),
+            sells_5m: ju(best, "/txns/m5/sells"),
+            buys_1h: ju(best, "/txns/h1/buys"),
+            sells_1h: ju(best, "/txns/h1/sells"),
+            buys_24h: ju(best, "/txns/h24/buys"),
+            sells_24h: ju(best, "/txns/h24/sells"),
+            chg_5m: jf(best, "/priceChange/m5"),
+            chg_1h: jf(best, "/priceChange/h1"),
+            chg_6h: jf(best, "/priceChange/h6"),
+            chg_24h: jf(best, "/priceChange/h24"),
+            pair_created_at_ms: best.get("pairCreatedAt").and_then(|v| v.as_i64()),
+            websites,
+            socials,
+            pair_count: token_pairs.len(),
+        })
+    }
+}

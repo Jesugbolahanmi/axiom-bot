@@ -507,3 +507,27 @@ fn test_callrecord_serde_backwards_compatibility() {
     assert_eq!(rec.last_notified_milestone, 0.0);
     assert_eq!(rec.symbol, "LEGACY");
 }
+
+#[test]
+fn test_ca_extraction_solana_and_evm() {
+    use axiom_bot::alerts::TelegramBotService;
+
+    // Direct Solana CA
+    let sol_ca = "Hmpfs3cGmAiRgFFxwXHN1tJqqcmXfztUbfGFvvQCpump";
+    assert_eq!(TelegramBotService::extract_contract_address(sol_ca).as_deref(), Some(sol_ca));
+
+    // Direct EVM CA
+    let evm_ca = "0x94De08cf769bee1D7Db460124c1c5Cc5C7aA7777";
+    assert_eq!(TelegramBotService::extract_contract_address(evm_ca).as_deref(), Some(evm_ca));
+
+    // Embedded in DexScreener URL
+    let dex_url = "https://dexscreener.com/solana/Hmpfs3cGmAiRgFFxwXHN1tJqqcmXfztUbfGFvvQCpump";
+    assert_eq!(TelegramBotService::extract_contract_address(dex_url).as_deref(), Some(sol_ca));
+
+    // Embedded in text with spaces and punctuation
+    let text = "Check out this coin: Hmpfs3cGmAiRgFFxwXHN1tJqqcmXfztUbfGFvvQCpump!";
+    assert_eq!(TelegramBotService::extract_contract_address(text).as_deref(), Some(sol_ca));
+
+    // Non-address regular text should return None
+    assert_eq!(TelegramBotService::extract_contract_address("hello world what is this"), None);
+}
