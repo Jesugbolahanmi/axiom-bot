@@ -113,7 +113,7 @@ async fn main() -> Result<()> {
     let tg_worker = telegram_service.clone();
     let enrichment_worker = enrichment_service.clone();
     let _min_age = config.filters.min_age_mins as f64;
-    let max_enrich_age_mins = config.filters.max_age_mins.max(config.revival_filters.max_age_mins);
+    let max_enrich_age_mins = config.filters.max_age_mins; // .max(config.revival_filters.max_age_mins); [PAUSED REVIVAL]
 
     tokio::spawn(async move {
         info!("Started filter evaluation worker (interval: {:?})", poll_interval);
@@ -156,27 +156,28 @@ async fn main() -> Result<()> {
                         store_worker.mark_alert_sent(&token.mint);
                     }
                 } else {
-                    // 2. Evaluate Token Revival filter (dormant CTO with sudden surge)
-                    let revival_result = filter_worker.evaluate_revival(&token);
-                    if revival_result.passed {
-                        let revival_key = format!("revival:{}", token.mint);
-                        if dedup_worker.should_alert(&revival_key) {
-                            let card = AlertCard::new_revival(&token);
-                            info!(
-                                "⚡ TOKEN REVIVAL DETECTED! ${} ({}) - Reclaim: ${:.0} -> ${:.0} (+{:.1}%), 5m Vol: ${:.0}, Dev: {:.1}%",
-                                card.symbol, card.name, card.bottom_market_cap_usd, card.market_cap_usd, card.surge_pct_from_bottom, card.rolling_5m_volume_usd, card.dev_holding_pct
-                            );
-
-                            if let Some(ref tg) = tg_worker {
-                                if let Err(e) = tg.send_alert(&card).await {
-                                    error!("Failed to send revival alert via Telegram: {:?}", e);
-                                }
-                            }
-
-                            dedup_worker.record_alert(&revival_key);
-                            store_worker.mark_alert_sent(&token.mint);
-                        }
-                    } else if token.holder_count >= 10 || token.market_cap_usd >= 7500.0 {
+                    // [PAUSED] 2. Evaluate Token Revival filter (dormant CTO with sudden surge)
+                    // let revival_result = filter_worker.evaluate_revival(&token);
+                    // if revival_result.passed {
+                    //     let revival_key = format!("revival:{}", token.mint);
+                    //     if dedup_worker.should_alert(&revival_key) {
+                    //         let card = AlertCard::new_revival(&token);
+                    //         info!(
+                    //             "⚡ TOKEN REVIVAL DETECTED! ${} ({}) - Reclaim: ${:.0} -> ${:.0} (+{:.1}%), 5m Vol: ${:.0}, Dev: {:.1}%",
+                    //             card.symbol, card.name, card.bottom_market_cap_usd, card.market_cap_usd, card.surge_pct_from_bottom, card.rolling_5m_volume_usd, card.dev_holding_pct
+                    //         );
+                    //
+                    //         if let Some(ref tg) = tg_worker {
+                    //             if let Err(e) = tg.send_alert(&card).await {
+                    //                 error!("Failed to send revival alert via Telegram: {:?}", e);
+                    //             }
+                    //         }
+                    //
+                    //         dedup_worker.record_alert(&revival_key);
+                    //         store_worker.mark_alert_sent(&token.mint);
+                    //     }
+                    // } else
+                    if token.holder_count >= 10 || token.market_cap_usd >= 7500.0 {
                         info!(
                             "📊 Candidate ${} ({}) maturing: MCap=${:.0}, Vol=${:.0}, Holders={} (Needs $10k+, 50+ holders) | Pending: {}",
                             token.symbol, token.mint, token.market_cap_usd, token.total_volume_usd, token.holder_count,
@@ -188,25 +189,25 @@ async fn main() -> Result<()> {
 
             // Prune expired tokens every 12 loops (~1 minute)
             if loop_count % 12 == 0 {
-                store_worker.prune_expired_tokens(config.revival_filters.max_age_mins);
+                store_worker.prune_expired_tokens(config.filters.max_age_mins); // [PAUSED REVIVAL]
                 dedup_worker.prune();
             }
         }
     });
 
-    // 3. Multi-Chain Revival Scanner Worker (Solana, Base, Ethereum, BSC)
-    if config.multi_chain_revival.enabled {
-        let multi_chain_scanner = Arc::new(axiom_bot::enrichment::MultiChainRevivalScanner::new(
-            config.multi_chain_revival.clone(),
-            telegram_service.clone(),
-        ));
-
-        let scanner_worker = multi_chain_scanner.clone();
-        tokio::spawn(async move {
-            scanner_worker.run().await;
-        });
-        info!("Spawned Multi-Chain Revival Scanner daemon across chains {:?}", config.multi_chain_revival.chains);
-    }
+    // [PAUSED] 3. Multi-Chain Revival Scanner Worker (Solana, Base, Ethereum, BSC)
+    // if config.multi_chain_revival.enabled {
+    //     let multi_chain_scanner = Arc::new(axiom_bot::enrichment::MultiChainRevivalScanner::new(
+    //         config.multi_chain_revival.clone(),
+    //         telegram_service.clone(),
+    //     ));
+    //
+    //     let scanner_worker = multi_chain_scanner.clone();
+    //     tokio::spawn(async move {
+    //         scanner_worker.run().await;
+    //     });
+    //     info!("Spawned Multi-Chain Revival Scanner daemon across chains {:?}", config.multi_chain_revival.chains);
+    // }
 
     info!("Bot is fully operational. Press Ctrl+C to terminate.");
     tokio::signal::ctrl_c().await?;
