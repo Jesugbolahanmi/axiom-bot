@@ -131,15 +131,7 @@ impl TelegramBotService {
                     if metrics.market_cap_usd > 0.0 {
                         let mut milestone_to_notify: Option<(CallRecord, f64)> = None;
 
-                        let alert_ts = self.calls.get(&mint).map(|c| c.alert_timestamp.timestamp());
-                        let mut peak = metrics.market_cap_usd;
-                        if let (Some(ts), Some(ref paddr)) = (alert_ts, metrics.pair_address.as_ref()) {
-                            if !paddr.ends_with("pump") {
-                                if let Some(candle_peak) = self.dex_client.fetch_pool_candle_peak_after(paddr, ts).await {
-                                    peak = peak.max(candle_peak);
-                                }
-                            }
-                        }
+                        let peak = metrics.market_cap_usd;
 
                         if let Some(mut record) = self.calls.get_mut(&mint) {
                             record.current_market_cap_usd = metrics.market_cap_usd;
@@ -304,12 +296,7 @@ impl TelegramBotService {
                 rec.current_volume_usd = metrics.total_volume_usd;
                 rec.current_volume_5m_usd = metrics.volume_5m_usd;
                 rec.current_liquidity_usd = metrics.liquidity_usd;
-                let mut peak = metrics.market_cap_usd;
-                if let Some(ref paddr) = metrics.pair_address {
-                    if let Some(candle_peak) = service.dex_client.fetch_pool_candle_peak_after(paddr, rec.alert_timestamp.timestamp()).await {
-                        peak = peak.max(candle_peak);
-                    }
-                }
+                let peak = metrics.market_cap_usd;
                 if peak > rec.highest_market_cap_usd {
                     rec.highest_market_cap_usd = peak;
                     rec.ath_timestamp = chrono::Utc::now();
@@ -550,17 +537,7 @@ impl TelegramBotService {
 
                                 let metrics_opt = service.dex_client.fetch_metrics(mint).await.unwrap_or(None);
 
-                                let alert_ts = service.calls.get(*mint).map(|c| c.alert_timestamp.timestamp());
-                                let mut peak = metrics_opt.as_ref().map(|m| m.market_cap_usd).unwrap_or(0.0);
-                                if let (Some(ts), Some(ref m)) = (alert_ts, metrics_opt.as_ref()) {
-                                    if let Some(ref paddr) = m.pair_address {
-                                        if !paddr.ends_with("pump") {
-                                            if let Some(candle_peak) = service.dex_client.fetch_pool_candle_peak_after(paddr, ts).await {
-                                                peak = peak.max(candle_peak);
-                                            }
-                                        }
-                                    }
-                                }
+                                let peak = metrics_opt.as_ref().map(|m| m.market_cap_usd).unwrap_or(0.0);
 
                                 let mut updated_rec: Option<CallRecord> = None;
                                 if let Some(mut record) = service.calls.get_mut(*mint) {
@@ -620,16 +597,16 @@ impl TelegramBotService {
                                             });
                                             (m.market_cap_usd, m.total_volume_usd, m.volume_5m_usd, m.liquidity_usd, name, sym)
                                         } else {
-                                            (24_500.0, 31_200.0, 4_800.0, 11_000.0, "Token".to_string(), "TOKEN".to_string())
+                                            (0.0, 0.0, 0.0, 0.0, "Token".to_string(), "TOKEN".to_string())
                                         };
                                         let rec = CallRecord {
                                             alert_type: crate::models::alert::AlertType::EarlyLaunch,
                                             mint: mint.to_string(),
                                             name,
                                             symbol,
-                                            initial_market_cap_usd: 24_500.0,
+                                            initial_market_cap_usd: mcap,
                                             current_market_cap_usd: mcap,
-                                            highest_market_cap_usd: mcap.max(24_500.0),
+                                            highest_market_cap_usd: mcap,
                                             initial_volume_usd: vol,
                                             current_volume_usd: vol,
                                             current_volume_5m_usd: vol5m,
@@ -641,7 +618,7 @@ impl TelegramBotService {
                                             lore_description: None,
                                             alert_timestamp: now,
                                             last_refreshed: now,
-                                            bottom_market_cap_usd: 24_500.0,
+                                            bottom_market_cap_usd: mcap,
                                             surge_pct_from_bottom: 0.0,
                                             is_cto: false,
                                             cto_status_desc: "Dev Holds 3.5%".to_string(),

@@ -1,870 +1,23 @@
 [
   {
-    "alert_type": "EarlyLaunch",
-    "mint": "33NfErYRPPy8Xyjy38ZSJ3CizN9ieJ6JNWs5L1n2GWkq",
-    "name": "Elon News Network",
-    "symbol": "ENN",
-    "initial_market_cap_usd": 29004.0,
-    "current_market_cap_usd": 2211.0,
-    "highest_market_cap_usd": 41090.225865810426,
-    "initial_volume_usd": 423971.24,
-    "current_volume_usd": 313.93,
-    "current_volume_5m_usd": 0.0,
-    "current_liquidity_usd": 2386.07,
-    "holder_count": 100,
-    "dev_holding_pct": 0.0,
-    "top_holder_pct": 2.907923784122361,
-    "sniper_bundler_pct": 0.07071535258427575,
-    "lore_description": null,
-    "alert_timestamp": "2026-10-22T18:56:43.671292100Z",
-    "last_refreshed": "2026-10-26T09:23:14.321369Z",
-    "bottom_market_cap_usd": 6349.5452306805855,
-    "surge_pct_from_bottom": 356.7886194408787,
-    "is_cto": true,
-    "cto_status_desc": "Dev Dumped (0.0% Clean CTO)",
-    "top_holders": [
-      {
-        "rank": 1,
-        "address": "NbfnkSpTKepA8EG9AV7CPriXnfyF3E5LSNdAgARAsNa",
-        "amount": 28165351.468072,
-        "pct": 2.907923784122361,
-        "is_dev": false
-      },
-      {
-        "rank": 2,
-        "address": "A28bVMHfUSMxPAK51fBUNXsW2NHxH7uvzVBKjgJfH9SQ",
-        "amount": 19029964.878814,
-        "pct": 1.964743367212966,
-        "is_dev": false
-      },
-      {
-        "rank": 3,
-        "address": "C9NLgC8nCez8LV7W4bFCd7h2RvdWW2Z3L4MJcVUubuxc",
-        "amount": 18806028.219642,
-        "pct": 1.9416230898721576,
-        "is_dev": false
-      },
-      {
-        "rank": 4,
-        "address": "92fmhKi74WMNBnMWhAjKpHHozWHoLWscPDBYKcZEKvUc",
-        "amount": 15320998.087983,
-        "pct": 1.5818121349219831,
-        "is_dev": false
-      },
-      {
-        "rank": 5,
-        "address": "2b3Ub33jkUibfxTMkY6EWC6FnhWp91Zam4HxrYBAkfFD",
-        "amount": 15110979.643306,
-        "pct": 1.560128839718906,
-        "is_dev": false
-      },
-      {
-        "rank": 6,
-        "address": "EW334V6Btdf9YRS6Uqpo6znCQMyqz9GkTZofs5H5qYDn",
-        "amount": 13873520.211958,
-        "pct": 1.432367689058935,
-        "is_dev": false
-      },
-      {
-        "rank": 7,
-        "address": "BuaMLYpY7t6nQQVy9FeciHUJwFtCrZLwGFo63TzpQE43",
-        "amount": 12576258.577038,
-        "pct": 1.2984322767247547,
-        "is_dev": false
-      },
-      {
-        "rank": 8,
-        "address": "Fh5k7dgy8kt92bvBPKPZ6MPM78VkDz86HpA6aw2XZzZ5",
-        "amount": 12259215.940157,
-        "pct": 1.2656992989235645,
-        "is_dev": false
-      },
-      {
-        "rank": 9,
-        "address": "4LbcekZUTmkKaViEvX6Lcfd7qDAsKAncBGZsSUUWv2TK",
-        "amount": 11710325.96292,
-        "pct": 1.2090293077294827,
-        "is_dev": false
-      },
-      {
-        "rank": 10,
-        "address": "BRUHjjiG1V8ZK3dp6j5eVnEpswjoiRA8nTX1KuQq5tbF",
-        "amount": 11242577.474078,
-        "pct": 1.1607367466644156,
-        "is_dev": false
-      },
-      {
-        "rank": 11,
-        "address": "GAPqP6RXDGyhoAuUTpTNrc2rn4b5gcVwwuo7okWYgn96",
-        "amount": 11238713.917556,
-        "pct": 1.1603378548588452,
-        "is_dev": false
-      },
-      {
-        "rank": 12,
-        "address": "6KXBWLGfmft5B6dD94KSXYEZUV2rciaSQ11aPnPgvvFG",
-        "amount": 11143033.648619,
-        "pct": 1.150459372425259,
-        "is_dev": false
-      },
-      {
-        "rank": 13,
-        "address": "6AbHefgSBm3uXeCvM5t9wWc7XSAKz9baqtfGYeFxHkYa",
-        "amount": 10823828.231016,
-        "pct": 1.117503098937222,
-        "is_dev": false
-      },
-      {
-        "rank": 14,
-        "address": "HzEqquK2T4GyC4WUSFK9mrqkXNinduqE9SHm1dbJcq1i",
-        "amount": 10758631.486066,
-        "pct": 1.110771879356938,
-        "is_dev": false
-      },
-      {
-        "rank": 15,
-        "address": "2MwH86TBoWugBSLaYw3b378TjUoRVgXdhVkZUcDBYvbh",
-        "amount": 10727869.315243,
-        "pct": 1.1075958476894885,
-        "is_dev": false
-      },
-      {
-        "rank": 16,
-        "address": "7QHnXV3KtEu5KfJ6hZkEVcXqrY1NsFw6U1Qf6C4P6Vn2",
-        "amount": 10699841.727415,
-        "pct": 1.1047021472736067,
-        "is_dev": false
-      },
-      {
-        "rank": 17,
-        "address": "7dBKGrbBETUfN9i8qCs1kUjpmiuaUDtE9MQJpp7VYEiS",
-        "amount": 10545367.818519,
-        "pct": 1.0887535320321375,
-        "is_dev": false
-      },
-      {
-        "rank": 18,
-        "address": "Dzq1Jayy6eWnfZtcoC1GA1y9HsKtcf4nvibqz8RiqUb3",
-        "amount": 9676710.374768,
-        "pct": 0.999069238768412,
-        "is_dev": false
-      },
-      {
-        "rank": 19,
-        "address": "8tMwLPAY1Ka8T7D5v4q674NzGkS8asGZCPtGoX7CHWdt",
-        "amount": 8540028.634638,
-        "pct": 0.8817128524705677,
-        "is_dev": false
-      }
-    ],
-    "top_10_pct": 16.32249653494953,
-    "clustered_wallets_count": 1,
-    "bubblemaps_url": "https://bubblemaps.io/solana/token/33NfErYRPPy8Xyjy38ZSJ3CizN9ieJ6JNWs5L1n2GWkq",
-    "ath_timestamp": "2026-10-24T15:13:27.226170800Z",
-    "last_notified_milestone": 1.0,
-    "chain": "solana",
-    "sustained_secs": 0,
-    "buys_5m": 0,
-    "sells_5m": 0
-  },
-  {
-    "alert_type": "EarlyLaunch",
-    "mint": "GEZev5APkmxo7DLiXtvMiZ732qqEe1VAAFyv249HLock",
-    "name": "Hashlock.fun",
-    "symbol": "HASHLOCK",
-    "initial_market_cap_usd": 16661.65,
-    "current_market_cap_usd": 1956.0,
-    "highest_market_cap_usd": 59711.25494582966,
-    "initial_volume_usd": 30010.58,
-    "current_volume_usd": 26.27,
-    "current_volume_5m_usd": 0.0,
-    "current_liquidity_usd": 2109.03,
-    "holder_count": 83,
-    "dev_holding_pct": 0.0,
-    "top_holder_pct": 3.3324115231921,
-    "sniper_bundler_pct": 0.2437260804297,
-    "lore_description": null,
-    "alert_timestamp": "2026-10-22T18:28:36.536961100Z",
-    "last_refreshed": "2026-10-26T09:23:15.056479Z",
-    "bottom_market_cap_usd": 4000.2,
-    "surge_pct_from_bottom": 316.5204239788011,
-    "is_cto": true,
-    "cto_status_desc": "Dev Dumped (0.0% Clean CTO)",
-    "top_holders": [
-      {
-        "rank": 1,
-        "address": "CgN1tkvmzAqmgee2i1JUKfJQ27R17JFhMfz3i13LL1CF",
-        "amount": 33324115.231921,
-        "pct": 3.3324115231921,
-        "is_dev": false
-      },
-      {
-        "rank": 2,
-        "address": "Cghxv7Puj9rzK3Pbk3DRL6YuX4cN2PrVDy1vG2aJWTZG",
-        "amount": 29842156.128039,
-        "pct": 2.9842156128039,
-        "is_dev": false
-      },
-      {
-        "rank": 3,
-        "address": "4DHnzMq5GuBEv9r2aXvH7k1B7xseFPjhdiBwVjB9koHT",
-        "amount": 29118390.261707,
-        "pct": 2.9118390261707,
-        "is_dev": false
-      },
-      {
-        "rank": 4,
-        "address": "o87DDF3MCMFDgsnhL9TG58g48cf3SYnJYKwPaCNwnWa",
-        "amount": 27533333.08881,
-        "pct": 2.753333308881,
-        "is_dev": false
-      },
-      {
-        "rank": 5,
-        "address": "ErC5Qw7eb56xugRxbJUxrVc1Nsf2pdexHAbBdrJZu23v",
-        "amount": 26095764.639513,
-        "pct": 2.6095764639513,
-        "is_dev": false
-      },
-      {
-        "rank": 6,
-        "address": "D5y2ZbSQTpD36NavHDuH6tGiXrYNUyfzFRf5f2tQJWkb",
-        "amount": 25168826.724977,
-        "pct": 2.5168826724977,
-        "is_dev": false
-      },
-      {
-        "rank": 7,
-        "address": "B2UJRf9UWfimCAZ1dEGqAsBiWgxnBM1cU6P8eioH3F17",
-        "amount": 22290618.274216,
-        "pct": 2.2290618274216,
-        "is_dev": false
-      },
-      {
-        "rank": 8,
-        "address": "65R67Lzaz6CVe2ch72bPD21nRP159Bwy9tEuqYA8xKPa",
-        "amount": 21963649.057991,
-        "pct": 2.1963649057991,
-        "is_dev": false
-      },
-      {
-        "rank": 9,
-        "address": "4Fk4FC6DyZnAQSDdpwnv9gjow5udcdcbXQcQCPC3buRf",
-        "amount": 21336170.67276,
-        "pct": 2.133617067276,
-        "is_dev": false
-      },
-      {
-        "rank": 10,
-        "address": "F4MSGm2ykMWzZgC51iExAKMhCvV6iJiTVhP9b3uWz82G",
-        "amount": 21167706.356736,
-        "pct": 2.1167706356736,
-        "is_dev": false
-      },
-      {
-        "rank": 11,
-        "address": "4kJPy8Z65jrR3soTJYHUUy1qcANr495iyEjSRJzHi6Ye",
-        "amount": 20872113.956851,
-        "pct": 2.0872113956851,
-        "is_dev": false
-      },
-      {
-        "rank": 12,
-        "address": "2u2QQ1DFTE3Ki742FTV9QkZQQct7kPLoYwAWCtzQkXeS",
-        "amount": 19504692.458485,
-        "pct": 1.9504692458485,
-        "is_dev": false
-      },
-      {
-        "rank": 13,
-        "address": "DJHLZ61BrRzRFcUgf68AtY5rxXX6QPsYBaMooFDwrRbz",
-        "amount": 19190911.425556,
-        "pct": 1.9190911425556,
-        "is_dev": false
-      },
-      {
-        "rank": 14,
-        "address": "3UmC1j2WKpbCHtsf8P6WtBEZXhR3XqkabEZoUkKMijLB",
-        "amount": 18770212.900443,
-        "pct": 1.8770212900443,
-        "is_dev": false
-      },
-      {
-        "rank": 15,
-        "address": "BDVv7fwwerFh6qSECH97csHWzErJSCFTUJkLjGWokW64",
-        "amount": 18353046.089246,
-        "pct": 1.8353046089246,
-        "is_dev": false
-      },
-      {
-        "rank": 16,
-        "address": "2Bf5peSYqSEk6AcAejNiXVg668FMJ7NMTD7HDSuwAjs4",
-        "amount": 17180107.879683,
-        "pct": 1.7180107879683,
-        "is_dev": false
-      },
-      {
-        "rank": 17,
-        "address": "Eb9aKZUW85SY8pUM3vWZLA3R6PpX898nbjgrCfrWNyBH",
-        "amount": 16620448.467577,
-        "pct": 1.6620448467577,
-        "is_dev": false
-      },
-      {
-        "rank": 18,
-        "address": "7HsaBwAKATXci6PA8DKDgeCtZ2xSPi9Cbw2JRC4CYjag",
-        "amount": 16273659.874986,
-        "pct": 1.6273659874986,
-        "is_dev": false
-      },
-      {
-        "rank": 19,
-        "address": "8ZyHtHuYpkbjonWRUozZ8Ysxoambcp3sGFtEUtiY9py2",
-        "amount": 15444895.101914,
-        "pct": 1.5444895101914,
-        "is_dev": false
-      }
-    ],
-    "top_10_pct": 25.784073043667,
-    "clustered_wallets_count": 1,
-    "bubblemaps_url": "https://bubblemaps.io/solana/token/GEZev5APkmxo7DLiXtvMiZ732qqEe1VAAFyv249HLock",
-    "ath_timestamp": "2026-10-24T15:13:31.705262700Z",
-    "last_notified_milestone": 3.0,
-    "chain": "solana",
-    "sustained_secs": 0,
-    "buys_5m": 0,
-    "sells_5m": 0
-  },
-  {
-    "alert_type": "Revival",
-    "mint": "98sMhvDwXj1RQi5c5Mndm3vPe9cBqPrbLaufMXFNMh5g",
-    "name": "Unknown",
-    "symbol": "HYPE",
-    "initial_market_cap_usd": 84360.0,
-    "current_market_cap_usd": 84872.0,
-    "highest_market_cap_usd": 77538505897.37651,
-    "initial_volume_usd": 8150120.9399999995,
-    "current_volume_usd": 8516417.81,
-    "current_volume_5m_usd": 25281.13,
-    "current_liquidity_usd": 843713.06,
-    "holder_count": 100,
-    "dev_holding_pct": 0.0,
-    "top_holder_pct": 11.296056311378452,
-    "sniper_bundler_pct": -0.0,
-    "lore_description": null,
-    "alert_timestamp": "2026-10-26T08:27:46.011930400Z",
-    "last_refreshed": "2026-10-26T09:23:16.045161700Z",
-    "bottom_market_cap_usd": 5133.584245521751,
-    "surge_pct_from_bottom": 1543.2963007004494,
-    "is_cto": true,
-    "cto_status_desc": "Dev Dumped (0.0% Clean CTO)",
-    "top_holders": [
-      {
-        "rank": 1,
-        "address": "28bWtteA7woFR1U4QFhBpJnBrKwS86DGQJAXGXcVNJrx",
-        "amount": 79179.823404473,
-        "pct": 11.296056311378452,
-        "is_dev": false
-      },
-      {
-        "rank": 2,
-        "address": "3FGUthEqjRBHW66RJ8Gr2oHQoGgk2SmskgEQGDeV9pcb",
-        "amount": 40000.016424009,
-        "pct": 5.706535055951429,
-        "is_dev": false
-      },
-      {
-        "rank": 3,
-        "address": "454tPgjg9gtDywxjpzXBwaibXDWQzwJSdaYkLT5ojkuK",
-        "amount": 31083.295321973,
-        "pct": 4.434446039448709,
-        "is_dev": false
-      },
-      {
-        "rank": 4,
-        "address": "FWPLy9vhx2VRto91bcqh7f8xSUd285Sz2N12H6JC29rr",
-        "amount": 26345.407532675,
-        "pct": 3.758523247962927,
-        "is_dev": false
-      },
-      {
-        "rank": 5,
-        "address": "3KGotDRmG7D7vyNYtQGC9468azds4QnTwVyEB2TPsCVX",
-        "amount": 15661.584499831,
-        "pct": 2.2343336070828967,
-        "is_dev": false
-      },
-      {
-        "rank": 6,
-        "address": "FkxiPghgVPmstyoEgQdK8HFqSkhVkJCtrFMD6YqRDYfT",
-        "amount": 13214.649204012,
-        "pct": 1.88524569928757,
-        "is_dev": false
-      },
-      {
-        "rank": 7,
-        "address": "7Uxc9dh3mduVKBGqjcvgw1JvWL8Ba8FBk9TXnrcA5pHy",
-        "amount": 12865.570629719,
-        "pct": 1.8354449916986382,
-        "is_dev": false
-      },
-      {
-        "rank": 8,
-        "address": "E8sfWEPSJBXf4T5xcA1G3X8iKe8zL9gnPdBsFw6w1YhM",
-        "amount": 12460.037137822,
-        "pct": 1.7775902382569972,
-        "is_dev": false
-      },
-      {
-        "rank": 9,
-        "address": "FBxH9wbh6kdv7bjKr1bXhBp2p2qwCkAoaMDNxQJNcsDN",
-        "amount": 9070.499300869,
-        "pct": 1.294027524556804,
-        "is_dev": false
-      },
-      {
-        "rank": 10,
-        "address": "BfhFze9NPauyhKFgxkVQwTrWyQVZxf6qnKAiaoqULTDT",
-        "amount": 7909.38517988,
-        "pct": 1.1283791316874725,
-        "is_dev": false
-      },
-      {
-        "rank": 11,
-        "address": "G1P6BH7qiFcGAYkiMzv1QYYwoGW3vqSzYaQfWASxjkTH",
-        "amount": 7583.208765491,
-        "pct": 1.0818457222157167,
-        "is_dev": false
-      },
-      {
-        "rank": 12,
-        "address": "Ban52DCJ8S4SbHu7k5duBSy3W6nUNQ2Bv4xYpUXo7Gv9",
-        "amount": 7088.035977817,
-        "pct": 1.0112027294313735,
-        "is_dev": false
-      },
-      {
-        "rank": 13,
-        "address": "4geNRgVKtaMTi6QxgszemgaqQUbdaqr9cfbuow99DavT",
-        "amount": 6988.674909901,
-        "pct": 0.99702754982022,
-        "is_dev": false
-      },
-      {
-        "rank": 14,
-        "address": "2km8KpXQW6TQuFQrE1cBLLtsvWw8YjAvvHRbgLftAtEf",
-        "amount": 5956.829455849,
-        "pct": 0.8498210538664439,
-        "is_dev": false
-      },
-      {
-        "rank": 15,
-        "address": "BcSmdwkBafUZt2uFw4x2j7EkPuZ6gmeWpJR7Zxg7ANzD",
-        "amount": 5911.182953316,
-        "pct": 0.8433089723681526,
-        "is_dev": false
-      },
-      {
-        "rank": 16,
-        "address": "8X3dQLeGYXrEyYn6MRnbsr8RJ8esU8Z3aHNxgXu85n65",
-        "amount": 5575.551370494,
-        "pct": 0.7954266571971867,
-        "is_dev": false
-      },
-      {
-        "rank": 17,
-        "address": "7mGdp75FN4of1Ex76T17Zq5ZzdQwJbQwj6Qi7CvZGuEt",
-        "amount": 5000.0,
-        "pct": 0.7133165891059766,
-        "is_dev": false
-      },
-      {
-        "rank": 18,
-        "address": "Cvvezs3Y1q4zEvbpKKimhTjrDeuTQdHhNNRbvmEdZkSH",
-        "amount": 4925.480011113,
-        "pct": 0.7026853202473586,
-        "is_dev": false
-      },
-      {
-        "rank": 19,
-        "address": "5v8wEcfie8N74mLkK3bDcgUdXJ3DTy8WeL9S3wAEwBTx",
-        "amount": 3910.545719453,
-        "pct": 0.5578914268286382,
-        "is_dev": false
-      },
-      {
-        "rank": 20,
-        "address": "GqseCw2NbzxgG5cuZ96YEVz9kM8FxuVG82Z6AFNCHh4p",
-        "amount": 3881.731967342,
-        "pct": 0.5537807613536055,
-        "is_dev": false
-      }
-    ],
-    "top_10_pct": 35.350581847311894,
-    "clustered_wallets_count": 0,
-    "bubblemaps_url": "https://bubblemaps.io/solana/token/98sMhvDwXj1RQi5c5Mndm3vPe9cBqPrbLaufMXFNMh5g",
-    "ath_timestamp": "2026-10-26T08:52:50.699259400Z",
-    "last_notified_milestone": 100.0,
-    "chain": "solana",
-    "sustained_secs": 0,
-    "buys_5m": 0,
-    "sells_5m": 0
-  },
-  {
-    "alert_type": "EarlyLaunch",
-    "mint": "DNuS5gQiHccaVaPJCF6UZswUkSYthHZFM1BoozTEFob3",
-    "name": "The Solana Chud",
-    "symbol": "CHUD",
-    "initial_market_cap_usd": 16336.92,
-    "current_market_cap_usd": 2223.0,
-    "highest_market_cap_usd": 45552.440115659316,
-    "initial_volume_usd": 41109.23,
-    "current_volume_usd": 12.37,
-    "current_volume_5m_usd": 0.0,
-    "current_liquidity_usd": 2404.83,
-    "holder_count": 100,
-    "dev_holding_pct": 0.0,
-    "top_holder_pct": 3.4081334285974116,
-    "sniper_bundler_pct": -0.0,
-    "lore_description": "deployed on https://track.tech/",
-    "alert_timestamp": "2026-10-22T11:52:39.277235200Z",
-    "last_refreshed": "2026-10-26T09:23:16.786364400Z",
-    "bottom_market_cap_usd": 5618.41,
-    "surge_pct_from_bottom": 190.7747921564998,
-    "is_cto": true,
-    "cto_status_desc": "Dev Dumped (0.0% Clean CTO)",
-    "top_holders": [
-      {
-        "rank": 1,
-        "address": "5KkYjHqDJ7JGfB1BqKvEJSmgiqN8wB3UNCmq5Y4gVBVL",
-        "amount": 34081334.28594,
-        "pct": 3.4081334285974116,
-        "is_dev": false
-      },
-      {
-        "rank": 2,
-        "address": "8QeSzgX67vEWbCHPpSsopEDfWekAY3S596puH6XvRMtv",
-        "amount": 30550530.194827,
-        "pct": 3.0550530194857584,
-        "is_dev": false
-      },
-      {
-        "rank": 3,
-        "address": "3iX8RNxvG4utroKEU7KhcrSJetG1BoRY65Sc5xC4qLU7",
-        "amount": 29084498.076848,
-        "pct": 2.908449807687711,
-        "is_dev": false
-      },
-      {
-        "rank": 4,
-        "address": "7JMArJFHTFc3ArKNcdpKxJuquH7SqeRavyPw7iqG14hg",
-        "amount": 28915432.102852,
-        "pct": 2.8915432102880945,
-        "is_dev": false
-      },
-      {
-        "rank": 5,
-        "address": "6GkZ657nahFRPc76SEYFcf1CZM9dFV1D29QL49fCMCUQ",
-        "amount": 26283827.945079,
-        "pct": 2.628382794510531,
-        "is_dev": false
-      },
-      {
-        "rank": 6,
-        "address": "G6yu2UdDTgRLQWk7QwwABa84suHt3D6WBAhktnYuZNPX",
-        "amount": 21450440.444847,
-        "pct": 2.145044044486847,
-        "is_dev": false
-      },
-      {
-        "rank": 7,
-        "address": "GApCiodZ5zX2ZQQYsg72QkeTDeMbCcD3We9pbE7YR6YL",
-        "amount": 12271981.992366,
-        "pct": 1.2271981992378282,
-        "is_dev": false
-      },
-      {
-        "rank": 8,
-        "address": "GHYMdQ5Mkpy7QAiaoAHPWJZnKcN7aHa6AwzTknzN2z5e",
-        "amount": 11868443.587126,
-        "pct": 1.186844358713788,
-        "is_dev": false
-      },
-      {
-        "rank": 9,
-        "address": "hmgcNhdByAURq9L5bY3xgGiVzUd8ZhHacvTUT6y2QbM",
-        "amount": 11504734.751125,
-        "pct": 1.1504734751136516,
-        "is_dev": false
-      },
-      {
-        "rank": 10,
-        "address": "GaJrzpSAzpFueyvFVWcC8fGvxiU33p1KFWFkjYJbZeoZ",
-        "amount": 10509254.5974,
-        "pct": 1.050925459741052,
-        "is_dev": false
-      },
-      {
-        "rank": 11,
-        "address": "5dB3NdChDhLdiEmx62pwY6ZipN6ZzbNorHmoWGyy8RVm",
-        "amount": 10349489.597277,
-        "pct": 1.034948959728736,
-        "is_dev": false
-      },
-      {
-        "rank": 12,
-        "address": "4pKrRygGCfcbTdaXYCvmihFRBiUCjCEkFTrvircbVhjJ",
-        "amount": 10329895.10947,
-        "pct": 1.032989510948034,
-        "is_dev": false
-      },
-      {
-        "rank": 13,
-        "address": "DxwSffWhXyW1bZ9NFvJywTmQA4YVE1pwteh2R675GNvU",
-        "amount": 9684861.553055,
-        "pct": 0.9684861553064694,
-        "is_dev": false
-      },
-      {
-        "rank": 14,
-        "address": "2DG16FvUWH8RDtxvF6VV34YrJnFx5zSosyL2Bb6UP5ti",
-        "amount": 9426548.906875,
-        "pct": 0.9426548906884435,
-        "is_dev": false
-      },
-      {
-        "rank": 15,
-        "address": "623BnhYGvX8nYnBaA5kJuWv6GbJoPKLLYp7mjJKmxYgo",
-        "amount": 9343371.570957,
-        "pct": 0.9343371570966352,
-        "is_dev": false
-      },
-      {
-        "rank": 16,
-        "address": "54GAeA6FtBB2bbcLG2fcMSiDx7ryfDBmA7CShTcd3Mmc",
-        "amount": 9178469.759696,
-        "pct": 0.9178469759705188,
-        "is_dev": false
-      },
-      {
-        "rank": 17,
-        "address": "D4gMX2hm1JfVfXHtwFuKaZBj9F5UFY9QVdMdpAwJbfWC",
-        "amount": 8679314.50078,
-        "pct": 0.8679314500788687,
-        "is_dev": false
-      },
-      {
-        "rank": 18,
-        "address": "Ckppf6hqgU612vPvg6HnfjFTRYxm4gn18PkhCvgDcHsb",
-        "amount": 8577819.054361,
-        "pct": 0.8577819054369588,
-        "is_dev": false
-      },
-      {
-        "rank": 19,
-        "address": "FjCx3j85wV1jK8S1vsMUfLkj7AvzLC7P8SZTZpYLk8Su",
-        "amount": 8264276.200305,
-        "pct": 0.8264276200313272,
-        "is_dev": false
-      }
-    ],
-    "top_10_pct": 21.652047797862675,
-    "clustered_wallets_count": 0,
-    "bubblemaps_url": "https://bubblemaps.io/solana/token/DNuS5gQiHccaVaPJCF6UZswUkSYthHZFM1BoozTEFob3",
-    "ath_timestamp": "2026-10-25T13:41:02.435960300Z",
-    "last_notified_milestone": 2.0,
-    "chain": "solana",
-    "sustained_secs": 0,
-    "buys_5m": 0,
-    "sells_5m": 0
-  },
-  {
-    "alert_type": "EarlyLaunch",
-    "mint": "9PPQ5jEY3UpXjAa22a1aMb12VjoYYfL21aC9RhSspump",
-    "name": "Genny The Hippo",
-    "symbol": "GENNY",
-    "initial_market_cap_usd": 19519.86,
-    "current_market_cap_usd": 6817.0,
-    "highest_market_cap_usd": 144514.76334377844,
-    "initial_volume_usd": 62295.24,
-    "current_volume_usd": 651608.01,
-    "current_volume_5m_usd": 0.0,
-    "current_liquidity_usd": 5561.93,
-    "holder_count": 100,
-    "dev_holding_pct": 0.0,
-    "top_holder_pct": 2.7245455313159352,
-    "sniper_bundler_pct": -0.0,
-    "lore_description": null,
-    "alert_timestamp": "2026-10-25T18:22:14.794737200Z",
-    "last_refreshed": "2026-10-26T09:23:17.506344400Z",
-    "bottom_market_cap_usd": 5002.672602530828,
-    "surge_pct_from_bottom": 290.18863617269295,
-    "is_cto": true,
-    "cto_status_desc": "Dev Dumped (0.0% Clean CTO)",
-    "top_holders": [
-      {
-        "rank": 1,
-        "address": "ELG46yhBqzveg1hTWqZvgKS8b3rTbywHLMmPVfx5o2br",
-        "amount": 27245450.728749,
-        "pct": 2.7245455313159352,
-        "is_dev": false
-      },
-      {
-        "rank": 2,
-        "address": "HEYfPhGeGag2a4hx2wCcw3fKHBqgHxBth5doEWN77vJE",
-        "amount": 22865554.552439,
-        "pct": 2.2865558399873427,
-        "is_dev": false
-      },
-      {
-        "rank": 3,
-        "address": "3N9MLdY6si2UauRUvcs68Xx7gSgbCUTpkoG5xgmjvqxE",
-        "amount": 21647818.6457,
-        "pct": 2.1647822288234124,
-        "is_dev": false
-      },
-      {
-        "rank": 4,
-        "address": "Edu8p2M7Sv5fcUSEv7MXxC7xwmzrPTYPG719JNZyYAdT",
-        "amount": 20464711.582891,
-        "pct": 2.0464715026351583,
-        "is_dev": false
-      },
-      {
-        "rank": 5,
-        "address": "EvKUGZmHybgUgRimHN7zqz3L3BCYA9JA2sX5bzk3XYQN",
-        "amount": 19620073.029855,
-        "pct": 1.9620076331193887,
-        "is_dev": false
-      },
-      {
-        "rank": 6,
-        "address": "3NDMoJpqCYHeKUp7hApakU1mqUi9X2ZVZyctE4VX2CQ8",
-        "amount": 19040371.253253,
-        "pct": 1.9040374457049334,
-        "is_dev": false
-      },
-      {
-        "rank": 7,
-        "address": "77t1ruCCF5uqL7zFbK8wZSih4ckLNHHwyTdjAm4N7cCS",
-        "amount": 18098887.746014,
-        "pct": 1.8098890791393178,
-        "is_dev": false
-      },
-      {
-        "rank": 8,
-        "address": "Ah232uPQg76XDEmT3JhNb8NkzBzRKhVgGCV2nhnFprPi",
-        "amount": 16741922.383503,
-        "pct": 1.6741925200554664,
-        "is_dev": false
-      },
-      {
-        "rank": 9,
-        "address": "8yS28KjSsmxJZ2WNH6caxz3r8q8AuKJmPSiwr9VXM2LT",
-        "amount": 14655465.922664,
-        "pct": 1.4655468388641546,
-        "is_dev": false
-      },
-      {
-        "rank": 10,
-        "address": "D5xQqzNkq6pMcumC3mM7WD8eRz8Q8TsUSQqjGkmzBeq8",
-        "amount": 14582344.215195,
-        "pct": 1.4582346668868844,
-        "is_dev": false
-      },
-      {
-        "rank": 11,
-        "address": "H1uifLZz3S6QraBPf3PWdby2MT72Jm4Jb7LuFwWsxyoG",
-        "amount": 13481408.07022,
-        "pct": 1.3481410338646658,
-        "is_dev": false
-      },
-      {
-        "rank": 12,
-        "address": "9FBDi3oAHQPwYCTuRmKV75UZj2YfVf5xtpHnKGkW9KgB",
-        "amount": 12311003.770328,
-        "pct": 1.231100584181853,
-        "is_dev": false
-      },
-      {
-        "rank": 13,
-        "address": "HbNBpcLNXuTA2eLErE7SoCxzNA8MKQWoHB1LZeysfNYt",
-        "amount": 12148732.055835,
-        "pct": 1.214873410002115,
-        "is_dev": false
-      },
-      {
-        "rank": 14,
-        "address": "FBdejDoCGAxRFNK2oqsWU7YqeepSEEw5ca4SPuifoyKG",
-        "amount": 11955932.239388,
-        "pct": 1.1955934251133011,
-        "is_dev": false
-      },
-      {
-        "rank": 15,
-        "address": "4s5haayosYoNf9UqBTgqbWHjz5W6VokxFCdDCsW4idK2",
-        "amount": 10972579.0847,
-        "pct": 1.0972580930982732,
-        "is_dev": false
-      },
-      {
-        "rank": 16,
-        "address": "ExmmQEBDycdHcneMuoQT44yVdnWoSF5J5Ffg47FTju4J",
-        "amount": 10778522.003481,
-        "pct": 1.077852381711104,
-        "is_dev": false
-      },
-      {
-        "rank": 17,
-        "address": "6B9Fx8SBoTva3ArhENo8Hsn91vst52rtH9rGkq2oNfU3",
-        "amount": 10751474.708241,
-        "pct": 1.0751476517319973,
-        "is_dev": false
-      },
-      {
-        "rank": 18,
-        "address": "2wFEnFSsqrdJa1c4MXzpVTdsxM4i6vHNru3PrVqedDCD",
-        "amount": 10709241.217177,
-        "pct": 1.0709243019149624,
-        "is_dev": false
-      },
-      {
-        "rank": 19,
-        "address": "5fuB8aHMbcks3p59PoLCieRzxWnVFomr6uZ3NvfoHsZp",
-        "amount": 9233111.46741,
-        "pct": 0.9233113021004112,
-        "is_dev": false
-      }
-    ],
-    "top_10_pct": 19.496263286531992,
-    "clustered_wallets_count": 0,
-    "bubblemaps_url": "https://bubblemaps.io/solana/token/9PPQ5jEY3UpXjAa22a1aMb12VjoYYfL21aC9RhSspump",
-    "ath_timestamp": "2026-10-26T08:31:02.025501900Z",
-    "last_notified_milestone": 5.0,
-    "chain": "solana",
-    "sustained_secs": 0,
-    "buys_5m": 0,
-    "sells_5m": 0
-  },
-  {
     "alert_type": "MultiChainRevival",
-    "mint": "JBdcnX7qT4yVsTWHQzzCzTbsR7QsNd8YvziA5ziJpump",
-    "name": "The Otanmäki Wolves",
-    "symbol": "Wolves",
-    "initial_market_cap_usd": 27741.79,
-    "current_market_cap_usd": 14803.0,
-    "highest_market_cap_usd": 63705.6472357381,
-    "initial_volume_usd": 157054.5,
-    "current_volume_usd": 260533.65,
-    "current_volume_5m_usd": 10.71,
-    "current_liquidity_usd": 8787.46,
-    "holder_count": 33,
+    "mint": "BEwvuL9EsEukMbETMcgRDJ2MVvVjTyEz4SAUxLuh2zL1",
+    "name": "Lab",
+    "symbol": "LAB",
+    "initial_market_cap_usd": 319616.0,
+    "current_market_cap_usd": 232995.0,
+    "highest_market_cap_usd": 376559.0,
+    "initial_volume_usd": 373562.25,
+    "current_volume_usd": 514444.49,
+    "current_volume_5m_usd": 16621.96,
+    "current_liquidity_usd": 55526.66,
+    "holder_count": 226,
     "dev_holding_pct": 0.0,
     "top_holder_pct": 0.0,
     "sniper_bundler_pct": 0.0,
-    "lore_description": "",
-    "alert_timestamp": "2026-10-25T09:36:28.899424500Z",
-    "last_refreshed": "2026-10-26T09:23:18.156768900Z",
+    "lore_description": null,
+    "alert_timestamp": "2026-10-26T09:22:03.647499500Z",
+    "last_refreshed": "2026-10-26T10:19:01.327463600Z",
     "bottom_market_cap_usd": 0.0,
     "surge_pct_from_bottom": 0.0,
     "is_cto": true,
@@ -872,923 +25,15 @@
     "top_holders": [],
     "top_10_pct": 0.0,
     "clustered_wallets_count": 0,
-    "bubblemaps_url": "https://bubblemaps.io/solana/token/JBdcnX7qT4yVsTWHQzzCzTbsR7QsNd8YvziA5ziJpump",
-    "ath_timestamp": "2026-10-25T13:41:03.352686500Z",
-    "last_notified_milestone": 2.0,
-    "chain": "solana",
-    "sustained_secs": 121,
-    "buys_5m": 29,
-    "sells_5m": 4
-  },
-  {
-    "alert_type": "EarlyLaunch",
-    "mint": "9sKp9RiscaVEAcmbMQ5pH212A7bEhKdntU54gao2pump",
-    "name": "Orwell & Goode ",
-    "symbol": "OG",
-    "initial_market_cap_usd": 10842.83,
-    "current_market_cap_usd": 2923.94,
-    "highest_market_cap_usd": 13315.63016708184,
-    "initial_volume_usd": 68955.57,
-    "current_volume_usd": 14.8,
-    "current_volume_5m_usd": 0.0,
-    "current_liquidity_usd": 1169.576,
-    "holder_count": 100,
-    "dev_holding_pct": 0.0,
-    "top_holder_pct": 3.2475152136712,
-    "sniper_bundler_pct": -0.0,
-    "lore_description": null,
-    "alert_timestamp": "2026-10-22T18:52:18.047637400Z",
-    "last_refreshed": "2026-10-26T09:23:18.947880600Z",
-    "bottom_market_cap_usd": 4233.209190758743,
-    "surge_pct_from_bottom": 156.1373537520969,
-    "is_cto": true,
-    "cto_status_desc": "Dev Dumped (0.0% Clean CTO)",
-    "top_holders": [
-      {
-        "rank": 1,
-        "address": "2NHz6YyLkojUpEKFCheWEmum3K3Lrj5oF48TrMujYEPV",
-        "amount": 32475152.136712,
-        "pct": 3.2475152136712,
-        "is_dev": false
-      },
-      {
-        "rank": 2,
-        "address": "6omgUr7k5md7BkMuXPohs1dcd5oBBQe2K5wrwHSkKZsn",
-        "amount": 25708458.405331,
-        "pct": 2.5708458405331003,
-        "is_dev": false
-      },
-      {
-        "rank": 3,
-        "address": "CreHBcEJGCHawL6yn8LsRyzheYeMDCizbNgg3RjhAhzv",
-        "amount": 25323281.399244,
-        "pct": 2.5323281399244,
-        "is_dev": false
-      },
-      {
-        "rank": 4,
-        "address": "G9hW12riLgMSfKpAH51hVVZiqAnVQwt9awkUoAghaieG",
-        "amount": 23426783.139382,
-        "pct": 2.3426783139382,
-        "is_dev": false
-      },
-      {
-        "rank": 5,
-        "address": "BZ3tzHDb7LArQCd74Gg5P5QD8XvEwqANDC1LVbzdx2Rx",
-        "amount": 21238770.302542,
-        "pct": 2.1238770302542003,
-        "is_dev": false
-      },
-      {
-        "rank": 6,
-        "address": "7RDbbwc8Hvu4FxcrDJohMSAvPiSCcwKJr24z6f87Btcp",
-        "amount": 20771172.305902,
-        "pct": 2.0771172305901997,
-        "is_dev": false
-      },
-      {
-        "rank": 7,
-        "address": "AP3C4vuV8NhavU3MwTyUmhYi8FXLr9Xo8ncZikp5G6Xv",
-        "amount": 16866094.581905,
-        "pct": 1.6866094581905002,
-        "is_dev": false
-      },
-      {
-        "rank": 8,
-        "address": "GfgjqbhCbrYa5K3nTz3thG1sLFyhEnJhsMgEzThpuDuj",
-        "amount": 16645853.5303,
-        "pct": 1.66458535303,
-        "is_dev": false
-      },
-      {
-        "rank": 9,
-        "address": "7weea7nLqK6J5qUHNDCFyRzFfiThGru5GnoQu2kKvRxd",
-        "amount": 14835465.863625,
-        "pct": 1.4835465863625,
-        "is_dev": false
-      },
-      {
-        "rank": 10,
-        "address": "BNSaUuDaxuKqQXJwqkhvnFLg2mLmWq3NigcXKRm7iZUM",
-        "amount": 14046617.195448,
-        "pct": 1.4046617195448,
-        "is_dev": false
-      },
-      {
-        "rank": 11,
-        "address": "BLxk6ZMXDZHs7F448FP51cYC2QetRCshtrxzPYsfjirK",
-        "amount": 13995670.095304,
-        "pct": 1.3995670095303998,
-        "is_dev": false
-      },
-      {
-        "rank": 12,
-        "address": "CWuNep7jvsDicw6hEuYMiz7Mf8TfDtd2dqxpGiW53WQf",
-        "amount": 13892181.45471,
-        "pct": 1.389218145471,
-        "is_dev": false
-      },
-      {
-        "rank": 13,
-        "address": "7sQtU5hvUmniTtrcKQgsnzAdCpBcy7dxmEXHvwdXFEyJ",
-        "amount": 12898881.92343,
-        "pct": 1.289888192343,
-        "is_dev": false
-      },
-      {
-        "rank": 14,
-        "address": "C75XdS59yz1PsA2ZxwmxZ3btMxQXzKtD3bG4XSM8pPBC",
-        "amount": 12763777.273101,
-        "pct": 1.2763777273101,
-        "is_dev": false
-      },
-      {
-        "rank": 15,
-        "address": "D1ZgHBBKyGZLj85dfD8QVWixUyFuuqvdJ4Z4yzPZFHr8",
-        "amount": 12554292.983385,
-        "pct": 1.2554292983385,
-        "is_dev": false
-      },
-      {
-        "rank": 16,
-        "address": "98xYnhyPrwX23tvwytFho4JTDXhfDc3Hw2HFjwKwqPf8",
-        "amount": 12374739.446504,
-        "pct": 1.2374739446504002,
-        "is_dev": false
-      },
-      {
-        "rank": 17,
-        "address": "EJxR2nVwAjRxPeAQtYzqog8NNDRBQHj9dqa9NJPnnvTm",
-        "amount": 11640032.364982,
-        "pct": 1.1640032364982,
-        "is_dev": false
-      },
-      {
-        "rank": 18,
-        "address": "32BUfeKuGNqUPuzLPEkyF1BjF8n6ZG9rVJXER3ZqZ2g8",
-        "amount": 11551217.076714,
-        "pct": 1.1551217076714,
-        "is_dev": false
-      },
-      {
-        "rank": 19,
-        "address": "E9jxPZN1qZvMHXKnH86ZQCqZ2UL1y2mJ8E5goggESqN7",
-        "amount": 10325693.859208,
-        "pct": 1.0325693859208,
-        "is_dev": false
-      }
-    ],
-    "top_10_pct": 21.133764886039103,
-    "clustered_wallets_count": 0,
-    "bubblemaps_url": "https://bubblemaps.io/solana/token/9sKp9RiscaVEAcmbMQ5pH212A7bEhKdntU54gao2pump",
-    "ath_timestamp": "2026-10-24T15:13:59.454487500Z",
+    "bubblemaps_url": "https://bubblemaps.io/solana/token/BEwvuL9EsEukMbETMcgRDJ2MVvVjTyEz4SAUxLuh2zL1",
+    "ath_timestamp": "2026-10-26T09:48:39.781006100Z",
     "last_notified_milestone": 1.0,
     "chain": "solana",
-    "sustained_secs": 0,
-    "buys_5m": 0,
-    "sells_5m": 0
-  },
-  {
-    "alert_type": "EarlyLaunch",
-    "mint": "6F3ARx9epz8DHL5rZXDexfotkpphdycKLLdMcx5k35gg",
-    "name": "PUMP LAUNCH",
-    "symbol": "PUMPLAUNCH",
-    "initial_market_cap_usd": 10584.74,
-    "current_market_cap_usd": 41749.53,
-    "highest_market_cap_usd": 41767.47394763046,
-    "initial_volume_usd": 20193.66,
-    "current_volume_usd": 225578.43,
-    "current_volume_5m_usd": 0.0,
-    "current_liquidity_usd": 16699.812,
-    "holder_count": 50,
-    "dev_holding_pct": 0.0,
-    "top_holder_pct": 4.0375660894036995,
-    "sniper_bundler_pct": 0.6844757238521001,
-    "lore_description": "A new way to launch on Pumpfun, designed to block zero-block sniping, limit MEV bundling and give everyone a fairer start.",
-    "alert_timestamp": "2026-10-25T18:39:13.459394600Z",
-    "last_refreshed": "2026-10-26T09:23:19.563809200Z",
-    "bottom_market_cap_usd": 4193.849021435229,
-    "surge_pct_from_bottom": 152.38724488888886,
-    "is_cto": true,
-    "cto_status_desc": "Dev Dumped (0.0% Clean CTO)",
-    "top_holders": [
-      {
-        "rank": 1,
-        "address": "5rPYiFtFrWGJmj6nemUGkTPM5UTvqsie56wjmUnMdyCN",
-        "amount": 40375660.894037,
-        "pct": 4.0375660894036995,
-        "is_dev": false
-      },
-      {
-        "rank": 2,
-        "address": "61B5WocJB2vxzvEWDf9gXv7AkSmDE9EDUQSHHC128b6s",
-        "amount": 35781072.982042,
-        "pct": 3.5781072982042,
-        "is_dev": false
-      },
-      {
-        "rank": 3,
-        "address": "3Wi5wbkV2253kbhdpSD74wFCS5Wb4NJBTrkEYTDGGYnp",
-        "amount": 32188447.715829,
-        "pct": 3.2188447715829,
-        "is_dev": false
-      },
-      {
-        "rank": 4,
-        "address": "3ois3wRX7JWryp6zuSwD37oonNecCaKKVn9Y3iRrLhZu",
-        "amount": 29845423.491756,
-        "pct": 2.9845423491756,
-        "is_dev": false
-      },
-      {
-        "rank": 5,
-        "address": "D3nr22gbsWY1D2F5iDeAcW4k2j3BUP7hR8gpgAvU7mXN",
-        "amount": 25937159.950678,
-        "pct": 2.5937159950678,
-        "is_dev": false
-      },
-      {
-        "rank": 6,
-        "address": "3wV9XC6wMArFG5fDKsBnE2qCF7VkMTQNWjCChFokwf9H",
-        "amount": 23732713.513766,
-        "pct": 2.3732713513765997,
-        "is_dev": false
-      },
-      {
-        "rank": 7,
-        "address": "8NtPo9bYTcFcJiHPG5NsgevdkpdYJ1xCCAVJNQuANWjy",
-        "amount": 23178124.095607,
-        "pct": 2.3178124095607004,
-        "is_dev": false
-      },
-      {
-        "rank": 8,
-        "address": "D3JgqVCJ1DZDGTtMyX4swPhaZ6v6tzXGoijT4EoGEvKM",
-        "amount": 21703112.998323,
-        "pct": 2.1703112998323,
-        "is_dev": false
-      },
-      {
-        "rank": 9,
-        "address": "2mAWLn5XrpFiDzWYUhSVb7m6ssYvYSFUKF97jSsfxkLs",
-        "amount": 20207137.439042,
-        "pct": 2.0207137439041998,
-        "is_dev": false
-      },
-      {
-        "rank": 10,
-        "address": "C32ojFz4wt3MExjDDHZPJADajPkTy9tQm2kG2a1ZSGef",
-        "amount": 19196062.039165,
-        "pct": 1.9196062039165,
-        "is_dev": false
-      },
-      {
-        "rank": 11,
-        "address": "3UbHU4qfAguXybM5KQN2ovShiZ3c2ZuwYMTXqnRMpQTk",
-        "amount": 18262895.779737,
-        "pct": 1.8262895779736998,
-        "is_dev": false
-      },
-      {
-        "rank": 12,
-        "address": "BMykf1KWaFMvzWEwupmfAVVPqJmpfQSF12gJsMfPB76T",
-        "amount": 17957865.48688,
-        "pct": 1.7957865486880003,
-        "is_dev": false
-      },
-      {
-        "rank": 13,
-        "address": "ExtEkutRgaJv9DodqHgqnSxvxncej9fXkv5iQWFJEiAw",
-        "amount": 17760361.907237,
-        "pct": 1.7760361907237,
-        "is_dev": false
-      },
-      {
-        "rank": 14,
-        "address": "J2vkQC7kwQE3LjyeKJovSXJuP5nikxPp2VASNkUTo3dN",
-        "amount": 17359971.521674,
-        "pct": 1.7359971521674,
-        "is_dev": false
-      },
-      {
-        "rank": 15,
-        "address": "2YNWmiXDTSYJQDJySKD1RZFCEFJ7xiv3ZsJTi2aA5UM4",
-        "amount": 16451880.010253,
-        "pct": 1.6451880010253,
-        "is_dev": false
-      },
-      {
-        "rank": 16,
-        "address": "9j2ZijzcMgthrvaAhz48LXcK5D18vmTh7q59mxNgEhsA",
-        "amount": 14757576.703926,
-        "pct": 1.4757576703926,
-        "is_dev": false
-      },
-      {
-        "rank": 17,
-        "address": "FbjpZaRYMSG6wAkafFERfG9hdjFhHwFggLTTeekyj6XP",
-        "amount": 11600389.936719,
-        "pct": 1.1600389936719,
-        "is_dev": false
-      },
-      {
-        "rank": 18,
-        "address": "5q4noTzNpVomYpjZhKnnTvwC9cRBhdcbTmriSW1p149D",
-        "amount": 10304572.458091,
-        "pct": 1.0304572458091001,
-        "is_dev": false
-      },
-      {
-        "rank": 19,
-        "address": "J1kSd9w39BB6j6JR5W5wGzDy7fc7uiuGP9NSvEH4vLfy",
-        "amount": 10192327.003342,
-        "pct": 1.0192327003342,
-        "is_dev": false
-      }
-    ],
-    "top_10_pct": 27.214491512024505,
-    "clustered_wallets_count": 1,
-    "bubblemaps_url": "https://bubblemaps.io/solana/token/6F3ARx9epz8DHL5rZXDexfotkpphdycKLLdMcx5k35gg",
-    "ath_timestamp": "2026-10-26T08:37:01.778475300Z",
-    "last_notified_milestone": 2.0,
-    "chain": "solana",
-    "sustained_secs": 0,
-    "buys_5m": 0,
-    "sells_5m": 0
-  },
-  {
-    "alert_type": "EarlyLaunch",
-    "mint": "8XwwRCaD2bpQrqLuHh2EbxqqFRGDEuYvNe8rqqg3pump",
-    "name": "Titcoin",
-    "symbol": "Titcoin",
-    "initial_market_cap_usd": 17701.94,
-    "current_market_cap_usd": 3181.74,
-    "highest_market_cap_usd": 19969.10159517532,
-    "initial_volume_usd": 54896.99,
-    "current_volume_usd": 0.12,
-    "current_volume_5m_usd": 0.0,
-    "current_liquidity_usd": 1272.696,
-    "holder_count": 88,
-    "dev_holding_pct": 0.0,
-    "top_holder_pct": 3.5875472627919,
-    "sniper_bundler_pct": -0.0,
-    "lore_description": "",
-    "alert_timestamp": "2026-10-22T18:36:10.165142700Z",
-    "last_refreshed": "2026-10-26T09:23:20.372467700Z",
-    "bottom_market_cap_usd": 4221.854613233923,
-    "surge_pct_from_bottom": 319.2929795476871,
-    "is_cto": true,
-    "cto_status_desc": "Dev Dumped (0.0% Clean CTO)",
-    "top_holders": [
-      {
-        "rank": 1,
-        "address": "7EtNyAiX3bejVgin8iZoAzFfMMqnokaWMqTJuPUq8p3x",
-        "amount": 35875472.627919,
-        "pct": 3.5875472627919,
-        "is_dev": false
-      },
-      {
-        "rank": 2,
-        "address": "9ZVPbppD3Ay2cimcVr7bEiwaGEjw5uteJU8qRttFuxzy",
-        "amount": 34187415.231538,
-        "pct": 3.4187415231537996,
-        "is_dev": false
-      },
-      {
-        "rank": 3,
-        "address": "BAQA9sAQLDZ1iFC9uTBijKhXjPLpFAbudVDnCerUrcfm",
-        "amount": 29524248.72224,
-        "pct": 2.952424872224,
-        "is_dev": false
-      },
-      {
-        "rank": 4,
-        "address": "Aout3A7wsbLNuNcZMTFbasfykHx7PMQGZVNTygFJHf2A",
-        "amount": 27465014.691045,
-        "pct": 2.7465014691045,
-        "is_dev": false
-      },
-      {
-        "rank": 5,
-        "address": "5NKiF64tV7Mod62Y8ojgvsuVwqFR7T4QBvpsTKaYNMay",
-        "amount": 26218322.307605,
-        "pct": 2.6218322307605,
-        "is_dev": false
-      },
-      {
-        "rank": 6,
-        "address": "HGeF57Yse6saghVzxhqH7YywLFriSbCm9nQEvuXgYFd1",
-        "amount": 25235171.488882,
-        "pct": 2.5235171488882,
-        "is_dev": false
-      },
-      {
-        "rank": 7,
-        "address": "BZQtf2DKgdb81aGJBcrSjWuKWgLX882WD4Z9HvBLCowc",
-        "amount": 23632435.958392,
-        "pct": 2.3632435958392,
-        "is_dev": false
-      },
-      {
-        "rank": 8,
-        "address": "ATAzHivR1oYeqtuB5yZsMbUWfaN358ewFmARsLm3vE9r",
-        "amount": 22706569.513582,
-        "pct": 2.2706569513582,
-        "is_dev": false
-      },
-      {
-        "rank": 9,
-        "address": "Eaftys7RLDW4GftEM5Ez5Mdm5TmTSYdz4rj6JbAZJ387",
-        "amount": 20625664.340823,
-        "pct": 2.0625664340823,
-        "is_dev": false
-      },
-      {
-        "rank": 10,
-        "address": "BVx7Y7SeJ6SayGnDJ6amNa6umWqLrau4MKggFTL3mf59",
-        "amount": 19878784.459508,
-        "pct": 1.9878784459508,
-        "is_dev": false
-      },
-      {
-        "rank": 11,
-        "address": "4rSMiSQZ5CSoevZJXjkaFLeFzDj3Ka8xC4hwHv2PsGNm",
-        "amount": 18809897.401495,
-        "pct": 1.8809897401495,
-        "is_dev": false
-      },
-      {
-        "rank": 12,
-        "address": "HhjNmX1NkUdMHsPZym8TvwMaqG8BTpS6j2SnLQpFVoa",
-        "amount": 18139386.666405,
-        "pct": 1.8139386666405,
-        "is_dev": false
-      },
-      {
-        "rank": 13,
-        "address": "6LNeJAzi8nPJLQaiaXwmX9UfYet69DFf7qZ9zoFyxVXJ",
-        "amount": 17550488.199055,
-        "pct": 1.7550488199055,
-        "is_dev": false
-      },
-      {
-        "rank": 14,
-        "address": "E7BFt9ErmwvtjZC9uWYRLBhzpXEceYBEF7tocvvc9yC4",
-        "amount": 17355653.161151,
-        "pct": 1.7355653161151,
-        "is_dev": false
-      },
-      {
-        "rank": 15,
-        "address": "Bt9ayUbShUunZS9m1oFV1PmGWApinZt3fDW81YgPzHVs",
-        "amount": 15211235.071747,
-        "pct": 1.5211235071746998,
-        "is_dev": false
-      },
-      {
-        "rank": 16,
-        "address": "FnrHttfWypV6Wt1LKo7jJFBBV4mkAwvnZzLXZNEbMp4c",
-        "amount": 14938285.208569,
-        "pct": 1.4938285208569,
-        "is_dev": false
-      },
-      {
-        "rank": 17,
-        "address": "89NPwuDKj3inKPRny4hyFP5PPXSgrkHbkML37ThP1fA",
-        "amount": 14626116.524251,
-        "pct": 1.4626116524250998,
-        "is_dev": false
-      },
-      {
-        "rank": 18,
-        "address": "FfM2gsUnkPFY6DHTa3ax1J8w3n2X2nCG9zWpy4Vn15XQ",
-        "amount": 13845100.126601,
-        "pct": 1.3845100126601,
-        "is_dev": false
-      },
-      {
-        "rank": 19,
-        "address": "E83cpkshqv4LCPnPEkh2egBaE27HHtiQyTwgPzzi6Bxr",
-        "amount": 13587723.824851,
-        "pct": 1.3587723824851,
-        "is_dev": false
-      }
-    ],
-    "top_10_pct": 26.534909934153397,
-    "clustered_wallets_count": 0,
-    "bubblemaps_url": "https://bubblemaps.io/solana/token/8XwwRCaD2bpQrqLuHh2EbxqqFRGDEuYvNe8rqqg3pump",
-    "ath_timestamp": "2026-10-25T13:41:06.255035800Z",
-    "last_notified_milestone": 1.0,
-    "chain": "solana",
-    "sustained_secs": 0,
-    "buys_5m": 0,
-    "sells_5m": 0
-  },
-  {
-    "alert_type": "MultiChainRevival",
-    "mint": "6p5ECyCAymV4Dzyq5yZhMnGLqjeUKKTnRHama1b3pump",
-    "name": "Big Ass Slutty Exhibitionists",
-    "symbol": "BASE",
-    "initial_market_cap_usd": 109532.0,
-    "current_market_cap_usd": 1983.0,
-    "highest_market_cap_usd": 121443.47095459804,
-    "initial_volume_usd": 537666.83,
-    "current_volume_usd": 585733.73,
-    "current_volume_5m_usd": 0.0,
-    "current_liquidity_usd": 2198.09,
-    "holder_count": 631,
-    "dev_holding_pct": 0.0,
-    "top_holder_pct": 0.0,
-    "sniper_bundler_pct": 0.0,
-    "lore_description": "Too thick to ignore. Too shameless to stop.",
-    "alert_timestamp": "2026-10-25T14:19:13.594897600Z",
-    "last_refreshed": "2026-10-26T09:23:21.098363600Z",
-    "bottom_market_cap_usd": 0.0,
-    "surge_pct_from_bottom": 0.0,
-    "is_cto": true,
-    "cto_status_desc": "Community Active / Multi-Chain",
-    "top_holders": [],
-    "top_10_pct": 0.0,
-    "clustered_wallets_count": 0,
-    "bubblemaps_url": "https://bubblemaps.io/solana/token/6p5ECyCAymV4Dzyq5yZhMnGLqjeUKKTnRHama1b3pump",
-    "ath_timestamp": "2026-10-25T17:36:48.131200100Z",
-    "last_notified_milestone": 1.0,
-    "chain": "solana",
-    "sustained_secs": 122,
-    "buys_5m": 394,
-    "sells_5m": 237
-  },
-  {
-    "alert_type": "MultiChainRevival",
-    "mint": "7Yn6XiurWwemRbTaQaWbECTgxBS4mtAb7gsEwZg9pump",
-    "name": "Gadi Eisenkot",
-    "symbol": "Eisenkot",
-    "initial_market_cap_usd": 41794.73,
-    "current_market_cap_usd": 32011.0,
-    "highest_market_cap_usd": 45944.54970253754,
-    "initial_volume_usd": 29997.6,
-    "current_volume_usd": 62692.0,
-    "current_volume_5m_usd": 0.0,
-    "current_liquidity_usd": 13704.64,
-    "holder_count": 20,
-    "dev_holding_pct": 0.0,
-    "top_holder_pct": 0.0,
-    "sniper_bundler_pct": 0.0,
-    "lore_description": "Gadi Eisenkot is the frontrunner to become Israel’s next prime minister, leading all polls on Polymarket.",
-    "alert_timestamp": "2026-10-25T18:32:15.114109800Z",
-    "last_refreshed": "2026-10-26T09:23:21.901663900Z",
-    "bottom_market_cap_usd": 0.0,
-    "surge_pct_from_bottom": 0.0,
-    "is_cto": true,
-    "cto_status_desc": "Community Active / Multi-Chain",
-    "top_holders": [],
-    "top_10_pct": 0.0,
-    "clustered_wallets_count": 0,
-    "bubblemaps_url": "https://bubblemaps.io/solana/token/7Yn6XiurWwemRbTaQaWbECTgxBS4mtAb7gsEwZg9pump",
-    "ath_timestamp": "2026-10-26T08:42:14.216046700Z",
-    "last_notified_milestone": 1.0,
-    "chain": "solana",
-    "sustained_secs": 122,
-    "buys_5m": 14,
-    "sells_5m": 5
-  },
-  {
-    "alert_type": "MultiChainRevival",
-    "mint": "4hj5Pf5UNtu5UCjv3kCLQscj6B9TroUDcDMnGzEhpump",
-    "name": "Take The Risk",
-    "symbol": "Fish",
-    "initial_market_cap_usd": 25932.46,
-    "current_market_cap_usd": 20786.09,
-    "highest_market_cap_usd": 32981.45802023339,
-    "initial_volume_usd": 118716.65,
-    "current_volume_usd": 150315.82,
-    "current_volume_5m_usd": 1372.47,
-    "current_liquidity_usd": 8314.436,
-    "holder_count": 79,
-    "dev_holding_pct": 0.0,
-    "top_holder_pct": 0.0,
-    "sniper_bundler_pct": 0.0,
-    "lore_description": "take the risk",
-    "alert_timestamp": "2026-10-26T08:32:40.626517500Z",
-    "last_refreshed": "2026-10-26T09:23:22.501169900Z",
-    "bottom_market_cap_usd": 0.0,
-    "surge_pct_from_bottom": 0.0,
-    "is_cto": true,
-    "cto_status_desc": "Community Active / Multi-Chain",
-    "top_holders": [],
-    "top_10_pct": 0.0,
-    "clustered_wallets_count": 0,
-    "bubblemaps_url": "https://bubblemaps.io/solana/token/4hj5Pf5UNtu5UCjv3kCLQscj6B9TroUDcDMnGzEhpump",
-    "ath_timestamp": "2026-10-26T09:23:01.629239200Z",
-    "last_notified_milestone": 1.0,
-    "chain": "solana",
-    "sustained_secs": 124,
-    "buys_5m": 52,
-    "sells_5m": 27
-  },
-  {
-    "alert_type": "MultiChainRevival",
-    "mint": "43SYgbobrEmcQp4HvnqPd6TzaY8ZBExkXKhdYWFrpump",
-    "name": "Lordkek official coin",
-    "symbol": "kek",
-    "initial_market_cap_usd": 12701.96,
-    "current_market_cap_usd": 3180.42,
-    "highest_market_cap_usd": 12701.96,
-    "initial_volume_usd": 48653.11,
-    "current_volume_usd": 55987.95,
-    "current_volume_5m_usd": 0.0,
-    "current_liquidity_usd": 1272.1680000000001,
-    "holder_count": 56,
-    "dev_holding_pct": 0.0,
-    "top_holder_pct": 0.0,
-    "sniper_bundler_pct": 0.0,
-    "lore_description": "Pepe dev official coin $Kek",
-    "alert_timestamp": "2026-10-25T14:00:23.142414800Z",
-    "last_refreshed": "2026-10-26T09:23:23.216701100Z",
-    "bottom_market_cap_usd": 0.0,
-    "surge_pct_from_bottom": 0.0,
-    "is_cto": true,
-    "cto_status_desc": "Community Active / Multi-Chain",
-    "top_holders": [],
-    "top_10_pct": 0.0,
-    "clustered_wallets_count": 0,
-    "bubblemaps_url": "https://bubblemaps.io/solana/token/43SYgbobrEmcQp4HvnqPd6TzaY8ZBExkXKhdYWFrpump",
-    "ath_timestamp": "2026-10-25T14:00:23.142414800Z",
-    "last_notified_milestone": 1.0,
-    "chain": "solana",
-    "sustained_secs": 121,
-    "buys_5m": 45,
-    "sells_5m": 11
-  },
-  {
-    "alert_type": "MultiChainRevival",
-    "mint": "9DGb9TWswLUqu85reo2kNoZkKkME9nB9YVfjYkqopump",
-    "name": "Giga Titty Ass",
-    "symbol": "GTA",
-    "initial_market_cap_usd": 656025.0,
-    "current_market_cap_usd": 342475.0,
-    "highest_market_cap_usd": 1029855.7716363723,
-    "initial_volume_usd": 469913.68,
-    "current_volume_usd": 2213110.2800000003,
-    "current_volume_5m_usd": 5195.21,
-    "current_liquidity_usd": 52372.36,
-    "holder_count": 872,
-    "dev_holding_pct": 0.0,
-    "top_holder_pct": 0.0,
-    "sniper_bundler_pct": 0.0,
-    "lore_description": "Big curves. Fast cars. Five-star trouble. GTA just got a new meaning.",
-    "alert_timestamp": "2026-10-25T17:37:55.595875Z",
-    "last_refreshed": "2026-10-26T09:23:23.903250800Z",
-    "bottom_market_cap_usd": 0.0,
-    "surge_pct_from_bottom": 0.0,
-    "is_cto": true,
-    "cto_status_desc": "Community Active / Multi-Chain",
-    "top_holders": [],
-    "top_10_pct": 0.0,
-    "clustered_wallets_count": 0,
-    "bubblemaps_url": "https://bubblemaps.io/solana/token/9DGb9TWswLUqu85reo2kNoZkKkME9nB9YVfjYkqopump",
-    "ath_timestamp": "2026-10-25T17:48:24.109517600Z",
-    "last_notified_milestone": 1.0,
-    "chain": "solana",
-    "sustained_secs": 122,
-    "buys_5m": 676,
-    "sells_5m": 196
-  },
-  {
-    "alert_type": "EarlyLaunch",
-    "mint": "Hmpfs3cGmAiRgFFxwXHN1tJqqcmXfztUbfGFvvQCpump",
-    "name": "Sleepless",
-    "symbol": "SLEEP",
-    "initial_market_cap_usd": 22425.0,
-    "current_market_cap_usd": 1928.0,
-    "highest_market_cap_usd": 55853.651927784114,
-    "initial_volume_usd": 58539.7,
-    "current_volume_usd": 5.4,
-    "current_volume_5m_usd": 0.0,
-    "current_liquidity_usd": 2084.17,
-    "holder_count": 100,
-    "dev_holding_pct": 0.0,
-    "top_holder_pct": 8.471176548141386,
-    "sniper_bundler_pct": 8.471176548141386,
-    "lore_description": null,
-    "alert_timestamp": "2026-10-24T15:23:30.901344500Z",
-    "last_refreshed": "2026-10-26T09:23:03.428036700Z",
-    "bottom_market_cap_usd": 4235.365529418966,
-    "surge_pct_from_bottom": 429.4702392092331,
-    "is_cto": true,
-    "cto_status_desc": "Dev Dumped (0.0% Clean CTO)",
-    "top_holders": [
-      {
-        "rank": 1,
-        "address": "6QVKaGn96wwJxXj5x6PMTNE6TqasUuHGt72B59PKZYFC",
-        "amount": 81369486.787496,
-        "pct": 8.471176548141386,
-        "is_dev": false
-      },
-      {
-        "rank": 2,
-        "address": "CSGhVAH8Kv32cKCvjjB4vxVypVMAiSSYnNWrQDNkULAi",
-        "amount": 51516500.844983,
-        "pct": 5.36325582266531,
-        "is_dev": false
-      },
-      {
-        "rank": 3,
-        "address": "HYaYevTQAJkXApbNTQHZ58e5WnvBfRg2RXcQZ2dZ8sQA",
-        "amount": 8403179.660608,
-        "pct": 0.874834305599923,
-        "is_dev": false
-      },
-      {
-        "rank": 4,
-        "address": "7vE6huv91ZLUowDNF6voEUJh5hzxjxzjoCXpwebwtBDq",
-        "amount": 8368638.94014,
-        "pct": 0.8712383563966477,
-        "is_dev": false
-      },
-      {
-        "rank": 5,
-        "address": "FcVrC7EvMo1bxSEm9SRHWScsUqLwmQD9MRtwjHGsi7Pn",
-        "amount": 7856270.374142,
-        "pct": 0.817896928895423,
-        "is_dev": false
-      },
-      {
-        "rank": 6,
-        "address": "9tvEpaTEv5r2xyZbowVHXFKTfYA35TQyYjis7PmXwLXD",
-        "amount": 7802432.989306,
-        "pct": 0.8122920515655824,
-        "is_dev": false
-      },
-      {
-        "rank": 7,
-        "address": "9oTv7j5n8pnHGc74iXF132q3nnmcf6rGNCrowGZ2ygyz",
-        "amount": 7048006.663968,
-        "pct": 0.7337505878447391,
-        "is_dev": false
-      },
-      {
-        "rank": 8,
-        "address": "ESpv7ohGhgGAmfAQRyMQxW9e3TodDngyyL4hZpxjyp59",
-        "amount": 7015400.700152,
-        "pct": 0.7303560613838683,
-        "is_dev": false
-      },
-      {
-        "rank": 9,
-        "address": "Gaayh8oGmWEh2jjqY27qzZN3Lm21v9zFoH1ZnpZq64M2",
-        "amount": 7000768.344127,
-        "pct": 0.7288327228930314,
-        "is_dev": false
-      },
-      {
-        "rank": 10,
-        "address": "GUoAG9yppTA2NFQnn194PF4p5quoZiJkh7Ey4qEjKWuG",
-        "amount": 6916389.707232,
-        "pct": 0.7200482711501344,
-        "is_dev": false
-      },
-      {
-        "rank": 11,
-        "address": "f6Ht8wvC68M2r7ng9vtLJXN25TwXpaXNfzAYSU9T46E",
-        "amount": 6897341.60861,
-        "pct": 0.7180652205902263,
-        "is_dev": false
-      },
-      {
-        "rank": 12,
-        "address": "8A4dUepveTLefM2hEdXuzkHt7UnUexAK3AairaVPcEmT",
-        "amount": 6587789.208304,
-        "pct": 0.685838483794634,
-        "is_dev": false
-      },
-      {
-        "rank": 13,
-        "address": "9Q3fmKZB6KSXVLV15v49T594vTykfp8H72mZwWsbNwGm",
-        "amount": 6353714.862647,
-        "pct": 0.6614695810801605,
-        "is_dev": false
-      },
-      {
-        "rank": 14,
-        "address": "6GKdJQuZACBnZxmeRwYVR6EKf5RovSoejUkdsGFk2FKP",
-        "amount": 6347691.284921,
-        "pct": 0.6608424812619983,
-        "is_dev": false
-      },
-      {
-        "rank": 15,
-        "address": "4shgXLBu6cWj8P7d8P6WLoLVDUKPxADA82qj3hRsqzbt",
-        "amount": 6267361.925935,
-        "pct": 0.6524795898534954,
-        "is_dev": false
-      },
-      {
-        "rank": 16,
-        "address": "B4wQUTyEBkdgC59f6vPCszAfm74pZMnLQTmLtytshNdq",
-        "amount": 6256724.364289,
-        "pct": 0.6513721395511439,
-        "is_dev": false
-      },
-      {
-        "rank": 17,
-        "address": "Q1pdVC3UBTxiWTGuEWPX4vwMe6vUNbSXS6hbzGLWztq",
-        "amount": 6135985.883323,
-        "pct": 0.638802354134056,
-        "is_dev": false
-      },
-      {
-        "rank": 18,
-        "address": "8yHUqU4X9piKFWz99jcZnYhChibv8nknEMoMVfVUBMgY",
-        "amount": 6108039.548333,
-        "pct": 0.6358929301359417,
-        "is_dev": false
-      },
-      {
-        "rank": 19,
-        "address": "Efsztg2QMJpiL3nLmjREo22q1bFDbsQqmTzF4nJUGGXL",
-        "amount": 6096893.601299,
-        "pct": 0.6347325530849246,
-        "is_dev": false
-      }
-    ],
-    "top_10_pct": 20.123681656536043,
-    "clustered_wallets_count": 1,
-    "bubblemaps_url": "https://bubblemaps.io/solana/token/Hmpfs3cGmAiRgFFxwXHN1tJqqcmXfztUbfGFvvQCpump",
-    "ath_timestamp": "2026-10-24T23:31:24.723711Z",
-    "last_notified_milestone": 2.0,
-    "chain": "solana",
-    "sustained_secs": 0,
-    "buys_5m": 0,
-    "sells_5m": 0
-  },
-  {
-    "alert_type": "MultiChainRevival",
-    "mint": "8gnyYyngFtzPP6K9YRQ8a7kZWKQ5tzu5N2D23Rafxrn5",
-    "name": "StonkMarket",
-    "symbol": "STM",
-    "initial_market_cap_usd": 337451.0,
-    "current_market_cap_usd": 145534.0,
-    "highest_market_cap_usd": 135935562.28591612,
-    "initial_volume_usd": 593044.14,
-    "current_volume_usd": 790766.37,
-    "current_volume_5m_usd": 7413.67,
-    "current_liquidity_usd": 35265.9,
-    "holder_count": 365,
-    "dev_holding_pct": 0.0,
-    "top_holder_pct": 0.0,
-    "sniper_bundler_pct": 0.0,
-    "lore_description": "",
-    "alert_timestamp": "2026-10-26T08:43:04.989209300Z",
-    "last_refreshed": "2026-10-26T09:23:04.027478500Z",
-    "bottom_market_cap_usd": 0.0,
-    "surge_pct_from_bottom": 0.0,
-    "is_cto": true,
-    "cto_status_desc": "Community Active / Multi-Chain",
-    "top_holders": [],
-    "top_10_pct": 0.0,
-    "clustered_wallets_count": 0,
-    "bubblemaps_url": "https://bubblemaps.io/solana/token/8gnyYyngFtzPP6K9YRQ8a7kZWKQ5tzu5N2D23Rafxrn5",
-    "ath_timestamp": "2026-10-26T09:17:01.275737700Z",
-    "last_notified_milestone": 100.0,
-    "chain": "solana",
-    "sustained_secs": 154,
-    "buys_5m": 219,
-    "sells_5m": 146
-  },
-  {
-    "alert_type": "EarlyLaunch",
-    "mint": "GSdzioCmcouDADrJAx2Va8AXfG6EMkGrxQpf5Lypump",
-    "name": "Bounceback",
-    "symbol": "BOUNCEBACK",
-    "initial_market_cap_usd": 7989.81,
-    "current_market_cap_usd": 7989.81,
-    "highest_market_cap_usd": 7989.81,
-    "initial_volume_usd": 33791.52,
-    "current_volume_usd": 1.79,
-    "current_volume_5m_usd": 0.0,
-    "current_liquidity_usd": 1214.6,
-    "holder_count": 50,
-    "dev_holding_pct": 0.0,
-    "top_holder_pct": 5.0,
-    "sniper_bundler_pct": 5.0,
-    "lore_description": null,
-    "alert_timestamp": "2026-10-22T12:06:22.257440600Z",
-    "last_refreshed": "2026-10-24T09:57:50.732403Z",
-    "bottom_market_cap_usd": 7989.81,
-    "surge_pct_from_bottom": 0.0,
-    "is_cto": false,
-    "cto_status_desc": "Tracked on demand",
-    "top_holders": [],
-    "top_10_pct": 0.0,
-    "clustered_wallets_count": 0,
-    "bubblemaps_url": "https://bubblemaps.io/solana/token/GSdzioCmcouDADrJAx2Va8AXfG6EMkGrxQpf5Lypump",
-    "ath_timestamp": "2026-10-22T12:06:22Z",
-    "last_notified_milestone": 1.0,
-    "chain": "solana",
-    "sustained_secs": 0,
-    "buys_5m": 0,
-    "sells_5m": 0
+    "sustained_secs": 355,
+    "buys_5m": 148,
+    "sells_5m": 78,
+    "websites": [],
+    "socials": []
   },
   {
     "alert_type": "EarlyLaunch",
@@ -1808,7 +53,7 @@
     "sniper_bundler_pct": 2.8899471047914,
     "lore_description": "",
     "alert_timestamp": "2026-10-24T09:57:16.441382500Z",
-    "last_refreshed": "2026-10-26T09:23:05.359676300Z",
+    "last_refreshed": "2026-10-26T10:19:03.078522400Z",
     "bottom_market_cap_usd": 5074.557315936621,
     "surge_pct_from_bottom": 179.65335922865043,
     "is_cto": true,
@@ -1956,7 +201,258 @@
     "chain": "solana",
     "sustained_secs": 0,
     "buys_5m": 0,
-    "sells_5m": 0
+    "sells_5m": 0,
+    "websites": [],
+    "socials": []
+  },
+  {
+    "alert_type": "Revival",
+    "mint": "98sMhvDwXj1RQi5c5Mndm3vPe9cBqPrbLaufMXFNMh5g",
+    "name": "Unknown",
+    "symbol": "HYPE",
+    "initial_market_cap_usd": 84360.0,
+    "current_market_cap_usd": 84884.0,
+    "highest_market_cap_usd": 85046.0,
+    "initial_volume_usd": 8150120.94,
+    "current_volume_usd": 8581653.16,
+    "current_volume_5m_usd": 9352.55,
+    "current_liquidity_usd": 844780.57,
+    "holder_count": 100,
+    "dev_holding_pct": 0.0,
+    "top_holder_pct": 11.296056311378452,
+    "sniper_bundler_pct": -0.0,
+    "lore_description": null,
+    "alert_timestamp": "2026-10-26T08:27:46.011930400Z",
+    "last_refreshed": "2026-10-26T10:19:05.446380300Z",
+    "bottom_market_cap_usd": 5133.584245521751,
+    "surge_pct_from_bottom": 1543.2963007004494,
+    "is_cto": true,
+    "cto_status_desc": "Dev Dumped (0.0% Clean CTO)",
+    "top_holders": [
+      {
+        "rank": 1,
+        "address": "28bWtteA7woFR1U4QFhBpJnBrKwS86DGQJAXGXcVNJrx",
+        "amount": 79179.823404473,
+        "pct": 11.296056311378452,
+        "is_dev": false
+      },
+      {
+        "rank": 2,
+        "address": "3FGUthEqjRBHW66RJ8Gr2oHQoGgk2SmskgEQGDeV9pcb",
+        "amount": 40000.016424009,
+        "pct": 5.706535055951429,
+        "is_dev": false
+      },
+      {
+        "rank": 3,
+        "address": "454tPgjg9gtDywxjpzXBwaibXDWQzwJSdaYkLT5ojkuK",
+        "amount": 31083.295321973,
+        "pct": 4.434446039448709,
+        "is_dev": false
+      },
+      {
+        "rank": 4,
+        "address": "FWPLy9vhx2VRto91bcqh7f8xSUd285Sz2N12H6JC29rr",
+        "amount": 26345.407532675,
+        "pct": 3.758523247962927,
+        "is_dev": false
+      },
+      {
+        "rank": 5,
+        "address": "3KGotDRmG7D7vyNYtQGC9468azds4QnTwVyEB2TPsCVX",
+        "amount": 15661.584499831,
+        "pct": 2.2343336070828967,
+        "is_dev": false
+      },
+      {
+        "rank": 6,
+        "address": "FkxiPghgVPmstyoEgQdK8HFqSkhVkJCtrFMD6YqRDYfT",
+        "amount": 13214.649204012,
+        "pct": 1.88524569928757,
+        "is_dev": false
+      },
+      {
+        "rank": 7,
+        "address": "7Uxc9dh3mduVKBGqjcvgw1JvWL8Ba8FBk9TXnrcA5pHy",
+        "amount": 12865.570629719,
+        "pct": 1.8354449916986384,
+        "is_dev": false
+      },
+      {
+        "rank": 8,
+        "address": "E8sfWEPSJBXf4T5xcA1G3X8iKe8zL9gnPdBsFw6w1YhM",
+        "amount": 12460.037137822,
+        "pct": 1.7775902382569972,
+        "is_dev": false
+      },
+      {
+        "rank": 9,
+        "address": "FBxH9wbh6kdv7bjKr1bXhBp2p2qwCkAoaMDNxQJNcsDN",
+        "amount": 9070.499300869,
+        "pct": 1.294027524556804,
+        "is_dev": false
+      },
+      {
+        "rank": 10,
+        "address": "BfhFze9NPauyhKFgxkVQwTrWyQVZxf6qnKAiaoqULTDT",
+        "amount": 7909.38517988,
+        "pct": 1.1283791316874725,
+        "is_dev": false
+      },
+      {
+        "rank": 11,
+        "address": "G1P6BH7qiFcGAYkiMzv1QYYwoGW3vqSzYaQfWASxjkTH",
+        "amount": 7583.208765491,
+        "pct": 1.0818457222157167,
+        "is_dev": false
+      },
+      {
+        "rank": 12,
+        "address": "Ban52DCJ8S4SbHu7k5duBSy3W6nUNQ2Bv4xYpUXo7Gv9",
+        "amount": 7088.035977817,
+        "pct": 1.0112027294313737,
+        "is_dev": false
+      },
+      {
+        "rank": 13,
+        "address": "4geNRgVKtaMTi6QxgszemgaqQUbdaqr9cfbuow99DavT",
+        "amount": 6988.674909901,
+        "pct": 0.99702754982022,
+        "is_dev": false
+      },
+      {
+        "rank": 14,
+        "address": "2km8KpXQW6TQuFQrE1cBLLtsvWw8YjAvvHRbgLftAtEf",
+        "amount": 5956.829455849,
+        "pct": 0.8498210538664439,
+        "is_dev": false
+      },
+      {
+        "rank": 15,
+        "address": "BcSmdwkBafUZt2uFw4x2j7EkPuZ6gmeWpJR7Zxg7ANzD",
+        "amount": 5911.182953316,
+        "pct": 0.8433089723681526,
+        "is_dev": false
+      },
+      {
+        "rank": 16,
+        "address": "8X3dQLeGYXrEyYn6MRnbsr8RJ8esU8Z3aHNxgXu85n65",
+        "amount": 5575.551370494,
+        "pct": 0.7954266571971867,
+        "is_dev": false
+      },
+      {
+        "rank": 17,
+        "address": "7mGdp75FN4of1Ex76T17Zq5ZzdQwJbQwj6Qi7CvZGuEt",
+        "amount": 5000.0,
+        "pct": 0.7133165891059766,
+        "is_dev": false
+      },
+      {
+        "rank": 18,
+        "address": "Cvvezs3Y1q4zEvbpKKimhTjrDeuTQdHhNNRbvmEdZkSH",
+        "amount": 4925.480011113,
+        "pct": 0.7026853202473586,
+        "is_dev": false
+      },
+      {
+        "rank": 19,
+        "address": "5v8wEcfie8N74mLkK3bDcgUdXJ3DTy8WeL9S3wAEwBTx",
+        "amount": 3910.545719453,
+        "pct": 0.5578914268286382,
+        "is_dev": false
+      },
+      {
+        "rank": 20,
+        "address": "GqseCw2NbzxgG5cuZ96YEVz9kM8FxuVG82Z6AFNCHh4p",
+        "amount": 3881.731967342,
+        "pct": 0.5537807613536055,
+        "is_dev": false
+      }
+    ],
+    "top_10_pct": 35.350581847311894,
+    "clustered_wallets_count": 0,
+    "bubblemaps_url": "https://bubblemaps.io/solana/token/98sMhvDwXj1RQi5c5Mndm3vPe9cBqPrbLaufMXFNMh5g",
+    "ath_timestamp": "2026-10-26T08:52:50.699259400Z",
+    "last_notified_milestone": 1.0,
+    "chain": "solana",
+    "sustained_secs": 0,
+    "buys_5m": 0,
+    "sells_5m": 0,
+    "websites": [],
+    "socials": []
+  },
+  {
+    "alert_type": "MultiChainRevival",
+    "mint": "EUkJycHeCUkHTPbLC8LdHWvNndnVDKPHBBJVMAPrpump",
+    "name": "Transom",
+    "symbol": "TRANSOM",
+    "initial_market_cap_usd": 38146.18,
+    "current_market_cap_usd": 41338.65,
+    "highest_market_cap_usd": 41338.65,
+    "initial_volume_usd": 96884.69,
+    "current_volume_usd": 117020.56,
+    "current_volume_5m_usd": 0.4,
+    "current_liquidity_usd": 16535.460000000003,
+    "holder_count": 94,
+    "dev_holding_pct": 0.0,
+    "top_holder_pct": 0.0,
+    "sniper_bundler_pct": 0.0,
+    "lore_description": "The security suite for onchain life. Wallet inspection, encrypted messaging, bounties and security coordination. Your security. One workspace.",
+    "alert_timestamp": "2026-10-25T14:32:03.212352300Z",
+    "last_refreshed": "2026-10-26T10:19:06.620587900Z",
+    "bottom_market_cap_usd": 0.0,
+    "surge_pct_from_bottom": 0.0,
+    "is_cto": true,
+    "cto_status_desc": "Community Active / Multi-Chain",
+    "top_holders": [],
+    "top_10_pct": 0.0,
+    "clustered_wallets_count": 0,
+    "bubblemaps_url": "https://bubblemaps.io/solana/token/EUkJycHeCUkHTPbLC8LdHWvNndnVDKPHBBJVMAPrpump",
+    "ath_timestamp": "2026-10-25T14:33:37.331209600Z",
+    "last_notified_milestone": 1.0,
+    "chain": "solana",
+    "sustained_secs": 123,
+    "buys_5m": 61,
+    "sells_5m": 33,
+    "websites": [],
+    "socials": []
+  },
+  {
+    "alert_type": "MultiChainRevival",
+    "mint": "2WG7bzXCGVR47xWfqNpDvPbeviS7Sskt51MAj6iMpump",
+    "name": "TATOBRO",
+    "symbol": "BRO",
+    "initial_market_cap_usd": 23174.05,
+    "current_market_cap_usd": 68736.0,
+    "highest_market_cap_usd": 120592.7771680014,
+    "initial_volume_usd": 18197.87,
+    "current_volume_usd": 52632.36,
+    "current_volume_5m_usd": 0.0,
+    "current_liquidity_usd": 20925.47,
+    "holder_count": 43,
+    "dev_holding_pct": 0.0,
+    "top_holder_pct": 0.0,
+    "sniper_bundler_pct": 0.0,
+    "lore_description": "\ud83e\udd54 TATOBRO ($BRO) \u2014 NO BRAIN. JUST POTATO.\n\nMeet the most confident potato on Solana! \ud83d\udc51\n\nHe doesn\u2019t understand crypto. He doesn\u2019t understand charts. He barely understands potatoes.\n\nBut he has black sunglasses, a gold BRO chain, and absolutely ZERO doubts. \ud83d\ude0e\n\nTATOBRO is a community-driven meme coin built for laughs, crazy memes, and pure potato energy.\n\n\ud83e\udde0 0 IQ. 100% CONFIDENCE.\n\ud83e\udd54 SMALL POTATO. BIG DREAMS.\n\nNo promises of riches. Just memes, fun, and potato-powered chaos.\n\nWELCOME TO THE POTATO CLUB! \ud83d\ude80",
+    "alert_timestamp": "2026-10-25T18:34:08.159295700Z",
+    "last_refreshed": "2026-10-26T10:19:07.894191300Z",
+    "bottom_market_cap_usd": 0.0,
+    "surge_pct_from_bottom": 0.0,
+    "is_cto": true,
+    "cto_status_desc": "Community Active / Multi-Chain",
+    "top_holders": [],
+    "top_10_pct": 0.0,
+    "clustered_wallets_count": 0,
+    "bubblemaps_url": "https://bubblemaps.io/solana/token/2WG7bzXCGVR47xWfqNpDvPbeviS7Sskt51MAj6iMpump",
+    "ath_timestamp": "2026-10-26T08:33:38.170706Z",
+    "last_notified_milestone": 5.0,
+    "chain": "solana",
+    "sustained_secs": 121,
+    "buys_5m": 31,
+    "sells_5m": 12,
+    "websites": [],
+    "socials": []
   },
   {
     "alert_type": "EarlyLaunch",
@@ -1964,19 +460,19 @@
     "name": "kumchi",
     "symbol": "kumchi",
     "initial_market_cap_usd": 14591.0,
-    "current_market_cap_usd": 3261.0,
+    "current_market_cap_usd": 3330.0,
     "highest_market_cap_usd": 95617.63,
     "initial_volume_usd": 414001.17,
-    "current_volume_usd": 12954.98,
-    "current_volume_5m_usd": 0.0,
-    "current_liquidity_usd": 3309.27,
+    "current_volume_usd": 12963.12,
+    "current_volume_5m_usd": 20.13,
+    "current_liquidity_usd": 3366.05,
     "holder_count": 50,
     "dev_holding_pct": 0.0,
     "top_holder_pct": 5.0,
     "sniper_bundler_pct": 5.0,
     "lore_description": null,
     "alert_timestamp": "2026-10-22T12:07:02.898736200Z",
-    "last_refreshed": "2026-10-26T09:23:05.966626300Z",
+    "last_refreshed": "2026-10-26T10:19:08.957505700Z",
     "bottom_market_cap_usd": 14591.0,
     "surge_pct_from_bottom": 0.0,
     "is_cto": false,
@@ -1990,75 +486,421 @@
     "chain": "solana",
     "sustained_secs": 0,
     "buys_5m": 0,
-    "sells_5m": 0
+    "sells_5m": 0,
+    "websites": [],
+    "socials": []
   },
   {
-    "alert_type": "MultiChainRevival",
-    "mint": "0xB0CC643EAFfd28D4ed43D2793Bcca54438380650",
-    "name": "iPhone Duo",
-    "symbol": "iPhone Duo",
-    "initial_market_cap_usd": 54594598.0,
-    "current_market_cap_usd": 57444.0,
-    "highest_market_cap_usd": 54594598.0,
-    "initial_volume_usd": 24527855.89,
-    "current_volume_usd": 9116482.92,
-    "current_volume_5m_usd": 402.4,
-    "current_liquidity_usd": 31181.33,
-    "holder_count": 180,
+    "alert_type": "EarlyLaunch",
+    "mint": "GEZev5APkmxo7DLiXtvMiZ732qqEe1VAAFyv249HLock",
+    "name": "Hashlock.fun",
+    "symbol": "HASHLOCK",
+    "initial_market_cap_usd": 16661.65,
+    "current_market_cap_usd": 1956.0,
+    "highest_market_cap_usd": 59711.25494582966,
+    "initial_volume_usd": 30010.58,
+    "current_volume_usd": 26.27,
+    "current_volume_5m_usd": 0.0,
+    "current_liquidity_usd": 2109.03,
+    "holder_count": 83,
     "dev_holding_pct": 0.0,
-    "top_holder_pct": 0.0,
-    "sniper_bundler_pct": 0.0,
+    "top_holder_pct": 3.3324115231921,
+    "sniper_bundler_pct": 0.2437260804297,
     "lore_description": null,
-    "alert_timestamp": "2026-10-25T09:36:02.887220100Z",
-    "last_refreshed": "2026-10-26T09:23:06.664379900Z",
-    "bottom_market_cap_usd": 0.0,
-    "surge_pct_from_bottom": 0.0,
+    "alert_timestamp": "2026-10-22T18:28:36.536961100Z",
+    "last_refreshed": "2026-10-26T10:19:10.870538500Z",
+    "bottom_market_cap_usd": 4000.2,
+    "surge_pct_from_bottom": 316.5204239788011,
     "is_cto": true,
-    "cto_status_desc": "Community Active / Multi-Chain",
-    "top_holders": [],
-    "top_10_pct": 0.0,
-    "clustered_wallets_count": 0,
-    "bubblemaps_url": "https://bubblemaps.io/bsc/token/0xB0CC643EAFfd28D4ed43D2793Bcca54438380650",
-    "ath_timestamp": "2026-10-25T09:36:02.887220100Z",
-    "last_notified_milestone": 1.0,
-    "chain": "bsc",
-    "sustained_secs": 121,
-    "buys_5m": 164,
-    "sells_5m": 16
-  },
-  {
-    "alert_type": "MultiChainRevival",
-    "mint": "C3Sh85fPzcffBKwRsUWPNHnXr2YprR9TQ2KzFR34pump",
-    "name": "Vice City Manatees",
-    "symbol": "MANATEES",
-    "initial_market_cap_usd": 20299.19,
-    "current_market_cap_usd": 44414.31,
-    "highest_market_cap_usd": 44414.31,
-    "initial_volume_usd": 31909.69,
-    "current_volume_usd": 36201.32,
-    "current_volume_5m_usd": 21.47,
-    "current_liquidity_usd": 17765.724,
-    "holder_count": 29,
-    "dev_holding_pct": 0.0,
-    "top_holder_pct": 0.0,
-    "sniper_bundler_pct": 0.0,
-    "lore_description": null,
-    "alert_timestamp": "2026-10-25T17:43:32.729283Z",
-    "last_refreshed": "2026-10-26T09:23:07.356273300Z",
-    "bottom_market_cap_usd": 0.0,
-    "surge_pct_from_bottom": 0.0,
-    "is_cto": true,
-    "cto_status_desc": "Community Active / Multi-Chain",
-    "top_holders": [],
-    "top_10_pct": 0.0,
-    "clustered_wallets_count": 0,
-    "bubblemaps_url": "https://bubblemaps.io/solana/token/C3Sh85fPzcffBKwRsUWPNHnXr2YprR9TQ2KzFR34pump",
-    "ath_timestamp": "2026-10-26T08:25:09.919673100Z",
-    "last_notified_milestone": 2.0,
+    "cto_status_desc": "Dev Dumped (0.0% Clean CTO)",
+    "top_holders": [
+      {
+        "rank": 1,
+        "address": "CgN1tkvmzAqmgee2i1JUKfJQ27R17JFhMfz3i13LL1CF",
+        "amount": 33324115.231921,
+        "pct": 3.3324115231921,
+        "is_dev": false
+      },
+      {
+        "rank": 2,
+        "address": "Cghxv7Puj9rzK3Pbk3DRL6YuX4cN2PrVDy1vG2aJWTZG",
+        "amount": 29842156.128039,
+        "pct": 2.9842156128039,
+        "is_dev": false
+      },
+      {
+        "rank": 3,
+        "address": "4DHnzMq5GuBEv9r2aXvH7k1B7xseFPjhdiBwVjB9koHT",
+        "amount": 29118390.261707,
+        "pct": 2.9118390261707,
+        "is_dev": false
+      },
+      {
+        "rank": 4,
+        "address": "o87DDF3MCMFDgsnhL9TG58g48cf3SYnJYKwPaCNwnWa",
+        "amount": 27533333.08881,
+        "pct": 2.753333308881,
+        "is_dev": false
+      },
+      {
+        "rank": 5,
+        "address": "ErC5Qw7eb56xugRxbJUxrVc1Nsf2pdexHAbBdrJZu23v",
+        "amount": 26095764.639513,
+        "pct": 2.6095764639513,
+        "is_dev": false
+      },
+      {
+        "rank": 6,
+        "address": "D5y2ZbSQTpD36NavHDuH6tGiXrYNUyfzFRf5f2tQJWkb",
+        "amount": 25168826.724977,
+        "pct": 2.5168826724977,
+        "is_dev": false
+      },
+      {
+        "rank": 7,
+        "address": "B2UJRf9UWfimCAZ1dEGqAsBiWgxnBM1cU6P8eioH3F17",
+        "amount": 22290618.274216,
+        "pct": 2.2290618274216,
+        "is_dev": false
+      },
+      {
+        "rank": 8,
+        "address": "65R67Lzaz6CVe2ch72bPD21nRP159Bwy9tEuqYA8xKPa",
+        "amount": 21963649.057991,
+        "pct": 2.1963649057991,
+        "is_dev": false
+      },
+      {
+        "rank": 9,
+        "address": "4Fk4FC6DyZnAQSDdpwnv9gjow5udcdcbXQcQCPC3buRf",
+        "amount": 21336170.67276,
+        "pct": 2.133617067276,
+        "is_dev": false
+      },
+      {
+        "rank": 10,
+        "address": "F4MSGm2ykMWzZgC51iExAKMhCvV6iJiTVhP9b3uWz82G",
+        "amount": 21167706.356736,
+        "pct": 2.1167706356736,
+        "is_dev": false
+      },
+      {
+        "rank": 11,
+        "address": "4kJPy8Z65jrR3soTJYHUUy1qcANr495iyEjSRJzHi6Ye",
+        "amount": 20872113.956851,
+        "pct": 2.0872113956851,
+        "is_dev": false
+      },
+      {
+        "rank": 12,
+        "address": "2u2QQ1DFTE3Ki742FTV9QkZQQct7kPLoYwAWCtzQkXeS",
+        "amount": 19504692.458485,
+        "pct": 1.9504692458485,
+        "is_dev": false
+      },
+      {
+        "rank": 13,
+        "address": "DJHLZ61BrRzRFcUgf68AtY5rxXX6QPsYBaMooFDwrRbz",
+        "amount": 19190911.425556,
+        "pct": 1.9190911425556,
+        "is_dev": false
+      },
+      {
+        "rank": 14,
+        "address": "3UmC1j2WKpbCHtsf8P6WtBEZXhR3XqkabEZoUkKMijLB",
+        "amount": 18770212.900443,
+        "pct": 1.8770212900443,
+        "is_dev": false
+      },
+      {
+        "rank": 15,
+        "address": "BDVv7fwwerFh6qSECH97csHWzErJSCFTUJkLjGWokW64",
+        "amount": 18353046.089246,
+        "pct": 1.8353046089246,
+        "is_dev": false
+      },
+      {
+        "rank": 16,
+        "address": "2Bf5peSYqSEk6AcAejNiXVg668FMJ7NMTD7HDSuwAjs4",
+        "amount": 17180107.879683,
+        "pct": 1.7180107879683,
+        "is_dev": false
+      },
+      {
+        "rank": 17,
+        "address": "Eb9aKZUW85SY8pUM3vWZLA3R6PpX898nbjgrCfrWNyBH",
+        "amount": 16620448.467577,
+        "pct": 1.6620448467577,
+        "is_dev": false
+      },
+      {
+        "rank": 18,
+        "address": "7HsaBwAKATXci6PA8DKDgeCtZ2xSPi9Cbw2JRC4CYjag",
+        "amount": 16273659.874986,
+        "pct": 1.6273659874986,
+        "is_dev": false
+      },
+      {
+        "rank": 19,
+        "address": "8ZyHtHuYpkbjonWRUozZ8Ysxoambcp3sGFtEUtiY9py2",
+        "amount": 15444895.101914,
+        "pct": 1.5444895101914,
+        "is_dev": false
+      }
+    ],
+    "top_10_pct": 25.784073043667,
+    "clustered_wallets_count": 1,
+    "bubblemaps_url": "https://bubblemaps.io/solana/token/GEZev5APkmxo7DLiXtvMiZ732qqEe1VAAFyv249HLock",
+    "ath_timestamp": "2026-10-24T15:13:31.705262700Z",
+    "last_notified_milestone": 3.0,
     "chain": "solana",
-    "sustained_secs": 153,
-    "buys_5m": 18,
-    "sells_5m": 11
+    "sustained_secs": 0,
+    "buys_5m": 0,
+    "sells_5m": 0,
+    "websites": [],
+    "socials": []
+  },
+  {
+    "alert_type": "EarlyLaunch",
+    "mint": "8XwwRCaD2bpQrqLuHh2EbxqqFRGDEuYvNe8rqqg3pump",
+    "name": "Titcoin",
+    "symbol": "Titcoin",
+    "initial_market_cap_usd": 17701.94,
+    "current_market_cap_usd": 3181.74,
+    "highest_market_cap_usd": 19969.10159517532,
+    "initial_volume_usd": 54896.99,
+    "current_volume_usd": 0.12,
+    "current_volume_5m_usd": 0.0,
+    "current_liquidity_usd": 1272.696,
+    "holder_count": 88,
+    "dev_holding_pct": 0.0,
+    "top_holder_pct": 3.5875472627919,
+    "sniper_bundler_pct": -0.0,
+    "lore_description": "",
+    "alert_timestamp": "2026-10-22T18:36:10.165142700Z",
+    "last_refreshed": "2026-10-26T10:19:12.210586800Z",
+    "bottom_market_cap_usd": 4221.854613233923,
+    "surge_pct_from_bottom": 319.2929795476871,
+    "is_cto": true,
+    "cto_status_desc": "Dev Dumped (0.0% Clean CTO)",
+    "top_holders": [
+      {
+        "rank": 1,
+        "address": "7EtNyAiX3bejVgin8iZoAzFfMMqnokaWMqTJuPUq8p3x",
+        "amount": 35875472.627919,
+        "pct": 3.5875472627919,
+        "is_dev": false
+      },
+      {
+        "rank": 2,
+        "address": "9ZVPbppD3Ay2cimcVr7bEiwaGEjw5uteJU8qRttFuxzy",
+        "amount": 34187415.231538,
+        "pct": 3.4187415231537996,
+        "is_dev": false
+      },
+      {
+        "rank": 3,
+        "address": "BAQA9sAQLDZ1iFC9uTBijKhXjPLpFAbudVDnCerUrcfm",
+        "amount": 29524248.72224,
+        "pct": 2.952424872224,
+        "is_dev": false
+      },
+      {
+        "rank": 4,
+        "address": "Aout3A7wsbLNuNcZMTFbasfykHx7PMQGZVNTygFJHf2A",
+        "amount": 27465014.691045,
+        "pct": 2.7465014691045,
+        "is_dev": false
+      },
+      {
+        "rank": 5,
+        "address": "5NKiF64tV7Mod62Y8ojgvsuVwqFR7T4QBvpsTKaYNMay",
+        "amount": 26218322.307605,
+        "pct": 2.6218322307605,
+        "is_dev": false
+      },
+      {
+        "rank": 6,
+        "address": "HGeF57Yse6saghVzxhqH7YywLFriSbCm9nQEvuXgYFd1",
+        "amount": 25235171.488882,
+        "pct": 2.5235171488882,
+        "is_dev": false
+      },
+      {
+        "rank": 7,
+        "address": "BZQtf2DKgdb81aGJBcrSjWuKWgLX882WD4Z9HvBLCowc",
+        "amount": 23632435.958392,
+        "pct": 2.3632435958392,
+        "is_dev": false
+      },
+      {
+        "rank": 8,
+        "address": "ATAzHivR1oYeqtuB5yZsMbUWfaN358ewFmARsLm3vE9r",
+        "amount": 22706569.513582,
+        "pct": 2.2706569513582,
+        "is_dev": false
+      },
+      {
+        "rank": 9,
+        "address": "Eaftys7RLDW4GftEM5Ez5Mdm5TmTSYdz4rj6JbAZJ387",
+        "amount": 20625664.340823,
+        "pct": 2.0625664340823,
+        "is_dev": false
+      },
+      {
+        "rank": 10,
+        "address": "BVx7Y7SeJ6SayGnDJ6amNa6umWqLrau4MKggFTL3mf59",
+        "amount": 19878784.459508,
+        "pct": 1.9878784459508,
+        "is_dev": false
+      },
+      {
+        "rank": 11,
+        "address": "4rSMiSQZ5CSoevZJXjkaFLeFzDj3Ka8xC4hwHv2PsGNm",
+        "amount": 18809897.401495,
+        "pct": 1.8809897401495,
+        "is_dev": false
+      },
+      {
+        "rank": 12,
+        "address": "HhjNmX1NkUdMHsPZym8TvwMaqG8BTpS6j2SnLQpFVoa",
+        "amount": 18139386.666405,
+        "pct": 1.8139386666405,
+        "is_dev": false
+      },
+      {
+        "rank": 13,
+        "address": "6LNeJAzi8nPJLQaiaXwmX9UfYet69DFf7qZ9zoFyxVXJ",
+        "amount": 17550488.199055,
+        "pct": 1.7550488199055,
+        "is_dev": false
+      },
+      {
+        "rank": 14,
+        "address": "E7BFt9ErmwvtjZC9uWYRLBhzpXEceYBEF7tocvvc9yC4",
+        "amount": 17355653.161151,
+        "pct": 1.7355653161151,
+        "is_dev": false
+      },
+      {
+        "rank": 15,
+        "address": "Bt9ayUbShUunZS9m1oFV1PmGWApinZt3fDW81YgPzHVs",
+        "amount": 15211235.071747,
+        "pct": 1.5211235071746998,
+        "is_dev": false
+      },
+      {
+        "rank": 16,
+        "address": "FnrHttfWypV6Wt1LKo7jJFBBV4mkAwvnZzLXZNEbMp4c",
+        "amount": 14938285.208569,
+        "pct": 1.4938285208569,
+        "is_dev": false
+      },
+      {
+        "rank": 17,
+        "address": "89NPwuDKj3inKPRny4hyFP5PPXSgrkHbkML37ThP1fA",
+        "amount": 14626116.524251,
+        "pct": 1.4626116524250998,
+        "is_dev": false
+      },
+      {
+        "rank": 18,
+        "address": "FfM2gsUnkPFY6DHTa3ax1J8w3n2X2nCG9zWpy4Vn15XQ",
+        "amount": 13845100.126601,
+        "pct": 1.3845100126601,
+        "is_dev": false
+      },
+      {
+        "rank": 19,
+        "address": "E83cpkshqv4LCPnPEkh2egBaE27HHtiQyTwgPzzi6Bxr",
+        "amount": 13587723.824851,
+        "pct": 1.3587723824851,
+        "is_dev": false
+      }
+    ],
+    "top_10_pct": 26.534909934153397,
+    "clustered_wallets_count": 0,
+    "bubblemaps_url": "https://bubblemaps.io/solana/token/8XwwRCaD2bpQrqLuHh2EbxqqFRGDEuYvNe8rqqg3pump",
+    "ath_timestamp": "2026-10-25T13:41:06.255035800Z",
+    "last_notified_milestone": 1.0,
+    "chain": "solana",
+    "sustained_secs": 0,
+    "buys_5m": 0,
+    "sells_5m": 0,
+    "websites": [],
+    "socials": []
+  },
+  {
+    "alert_type": "MultiChainRevival",
+    "mint": "9DGb9TWswLUqu85reo2kNoZkKkME9nB9YVfjYkqopump",
+    "name": "Giga Titty Ass",
+    "symbol": "GTA",
+    "initial_market_cap_usd": 656025.0,
+    "current_market_cap_usd": 136783.0,
+    "highest_market_cap_usd": 1029855.7716363724,
+    "initial_volume_usd": 469913.68,
+    "current_volume_usd": 2301746.0100000002,
+    "current_volume_5m_usd": 5464.95,
+    "current_liquidity_usd": 32653.51,
+    "holder_count": 872,
+    "dev_holding_pct": 0.0,
+    "top_holder_pct": 0.0,
+    "sniper_bundler_pct": 0.0,
+    "lore_description": "Big curves. Fast cars. Five-star trouble. GTA just got a new meaning.",
+    "alert_timestamp": "2026-10-25T17:37:55.595875Z",
+    "last_refreshed": "2026-10-26T10:19:13.848554600Z",
+    "bottom_market_cap_usd": 0.0,
+    "surge_pct_from_bottom": 0.0,
+    "is_cto": true,
+    "cto_status_desc": "Community Active / Multi-Chain",
+    "top_holders": [],
+    "top_10_pct": 0.0,
+    "clustered_wallets_count": 0,
+    "bubblemaps_url": "https://bubblemaps.io/solana/token/9DGb9TWswLUqu85reo2kNoZkKkME9nB9YVfjYkqopump",
+    "ath_timestamp": "2026-10-25T17:48:24.109517600Z",
+    "last_notified_milestone": 1.0,
+    "chain": "solana",
+    "sustained_secs": 122,
+    "buys_5m": 676,
+    "sells_5m": 196,
+    "websites": [],
+    "socials": []
+  },
+  {
+    "alert_type": "MultiChainRevival",
+    "mint": "6p5ECyCAymV4Dzyq5yZhMnGLqjeUKKTnRHama1b3pump",
+    "name": "Big Ass Slutty Exhibitionists",
+    "symbol": "BASE",
+    "initial_market_cap_usd": 109532.0,
+    "current_market_cap_usd": 1983.0,
+    "highest_market_cap_usd": 121443.47095459804,
+    "initial_volume_usd": 537666.83,
+    "current_volume_usd": 585733.73,
+    "current_volume_5m_usd": 0.0,
+    "current_liquidity_usd": 2198.09,
+    "holder_count": 631,
+    "dev_holding_pct": 0.0,
+    "top_holder_pct": 0.0,
+    "sniper_bundler_pct": 0.0,
+    "lore_description": "Too thick to ignore. Too shameless to stop.",
+    "alert_timestamp": "2026-10-25T14:19:13.594897600Z",
+    "last_refreshed": "2026-10-26T10:19:14.674651400Z",
+    "bottom_market_cap_usd": 0.0,
+    "surge_pct_from_bottom": 0.0,
+    "is_cto": true,
+    "cto_status_desc": "Community Active / Multi-Chain",
+    "top_holders": [],
+    "top_10_pct": 0.0,
+    "clustered_wallets_count": 0,
+    "bubblemaps_url": "https://bubblemaps.io/solana/token/6p5ECyCAymV4Dzyq5yZhMnGLqjeUKKTnRHama1b3pump",
+    "ath_timestamp": "2026-10-25T17:36:48.131200100Z",
+    "last_notified_milestone": 1.0,
+    "chain": "solana",
+    "sustained_secs": 122,
+    "buys_5m": 394,
+    "sells_5m": 237,
+    "websites": [],
+    "socials": []
   },
   {
     "alert_type": "MultiChainRevival",
@@ -2078,7 +920,7 @@
     "sniper_bundler_pct": 0.0,
     "lore_description": "Pretty. Unreal. Massive. Pair.",
     "alert_timestamp": "2026-10-25T18:08:10.138941500Z",
-    "last_refreshed": "2026-10-26T09:23:07.955164500Z",
+    "last_refreshed": "2026-10-26T10:19:15.422133500Z",
     "bottom_market_cap_usd": 0.0,
     "surge_pct_from_bottom": 0.0,
     "is_cto": true,
@@ -2092,27 +934,29 @@
     "chain": "solana",
     "sustained_secs": 130,
     "buys_5m": 284,
-    "sells_5m": 95
+    "sells_5m": 95,
+    "websites": [],
+    "socials": []
   },
   {
     "alert_type": "MultiChainRevival",
-    "mint": "EUkJycHeCUkHTPbLC8LdHWvNndnVDKPHBBJVMAPrpump",
-    "name": "Transom",
-    "symbol": "TRANSOM",
-    "initial_market_cap_usd": 38146.18,
-    "current_market_cap_usd": 41338.65,
-    "highest_market_cap_usd": 41338.65,
-    "initial_volume_usd": 96884.69,
-    "current_volume_usd": 117006.96,
-    "current_volume_5m_usd": 0.0,
-    "current_liquidity_usd": 16535.460000000003,
-    "holder_count": 94,
+    "mint": "C3Sh85fPzcffBKwRsUWPNHnXr2YprR9TQ2KzFR34pump",
+    "name": "Vice City Manatees",
+    "symbol": "MANATEES",
+    "initial_market_cap_usd": 20299.19,
+    "current_market_cap_usd": 44414.31,
+    "highest_market_cap_usd": 44414.31,
+    "initial_volume_usd": 31909.69,
+    "current_volume_usd": 36672.59,
+    "current_volume_5m_usd": 95.09,
+    "current_liquidity_usd": 17765.724,
+    "holder_count": 29,
     "dev_holding_pct": 0.0,
     "top_holder_pct": 0.0,
     "sniper_bundler_pct": 0.0,
-    "lore_description": "The security suite for onchain life. Wallet inspection, encrypted messaging, bounties and security coordination. Your security. One workspace.",
-    "alert_timestamp": "2026-10-25T14:32:03.212352300Z",
-    "last_refreshed": "2026-10-26T09:23:08.566225700Z",
+    "lore_description": null,
+    "alert_timestamp": "2026-10-25T17:43:32.729283Z",
+    "last_refreshed": "2026-10-26T10:19:16.393993100Z",
     "bottom_market_cap_usd": 0.0,
     "surge_pct_from_bottom": 0.0,
     "is_cto": true,
@@ -2120,249 +964,185 @@
     "top_holders": [],
     "top_10_pct": 0.0,
     "clustered_wallets_count": 0,
-    "bubblemaps_url": "https://bubblemaps.io/solana/token/EUkJycHeCUkHTPbLC8LdHWvNndnVDKPHBBJVMAPrpump",
-    "ath_timestamp": "2026-10-25T14:33:37.331209600Z",
-    "last_notified_milestone": 1.0,
-    "chain": "solana",
-    "sustained_secs": 123,
-    "buys_5m": 61,
-    "sells_5m": 33
-  },
-  {
-    "alert_type": "MultiChainRevival",
-    "mint": "9gexoGn8qnxT1XpncwNXJDwQci9cPGuNXG3uNfDkpump",
-    "name": "Gigantic Milker Enjoyers",
-    "symbol": "GME",
-    "initial_market_cap_usd": 314868.0,
-    "current_market_cap_usd": 115941.0,
-    "highest_market_cap_usd": 819655.1398464967,
-    "initial_volume_usd": 774361.18,
-    "current_volume_usd": 3559359.68,
-    "current_volume_5m_usd": 757.38,
-    "current_liquidity_usd": 31306.1,
-    "holder_count": 1074,
-    "dev_holding_pct": 0.0,
-    "top_holder_pct": 0.0,
-    "sniper_bundler_pct": 0.0,
-    "lore_description": "Community of like minded gigantic milker enjoyers",
-    "alert_timestamp": "2026-10-25T14:24:52.126699500Z",
-    "last_refreshed": "2026-10-26T09:24:37.237613200Z",
-    "bottom_market_cap_usd": 0.0,
-    "surge_pct_from_bottom": 0.0,
-    "is_cto": true,
-    "cto_status_desc": "Community Active / Multi-Chain",
-    "top_holders": [],
-    "top_10_pct": 0.0,
-    "clustered_wallets_count": 0,
-    "bubblemaps_url": "https://bubblemaps.io/solana/token/9gexoGn8qnxT1XpncwNXJDwQci9cPGuNXG3uNfDkpump",
-    "ath_timestamp": "2026-10-25T17:37:47.979436800Z",
+    "bubblemaps_url": "https://bubblemaps.io/solana/token/C3Sh85fPzcffBKwRsUWPNHnXr2YprR9TQ2KzFR34pump",
+    "ath_timestamp": "2026-10-26T08:25:09.919673100Z",
     "last_notified_milestone": 2.0,
     "chain": "solana",
-    "sustained_secs": 122,
-    "buys_5m": 658,
-    "sells_5m": 416
+    "sustained_secs": 153,
+    "buys_5m": 18,
+    "sells_5m": 11,
+    "websites": [],
+    "socials": []
   },
   {
     "alert_type": "EarlyLaunch",
-    "mint": "3Tza3a2ZNvGNuAut5KiaCqSbv3ogL2HSwngaqFUkpump",
-    "name": "php.gov",
-    "symbol": "php.gov",
-    "initial_market_cap_usd": 11086.82,
-    "current_market_cap_usd": 3601.43,
-    "highest_market_cap_usd": 12600.51,
-    "initial_volume_usd": 65368.12,
-    "current_volume_usd": 0.4,
+    "mint": "33NfErYRPPy8Xyjy38ZSJ3CizN9ieJ6JNWs5L1n2GWkq",
+    "name": "Elon News Network",
+    "symbol": "ENN",
+    "initial_market_cap_usd": 29004.0,
+    "current_market_cap_usd": 2211.0,
+    "highest_market_cap_usd": 41090.225865810426,
+    "initial_volume_usd": 423971.24,
+    "current_volume_usd": 312.88,
     "current_volume_5m_usd": 0.0,
-    "current_liquidity_usd": 1440.5720000000001,
+    "current_liquidity_usd": 2386.07,
     "holder_count": 100,
     "dev_holding_pct": 0.0,
-    "top_holder_pct": 4.3834607149434,
-    "sniper_bundler_pct": -0.0,
+    "top_holder_pct": 2.907923784122361,
+    "sniper_bundler_pct": 0.07071535258427575,
     "lore_description": null,
-    "alert_timestamp": "2026-10-22T18:16:48.368265500Z",
-    "last_refreshed": "2026-10-26T09:24:38.173860200Z",
-    "bottom_market_cap_usd": 4560.510559852408,
-    "surge_pct_from_bottom": 143.10479834430652,
+    "alert_timestamp": "2026-10-22T18:56:43.671292100Z",
+    "last_refreshed": "2026-10-26T10:19:17.294572800Z",
+    "bottom_market_cap_usd": 6349.5452306805855,
+    "surge_pct_from_bottom": 356.7886194408787,
     "is_cto": true,
     "cto_status_desc": "Dev Dumped (0.0% Clean CTO)",
     "top_holders": [
       {
         "rank": 1,
-        "address": "7GajHJCLWDWmm8Mk4FLBMW5mYqCBjNiCmkgh976V9KHu",
-        "amount": 43834607.149434,
-        "pct": 4.3834607149434,
+        "address": "NbfnkSpTKepA8EG9AV7CPriXnfyF3E5LSNdAgARAsNa",
+        "amount": 28165351.468072,
+        "pct": 2.907923784122361,
         "is_dev": false
       },
       {
         "rank": 2,
-        "address": "2mwvSmXLsN9YzKkiiwRxVJu6AsdwKUMvYuBHsmmCeR5e",
-        "amount": 34530718.408705,
-        "pct": 3.4530718408705003,
+        "address": "A28bVMHfUSMxPAK51fBUNXsW2NHxH7uvzVBKjgJfH9SQ",
+        "amount": 19029964.878814,
+        "pct": 1.964743367212966,
         "is_dev": false
       },
       {
         "rank": 3,
-        "address": "5h6j5S3QeQnWSn5vg9zyN3nqcgoRufuvHthWKho8e1im",
-        "amount": 26773658.555891,
-        "pct": 2.6773658555891,
+        "address": "C9NLgC8nCez8LV7W4bFCd7h2RvdWW2Z3L4MJcVUubuxc",
+        "amount": 18806028.219642,
+        "pct": 1.9416230898721576,
         "is_dev": false
       },
       {
         "rank": 4,
-        "address": "6tNK3vLpbQ85Gh5Y5mzifS9QFEdkoNiRfTCWc6CDSeWw",
-        "amount": 25030646.841221,
-        "pct": 2.5030646841221005,
+        "address": "92fmhKi74WMNBnMWhAjKpHHozWHoLWscPDBYKcZEKvUc",
+        "amount": 15320998.087983,
+        "pct": 1.5818121349219831,
         "is_dev": false
       },
       {
         "rank": 5,
-        "address": "9yF5X4DZZxfoioDWu2dYDdEv1sp9DQw3mBSiFZawFcVS",
-        "amount": 24118168.994673,
-        "pct": 2.4118168994672997,
+        "address": "2b3Ub33jkUibfxTMkY6EWC6FnhWp91Zam4HxrYBAkfFD",
+        "amount": 15110979.643306,
+        "pct": 1.560128839718906,
         "is_dev": false
       },
       {
         "rank": 6,
-        "address": "8fwpUURHpve5D7r1NpxyKqVNzt2Gz6j3PTCnmNCeMeGX",
-        "amount": 23404477.193875,
-        "pct": 2.3404477193875,
+        "address": "EW334V6Btdf9YRS6Uqpo6znCQMyqz9GkTZofs5H5qYDn",
+        "amount": 13873520.211958,
+        "pct": 1.432367689058935,
         "is_dev": false
       },
       {
         "rank": 7,
-        "address": "2WdqxkVVHTAq4o414xdakBHXhCFGnhV3DFwwvsY1DNPM",
-        "amount": 21931793.182209,
-        "pct": 2.1931793182209,
+        "address": "BuaMLYpY7t6nQQVy9FeciHUJwFtCrZLwGFo63TzpQE43",
+        "amount": 12576258.577038,
+        "pct": 1.2984322767247547,
         "is_dev": false
       },
       {
         "rank": 8,
-        "address": "93bfhxUPVwxAAFQxK9AyiahUNMa8EvYi3Mm8H7zbeH9x",
-        "amount": 20593868.362865,
-        "pct": 2.0593868362865,
+        "address": "Fh5k7dgy8kt92bvBPKPZ6MPM78VkDz86HpA6aw2XZzZ5",
+        "amount": 12259215.940157,
+        "pct": 1.2656992989235645,
         "is_dev": false
       },
       {
         "rank": 9,
-        "address": "DTSSuusZVyzGfgGmqcui73Mdge2Q6EiTFGMXBHdimHF2",
-        "amount": 13940046.69373,
-        "pct": 1.394004669373,
+        "address": "4LbcekZUTmkKaViEvX6Lcfd7qDAsKAncBGZsSUUWv2TK",
+        "amount": 11710325.96292,
+        "pct": 1.2090293077294827,
         "is_dev": false
       },
       {
         "rank": 10,
-        "address": "BXbCoXaFS3xNV5WCsB5ah9GesxC5TtkgR9NhSjua1dQd",
-        "amount": 13150908.08727,
-        "pct": 1.315090808727,
+        "address": "BRUHjjiG1V8ZK3dp6j5eVnEpswjoiRA8nTX1KuQq5tbF",
+        "amount": 11242577.474078,
+        "pct": 1.1607367466644156,
         "is_dev": false
       },
       {
         "rank": 11,
-        "address": "29sSsUHnUAnUexzKkrbySWBnfPkVPTBsoHfhZbYwJWKL",
-        "amount": 10765585.955318,
-        "pct": 1.0765585955318,
+        "address": "GAPqP6RXDGyhoAuUTpTNrc2rn4b5gcVwwuo7okWYgn96",
+        "amount": 11238713.917556,
+        "pct": 1.1603378548588452,
         "is_dev": false
       },
       {
         "rank": 12,
-        "address": "E5f43sgwy27ZFsiXZ9PoV4cRWwPLRfDz5AnjVA7WR344",
-        "amount": 10561802.455361,
-        "pct": 1.0561802455361,
+        "address": "6KXBWLGfmft5B6dD94KSXYEZUV2rciaSQ11aPnPgvvFG",
+        "amount": 11143033.648619,
+        "pct": 1.150459372425259,
         "is_dev": false
       },
       {
         "rank": 13,
-        "address": "6BbTxrEhMpvoaDgqE2o24eCKkSVMDLJBegjVggEceMHJ",
-        "amount": 10374183.271799,
-        "pct": 1.0374183271799,
+        "address": "6AbHefgSBm3uXeCvM5t9wWc7XSAKz9baqtfGYeFxHkYa",
+        "amount": 10823828.231016,
+        "pct": 1.117503098937222,
         "is_dev": false
       },
       {
         "rank": 14,
-        "address": "6kXURTWjz77smWyRWfjpwi8LfAi1KgR7YY6R3W3fy2kY",
-        "amount": 9945487.71919,
-        "pct": 0.994548771919,
+        "address": "HzEqquK2T4GyC4WUSFK9mrqkXNinduqE9SHm1dbJcq1i",
+        "amount": 10758631.486066,
+        "pct": 1.110771879356938,
         "is_dev": false
       },
       {
         "rank": 15,
-        "address": "HKDrYELKHnjFx6KXKDzJcsUsw1rSjP49A3fmuwqrBnk3",
-        "amount": 8144410.314612,
-        "pct": 0.8144410314612001,
+        "address": "2MwH86TBoWugBSLaYw3b378TjUoRVgXdhVkZUcDBYvbh",
+        "amount": 10727869.315243,
+        "pct": 1.1075958476894885,
         "is_dev": false
       },
       {
         "rank": 16,
-        "address": "7e948FXrZswWi9tXZtj4pmY2AghJ84EaSEmFGjVPZrDi",
-        "amount": 8079721.717651,
-        "pct": 0.8079721717651001,
+        "address": "7QHnXV3KtEu5KfJ6hZkEVcXqrY1NsFw6U1Qf6C4P6Vn2",
+        "amount": 10699841.727415,
+        "pct": 1.1047021472736067,
         "is_dev": false
       },
       {
         "rank": 17,
-        "address": "74eGZmHkEXASw3qBQSBMNBUgq3ZxZTmU2AaZApKq6SFS",
-        "amount": 6800419.605381,
-        "pct": 0.6800419605381,
+        "address": "7dBKGrbBETUfN9i8qCs1kUjpmiuaUDtE9MQJpp7VYEiS",
+        "amount": 10545367.818519,
+        "pct": 1.0887535320321375,
         "is_dev": false
       },
       {
         "rank": 18,
-        "address": "31W2AW8N3KhhGzBo7wX8KEKZdt8ie7RkTQDM8ZRDcsji",
-        "amount": 6653461.162367,
-        "pct": 0.6653461162367,
+        "address": "Dzq1Jayy6eWnfZtcoC1GA1y9HsKtcf4nvibqz8RiqUb3",
+        "amount": 9676710.374768,
+        "pct": 0.999069238768412,
         "is_dev": false
       },
       {
         "rank": 19,
-        "address": "2VuaTGNLVZ7kP5LZfkA7Lw5y6SoR1qbFVNUnJBasjD8h",
-        "amount": 6547681.197476,
-        "pct": 0.6547681197476,
+        "address": "8tMwLPAY1Ka8T7D5v4q674NzGkS8asGZCPtGoX7CHWdt",
+        "amount": 8540028.634638,
+        "pct": 0.8817128524705677,
         "is_dev": false
       }
     ],
-    "top_10_pct": 24.7308893469873,
-    "clustered_wallets_count": 0,
-    "bubblemaps_url": "https://bubblemaps.io/solana/token/3Tza3a2ZNvGNuAut5KiaCqSbv3ogL2HSwngaqFUkpump",
-    "ath_timestamp": "2026-10-22T18:30:00Z",
+    "top_10_pct": 16.32249653494953,
+    "clustered_wallets_count": 1,
+    "bubblemaps_url": "https://bubblemaps.io/solana/token/33NfErYRPPy8Xyjy38ZSJ3CizN9ieJ6JNWs5L1n2GWkq",
+    "ath_timestamp": "2026-10-24T15:13:27.226170800Z",
     "last_notified_milestone": 1.0,
     "chain": "solana",
     "sustained_secs": 0,
     "buys_5m": 0,
-    "sells_5m": 0
-  },
-  {
-    "alert_type": "MultiChainRevival",
-    "mint": "BEwvuL9EsEukMbETMcgRDJ2MVvVjTyEz4SAUxLuh2zL1",
-    "name": "Lab",
-    "symbol": "LAB",
-    "initial_market_cap_usd": 319616.0,
-    "current_market_cap_usd": 336495.0,
-    "highest_market_cap_usd": 2800975.8440635907,
-    "initial_volume_usd": 373562.25,
-    "current_volume_usd": 391816.5,
-    "current_volume_5m_usd": 22120.32,
-    "current_liquidity_usd": 70572.67,
-    "holder_count": 226,
-    "dev_holding_pct": 0.0,
-    "top_holder_pct": 0.0,
-    "sniper_bundler_pct": 0.0,
-    "lore_description": null,
-    "alert_timestamp": "2026-10-26T09:22:03.647499500Z",
-    "last_refreshed": "2026-10-26T09:24:39.023158600Z",
-    "bottom_market_cap_usd": 0.0,
-    "surge_pct_from_bottom": 0.0,
-    "is_cto": true,
-    "cto_status_desc": "Community Active / Multi-Chain",
-    "top_holders": [],
-    "top_10_pct": 0.0,
-    "clustered_wallets_count": 0,
-    "bubblemaps_url": "https://bubblemaps.io/solana/token/BEwvuL9EsEukMbETMcgRDJ2MVvVjTyEz4SAUxLuh2zL1",
-    "ath_timestamp": "2026-10-26T09:24:39.023160300Z",
-    "last_notified_milestone": 5.0,
-    "chain": "solana",
-    "sustained_secs": 355,
-    "buys_5m": 148,
-    "sells_5m": 78
+    "sells_5m": 0,
+    "websites": [],
+    "socials": []
   },
   {
     "alert_type": "EarlyLaunch",
@@ -2382,7 +1162,7 @@
     "sniper_bundler_pct": 0.34702241816766327,
     "lore_description": "Flywheel's own coin. 30% of every creator fee burns $WHEEL (20% through its vault's rule, 10% through the platform buyback); the rest funds the platform. Fees in. Anything out.",
     "alert_timestamp": "2026-10-22T18:42:12.055540700Z",
-    "last_refreshed": "2026-10-26T09:24:40.518991600Z",
+    "last_refreshed": "2026-10-26T10:19:18.109021300Z",
     "bottom_market_cap_usd": 4193.849021435229,
     "surge_pct_from_bottom": 223.410784,
     "is_cto": true,
@@ -2530,41 +1310,9 @@
     "chain": "solana",
     "sustained_secs": 0,
     "buys_5m": 0,
-    "sells_5m": 0
-  },
-  {
-    "alert_type": "MultiChainRevival",
-    "mint": "2WG7bzXCGVR47xWfqNpDvPbeviS7Sskt51MAj6iMpump",
-    "name": "TATOBRO",
-    "symbol": "BRO",
-    "initial_market_cap_usd": 23174.05,
-    "current_market_cap_usd": 71686.0,
-    "highest_market_cap_usd": 120592.7771680014,
-    "initial_volume_usd": 18197.87,
-    "current_volume_usd": 52491.78,
-    "current_volume_5m_usd": 0.0,
-    "current_liquidity_usd": 21346.38,
-    "holder_count": 43,
-    "dev_holding_pct": 0.0,
-    "top_holder_pct": 0.0,
-    "sniper_bundler_pct": 0.0,
-    "lore_description": "🥔 TATOBRO ($BRO) — NO BRAIN. JUST POTATO.\n\nMeet the most confident potato on Solana! 👑\n\nHe doesn’t understand crypto. He doesn’t understand charts. He barely understands potatoes.\n\nBut he has black sunglasses, a gold BRO chain, and absolutely ZERO doubts. 😎\n\nTATOBRO is a community-driven meme coin built for laughs, crazy memes, and pure potato energy.\n\n🧠 0 IQ. 100% CONFIDENCE.\n🥔 SMALL POTATO. BIG DREAMS.\n\nNo promises of riches. Just memes, fun, and potato-powered chaos.\n\nWELCOME TO THE POTATO CLUB! 🚀",
-    "alert_timestamp": "2026-10-25T18:34:08.159295700Z",
-    "last_refreshed": "2026-10-26T09:24:41.353560500Z",
-    "bottom_market_cap_usd": 0.0,
-    "surge_pct_from_bottom": 0.0,
-    "is_cto": true,
-    "cto_status_desc": "Community Active / Multi-Chain",
-    "top_holders": [],
-    "top_10_pct": 0.0,
-    "clustered_wallets_count": 0,
-    "bubblemaps_url": "https://bubblemaps.io/solana/token/2WG7bzXCGVR47xWfqNpDvPbeviS7Sskt51MAj6iMpump",
-    "ath_timestamp": "2026-10-26T08:33:38.170706Z",
-    "last_notified_milestone": 5.0,
-    "chain": "solana",
-    "sustained_secs": 121,
-    "buys_5m": 31,
-    "sells_5m": 12
+    "sells_5m": 0,
+    "websites": [],
+    "socials": []
   },
   {
     "alert_type": "MultiChainRevival",
@@ -2572,19 +1320,19 @@
     "name": "Pumpkin Bot",
     "symbol": "PumpkinBot",
     "initial_market_cap_usd": 291086.0,
-    "current_market_cap_usd": 542590.0,
-    "highest_market_cap_usd": 607876.91043221,
+    "current_market_cap_usd": 630742.0,
+    "highest_market_cap_usd": 678434.7823147414,
     "initial_volume_usd": 376308.73,
-    "current_volume_usd": 806560.51,
-    "current_volume_5m_usd": 1726.67,
-    "current_liquidity_usd": 63863.25,
+    "current_volume_usd": 687366.53,
+    "current_volume_5m_usd": 827.33,
+    "current_liquidity_usd": 69092.06,
     "holder_count": 79,
     "dev_holding_pct": 0.0,
     "top_holder_pct": 0.0,
     "sniper_bundler_pct": 0.0,
     "lore_description": "",
     "alert_timestamp": "2026-10-25T14:31:56.370104900Z",
-    "last_refreshed": "2026-10-26T09:24:41.942650200Z",
+    "last_refreshed": "2026-10-26T10:19:19.035429500Z",
     "bottom_market_cap_usd": 0.0,
     "surge_pct_from_bottom": 0.0,
     "is_cto": true,
@@ -2593,12 +1341,1049 @@
     "top_10_pct": 0.0,
     "clustered_wallets_count": 0,
     "bubblemaps_url": "https://bubblemaps.io/solana/token/5QREAgtfP1NkuymRaFdHxr5QNF2Yry9M1YCyaompump",
-    "ath_timestamp": "2026-10-26T08:26:25.996736100Z",
+    "ath_timestamp": "2026-10-26T10:14:37.229500900Z",
     "last_notified_milestone": 2.0,
     "chain": "solana",
     "sustained_secs": 124,
     "buys_5m": 48,
-    "sells_5m": 31
+    "sells_5m": 31,
+    "websites": [],
+    "socials": []
+  },
+  {
+    "alert_type": "MultiChainRevival",
+    "mint": "0x23cE28D7d9f642bB544aC0AC521bB441a2b1e514",
+    "name": "Flying Tesla Roadster",
+    "symbol": "FTR",
+    "initial_market_cap_usd": 120966248.0,
+    "current_market_cap_usd": 153126806.0,
+    "highest_market_cap_usd": 153126806.0,
+    "initial_volume_usd": 40005150.48,
+    "current_volume_usd": 41640267.57,
+    "current_volume_5m_usd": 272882.44,
+    "current_liquidity_usd": 1861171.46,
+    "holder_count": 304,
+    "dev_holding_pct": 0.0,
+    "top_holder_pct": 0.0,
+    "sniper_bundler_pct": 0.0,
+    "lore_description": "As it turns out, flying cars are indeed in our future. Science fiction is becoming reality\u2014this will be a historic, global milestone.",
+    "alert_timestamp": "2026-10-26T09:55:23.295132300Z",
+    "last_refreshed": "2026-10-26T10:19:20.506480600Z",
+    "bottom_market_cap_usd": 0.0,
+    "surge_pct_from_bottom": 0.0,
+    "is_cto": true,
+    "cto_status_desc": "Community Active / Multi-Chain",
+    "top_holders": [],
+    "top_10_pct": 0.0,
+    "clustered_wallets_count": 0,
+    "bubblemaps_url": "https://bubblemaps.io/bsc/token/0x23cE28D7d9f642bB544aC0AC521bB441a2b1e514",
+    "ath_timestamp": "2026-10-26T10:19:20.506482100Z",
+    "last_notified_milestone": 1.0,
+    "chain": "bsc",
+    "sustained_secs": 146,
+    "buys_5m": 210,
+    "sells_5m": 94,
+    "websites": [],
+    "socials": [
+      [
+        "telegram",
+        "https://t.me/FTR_BNB"
+      ]
+    ]
+  },
+  {
+    "alert_type": "EarlyLaunch",
+    "mint": "DNuS5gQiHccaVaPJCF6UZswUkSYthHZFM1BoozTEFob3",
+    "name": "The Solana Chud",
+    "symbol": "CHUD",
+    "initial_market_cap_usd": 16336.92,
+    "current_market_cap_usd": 2223.0,
+    "highest_market_cap_usd": 45552.440115659316,
+    "initial_volume_usd": 41109.23,
+    "current_volume_usd": 12.37,
+    "current_volume_5m_usd": 0.0,
+    "current_liquidity_usd": 2404.83,
+    "holder_count": 100,
+    "dev_holding_pct": 0.0,
+    "top_holder_pct": 3.4081334285974116,
+    "sniper_bundler_pct": -0.0,
+    "lore_description": "deployed on https://track.tech/",
+    "alert_timestamp": "2026-10-22T11:52:39.277235200Z",
+    "last_refreshed": "2026-10-26T10:19:21.668102800Z",
+    "bottom_market_cap_usd": 5618.41,
+    "surge_pct_from_bottom": 190.7747921564998,
+    "is_cto": true,
+    "cto_status_desc": "Dev Dumped (0.0% Clean CTO)",
+    "top_holders": [
+      {
+        "rank": 1,
+        "address": "5KkYjHqDJ7JGfB1BqKvEJSmgiqN8wB3UNCmq5Y4gVBVL",
+        "amount": 34081334.28594,
+        "pct": 3.4081334285974116,
+        "is_dev": false
+      },
+      {
+        "rank": 2,
+        "address": "8QeSzgX67vEWbCHPpSsopEDfWekAY3S596puH6XvRMtv",
+        "amount": 30550530.194827,
+        "pct": 3.0550530194857584,
+        "is_dev": false
+      },
+      {
+        "rank": 3,
+        "address": "3iX8RNxvG4utroKEU7KhcrSJetG1BoRY65Sc5xC4qLU7",
+        "amount": 29084498.076848,
+        "pct": 2.908449807687711,
+        "is_dev": false
+      },
+      {
+        "rank": 4,
+        "address": "7JMArJFHTFc3ArKNcdpKxJuquH7SqeRavyPw7iqG14hg",
+        "amount": 28915432.102852,
+        "pct": 2.8915432102880945,
+        "is_dev": false
+      },
+      {
+        "rank": 5,
+        "address": "6GkZ657nahFRPc76SEYFcf1CZM9dFV1D29QL49fCMCUQ",
+        "amount": 26283827.945079,
+        "pct": 2.628382794510531,
+        "is_dev": false
+      },
+      {
+        "rank": 6,
+        "address": "G6yu2UdDTgRLQWk7QwwABa84suHt3D6WBAhktnYuZNPX",
+        "amount": 21450440.444847,
+        "pct": 2.145044044486847,
+        "is_dev": false
+      },
+      {
+        "rank": 7,
+        "address": "GApCiodZ5zX2ZQQYsg72QkeTDeMbCcD3We9pbE7YR6YL",
+        "amount": 12271981.992366,
+        "pct": 1.2271981992378282,
+        "is_dev": false
+      },
+      {
+        "rank": 8,
+        "address": "GHYMdQ5Mkpy7QAiaoAHPWJZnKcN7aHa6AwzTknzN2z5e",
+        "amount": 11868443.587126,
+        "pct": 1.186844358713788,
+        "is_dev": false
+      },
+      {
+        "rank": 9,
+        "address": "hmgcNhdByAURq9L5bY3xgGiVzUd8ZhHacvTUT6y2QbM",
+        "amount": 11504734.751125,
+        "pct": 1.1504734751136516,
+        "is_dev": false
+      },
+      {
+        "rank": 10,
+        "address": "GaJrzpSAzpFueyvFVWcC8fGvxiU33p1KFWFkjYJbZeoZ",
+        "amount": 10509254.5974,
+        "pct": 1.050925459741052,
+        "is_dev": false
+      },
+      {
+        "rank": 11,
+        "address": "5dB3NdChDhLdiEmx62pwY6ZipN6ZzbNorHmoWGyy8RVm",
+        "amount": 10349489.597277,
+        "pct": 1.034948959728736,
+        "is_dev": false
+      },
+      {
+        "rank": 12,
+        "address": "4pKrRygGCfcbTdaXYCvmihFRBiUCjCEkFTrvircbVhjJ",
+        "amount": 10329895.10947,
+        "pct": 1.032989510948034,
+        "is_dev": false
+      },
+      {
+        "rank": 13,
+        "address": "DxwSffWhXyW1bZ9NFvJywTmQA4YVE1pwteh2R675GNvU",
+        "amount": 9684861.553055,
+        "pct": 0.9684861553064694,
+        "is_dev": false
+      },
+      {
+        "rank": 14,
+        "address": "2DG16FvUWH8RDtxvF6VV34YrJnFx5zSosyL2Bb6UP5ti",
+        "amount": 9426548.906875,
+        "pct": 0.9426548906884435,
+        "is_dev": false
+      },
+      {
+        "rank": 15,
+        "address": "623BnhYGvX8nYnBaA5kJuWv6GbJoPKLLYp7mjJKmxYgo",
+        "amount": 9343371.570957,
+        "pct": 0.9343371570966352,
+        "is_dev": false
+      },
+      {
+        "rank": 16,
+        "address": "54GAeA6FtBB2bbcLG2fcMSiDx7ryfDBmA7CShTcd3Mmc",
+        "amount": 9178469.759696,
+        "pct": 0.9178469759705188,
+        "is_dev": false
+      },
+      {
+        "rank": 17,
+        "address": "D4gMX2hm1JfVfXHtwFuKaZBj9F5UFY9QVdMdpAwJbfWC",
+        "amount": 8679314.50078,
+        "pct": 0.8679314500788687,
+        "is_dev": false
+      },
+      {
+        "rank": 18,
+        "address": "Ckppf6hqgU612vPvg6HnfjFTRYxm4gn18PkhCvgDcHsb",
+        "amount": 8577819.054361,
+        "pct": 0.8577819054369588,
+        "is_dev": false
+      },
+      {
+        "rank": 19,
+        "address": "FjCx3j85wV1jK8S1vsMUfLkj7AvzLC7P8SZTZpYLk8Su",
+        "amount": 8264276.200305,
+        "pct": 0.8264276200313272,
+        "is_dev": false
+      }
+    ],
+    "top_10_pct": 21.652047797862675,
+    "clustered_wallets_count": 0,
+    "bubblemaps_url": "https://bubblemaps.io/solana/token/DNuS5gQiHccaVaPJCF6UZswUkSYthHZFM1BoozTEFob3",
+    "ath_timestamp": "2026-10-26T09:53:37.262484900Z",
+    "last_notified_milestone": 2.0,
+    "chain": "solana",
+    "sustained_secs": 0,
+    "buys_5m": 0,
+    "sells_5m": 0,
+    "websites": [],
+    "socials": []
+  },
+  {
+    "alert_type": "EarlyLaunch",
+    "mint": "3Tza3a2ZNvGNuAut5KiaCqSbv3ogL2HSwngaqFUkpump",
+    "name": "php.gov",
+    "symbol": "php.gov",
+    "initial_market_cap_usd": 11086.82,
+    "current_market_cap_usd": 3601.43,
+    "highest_market_cap_usd": 12600.51,
+    "initial_volume_usd": 65368.12,
+    "current_volume_usd": 0.4,
+    "current_volume_5m_usd": 0.0,
+    "current_liquidity_usd": 1440.5720000000001,
+    "holder_count": 100,
+    "dev_holding_pct": 0.0,
+    "top_holder_pct": 4.3834607149434,
+    "sniper_bundler_pct": -0.0,
+    "lore_description": null,
+    "alert_timestamp": "2026-10-22T18:16:48.368265500Z",
+    "last_refreshed": "2026-10-26T10:19:22.730109400Z",
+    "bottom_market_cap_usd": 4560.510559852408,
+    "surge_pct_from_bottom": 143.10479834430652,
+    "is_cto": true,
+    "cto_status_desc": "Dev Dumped (0.0% Clean CTO)",
+    "top_holders": [
+      {
+        "rank": 1,
+        "address": "7GajHJCLWDWmm8Mk4FLBMW5mYqCBjNiCmkgh976V9KHu",
+        "amount": 43834607.149434,
+        "pct": 4.3834607149434,
+        "is_dev": false
+      },
+      {
+        "rank": 2,
+        "address": "2mwvSmXLsN9YzKkiiwRxVJu6AsdwKUMvYuBHsmmCeR5e",
+        "amount": 34530718.408705,
+        "pct": 3.4530718408705003,
+        "is_dev": false
+      },
+      {
+        "rank": 3,
+        "address": "5h6j5S3QeQnWSn5vg9zyN3nqcgoRufuvHthWKho8e1im",
+        "amount": 26773658.555891,
+        "pct": 2.6773658555891,
+        "is_dev": false
+      },
+      {
+        "rank": 4,
+        "address": "6tNK3vLpbQ85Gh5Y5mzifS9QFEdkoNiRfTCWc6CDSeWw",
+        "amount": 25030646.841221,
+        "pct": 2.5030646841221005,
+        "is_dev": false
+      },
+      {
+        "rank": 5,
+        "address": "9yF5X4DZZxfoioDWu2dYDdEv1sp9DQw3mBSiFZawFcVS",
+        "amount": 24118168.994673,
+        "pct": 2.4118168994672997,
+        "is_dev": false
+      },
+      {
+        "rank": 6,
+        "address": "8fwpUURHpve5D7r1NpxyKqVNzt2Gz6j3PTCnmNCeMeGX",
+        "amount": 23404477.193875,
+        "pct": 2.3404477193875,
+        "is_dev": false
+      },
+      {
+        "rank": 7,
+        "address": "2WdqxkVVHTAq4o414xdakBHXhCFGnhV3DFwwvsY1DNPM",
+        "amount": 21931793.182209,
+        "pct": 2.1931793182209,
+        "is_dev": false
+      },
+      {
+        "rank": 8,
+        "address": "93bfhxUPVwxAAFQxK9AyiahUNMa8EvYi3Mm8H7zbeH9x",
+        "amount": 20593868.362865,
+        "pct": 2.0593868362865,
+        "is_dev": false
+      },
+      {
+        "rank": 9,
+        "address": "DTSSuusZVyzGfgGmqcui73Mdge2Q6EiTFGMXBHdimHF2",
+        "amount": 13940046.69373,
+        "pct": 1.394004669373,
+        "is_dev": false
+      },
+      {
+        "rank": 10,
+        "address": "BXbCoXaFS3xNV5WCsB5ah9GesxC5TtkgR9NhSjua1dQd",
+        "amount": 13150908.08727,
+        "pct": 1.315090808727,
+        "is_dev": false
+      },
+      {
+        "rank": 11,
+        "address": "29sSsUHnUAnUexzKkrbySWBnfPkVPTBsoHfhZbYwJWKL",
+        "amount": 10765585.955318,
+        "pct": 1.0765585955318,
+        "is_dev": false
+      },
+      {
+        "rank": 12,
+        "address": "E5f43sgwy27ZFsiXZ9PoV4cRWwPLRfDz5AnjVA7WR344",
+        "amount": 10561802.455361,
+        "pct": 1.0561802455361,
+        "is_dev": false
+      },
+      {
+        "rank": 13,
+        "address": "6BbTxrEhMpvoaDgqE2o24eCKkSVMDLJBegjVggEceMHJ",
+        "amount": 10374183.271799,
+        "pct": 1.0374183271799,
+        "is_dev": false
+      },
+      {
+        "rank": 14,
+        "address": "6kXURTWjz77smWyRWfjpwi8LfAi1KgR7YY6R3W3fy2kY",
+        "amount": 9945487.71919,
+        "pct": 0.994548771919,
+        "is_dev": false
+      },
+      {
+        "rank": 15,
+        "address": "HKDrYELKHnjFx6KXKDzJcsUsw1rSjP49A3fmuwqrBnk3",
+        "amount": 8144410.314612,
+        "pct": 0.8144410314612001,
+        "is_dev": false
+      },
+      {
+        "rank": 16,
+        "address": "7e948FXrZswWi9tXZtj4pmY2AghJ84EaSEmFGjVPZrDi",
+        "amount": 8079721.717651,
+        "pct": 0.8079721717651001,
+        "is_dev": false
+      },
+      {
+        "rank": 17,
+        "address": "74eGZmHkEXASw3qBQSBMNBUgq3ZxZTmU2AaZApKq6SFS",
+        "amount": 6800419.605381,
+        "pct": 0.6800419605381,
+        "is_dev": false
+      },
+      {
+        "rank": 18,
+        "address": "31W2AW8N3KhhGzBo7wX8KEKZdt8ie7RkTQDM8ZRDcsji",
+        "amount": 6653461.162367,
+        "pct": 0.6653461162367,
+        "is_dev": false
+      },
+      {
+        "rank": 19,
+        "address": "2VuaTGNLVZ7kP5LZfkA7Lw5y6SoR1qbFVNUnJBasjD8h",
+        "amount": 6547681.197476,
+        "pct": 0.6547681197476,
+        "is_dev": false
+      }
+    ],
+    "top_10_pct": 24.7308893469873,
+    "clustered_wallets_count": 0,
+    "bubblemaps_url": "https://bubblemaps.io/solana/token/3Tza3a2ZNvGNuAut5KiaCqSbv3ogL2HSwngaqFUkpump",
+    "ath_timestamp": "2026-10-22T18:30:00Z",
+    "last_notified_milestone": 1.0,
+    "chain": "solana",
+    "sustained_secs": 0,
+    "buys_5m": 0,
+    "sells_5m": 0,
+    "websites": [],
+    "socials": []
+  },
+  {
+    "alert_type": "EarlyLaunch",
+    "mint": "Cv6T7HscXCtddx4E9SjqVXcDD1gTn3p1j3mTkcitpump",
+    "name": "Pumpkin ",
+    "symbol": "Pumpkin ",
+    "initial_market_cap_usd": 11034.18,
+    "current_market_cap_usd": 4810.09,
+    "highest_market_cap_usd": 12468.462075569067,
+    "initial_volume_usd": 22929.21,
+    "current_volume_usd": 34830.28,
+    "current_volume_5m_usd": 444.98,
+    "current_liquidity_usd": 1924.036,
+    "holder_count": 100,
+    "dev_holding_pct": 0.0,
+    "top_holder_pct": 2.7785622497262,
+    "sniper_bundler_pct": -0.0,
+    "lore_description": "Launched on discord.gg/uxento",
+    "alert_timestamp": "2026-10-26T10:05:44.246616800Z",
+    "last_refreshed": "2026-10-26T10:19:23.884608900Z",
+    "bottom_market_cap_usd": 4926.831013847151,
+    "surge_pct_from_bottom": 123.96099985949962,
+    "is_cto": true,
+    "cto_status_desc": "Dev Dumped (0.0% Clean CTO)",
+    "top_holders": [
+      {
+        "rank": 1,
+        "address": "w6DxJ7QzvWturfup7LHYcu147hHk7CQHxw62eCt7XXd",
+        "amount": 27785622.497262,
+        "pct": 2.7785622497262,
+        "is_dev": false
+      },
+      {
+        "rank": 2,
+        "address": "248Y41C1QSZD1Kis7mYbzM4WhTMLaf7RNXF7Dh7rotM7",
+        "amount": 24907099.929232,
+        "pct": 2.4907099929232004,
+        "is_dev": false
+      },
+      {
+        "rank": 3,
+        "address": "A6CJUwz4ZVTswVHNDcUBAEdKdknb33sBnodLVWu89Lba",
+        "amount": 24494753.725626,
+        "pct": 2.4494753725626,
+        "is_dev": false
+      },
+      {
+        "rank": 4,
+        "address": "AhFBTQnLXPfijeCxcuiwhAmNcqZAHJEbBXLD5DZyW8Vt",
+        "amount": 24437441.428275,
+        "pct": 2.4437441428274997,
+        "is_dev": false
+      },
+      {
+        "rank": 5,
+        "address": "5efbzr9PZk6WfSTSJGgfo5rccpDWkvirFnKGLwnv4c24",
+        "amount": 21272775.666548,
+        "pct": 2.1272775666548,
+        "is_dev": false
+      },
+      {
+        "rank": 6,
+        "address": "8Gci1f7bS9e6JDnvATCviPrHtnC17o2FeeS1wAWzbQcL",
+        "amount": 18916802.342549,
+        "pct": 1.8916802342549,
+        "is_dev": false
+      },
+      {
+        "rank": 7,
+        "address": "7hK5upsyzmbTr6WdaERsbRfTw3ih1bM3VPr6R4ujFXC5",
+        "amount": 17669841.137136,
+        "pct": 1.7669841137136002,
+        "is_dev": false
+      },
+      {
+        "rank": 8,
+        "address": "3JjfySkN1NCRW6JtBSWWdffA1j4D4Wtj29DGbqzoeQNo",
+        "amount": 16187808.273215,
+        "pct": 1.6187808273215,
+        "is_dev": false
+      },
+      {
+        "rank": 9,
+        "address": "5vh3tHYvehNjPuFDqnuVTHZpqzALfc77nSRwGX9t4Qxq",
+        "amount": 13466667.735141,
+        "pct": 1.3466667735141,
+        "is_dev": false
+      },
+      {
+        "rank": 10,
+        "address": "F5xkntYhpykoeMXRKNK7tb19XxAamCFcLf11ZPZNuC21",
+        "amount": 12807024.947426,
+        "pct": 1.2807024947426,
+        "is_dev": false
+      },
+      {
+        "rank": 11,
+        "address": "7vcyfFKJmytS73obgWT929o1LWxeqgiSZYdhNmyNi2C6",
+        "amount": 12739771.558447,
+        "pct": 1.2739771558447,
+        "is_dev": false
+      },
+      {
+        "rank": 12,
+        "address": "4GmUYstNiGzvgK3UBZr613USUeeeg4yLqPGL4Te6CA9e",
+        "amount": 11793026.261707,
+        "pct": 1.1793026261707,
+        "is_dev": false
+      },
+      {
+        "rank": 13,
+        "address": "91gTYLYTQLVwJDbbh2oz6kRLTVpvVoj8xoear4sZD2m3",
+        "amount": 11694125.272487,
+        "pct": 1.1694125272487,
+        "is_dev": false
+      },
+      {
+        "rank": 14,
+        "address": "AinwQ8xtgJ55jRweU3NE84P2sSGiYnXyA6vPvtUf4ADq",
+        "amount": 11373267.865361,
+        "pct": 1.1373267865360999,
+        "is_dev": false
+      },
+      {
+        "rank": 15,
+        "address": "DygBYFjaZoaqn7WPe8USE5ddbm8o71H64iT9K4vpBbF6",
+        "amount": 10522841.195967,
+        "pct": 1.0522841195966999,
+        "is_dev": false
+      },
+      {
+        "rank": 16,
+        "address": "3iCFWBdKYY8hYq1SKEAAvM6Joi1tU5e5Kg44HuJuHNwS",
+        "amount": 10192055.007176,
+        "pct": 1.0192055007176002,
+        "is_dev": false
+      },
+      {
+        "rank": 17,
+        "address": "E2CWrVKEyZdYPN9z8m7noziZTTCQP7pqnKtcRf88aYQN",
+        "amount": 10188084.857392,
+        "pct": 1.0188084857392,
+        "is_dev": false
+      },
+      {
+        "rank": 18,
+        "address": "9LfHPhCuZTF41a327KXASVYpoD6b4kW4x199DrXiT4ey",
+        "amount": 10067915.351122,
+        "pct": 1.0067915351121999,
+        "is_dev": false
+      },
+      {
+        "rank": 19,
+        "address": "7N5r7SFbK8939DSsPN7xqoeiShBvPQa7XYLUqR2kNhs6",
+        "amount": 9946303.795355,
+        "pct": 0.9946303795354999,
+        "is_dev": false
+      }
+    ],
+    "top_10_pct": 20.194583768241003,
+    "clustered_wallets_count": 0,
+    "bubblemaps_url": "https://bubblemaps.io/solana/token/Cv6T7HscXCtddx4E9SjqVXcDD1gTn3p1j3mTkcitpump",
+    "ath_timestamp": "2026-10-26T10:18:37.922338500Z",
+    "last_notified_milestone": 1.0,
+    "chain": "solana",
+    "sustained_secs": 0,
+    "buys_5m": 0,
+    "sells_5m": 0,
+    "websites": [],
+    "socials": []
+  },
+  {
+    "alert_type": "MultiChainRevival",
+    "mint": "0xB0CC643EAFfd28D4ed43D2793Bcca54438380650",
+    "name": "iPhone Duo",
+    "symbol": "iPhone Duo",
+    "initial_market_cap_usd": 54594598.0,
+    "current_market_cap_usd": 24730.0,
+    "highest_market_cap_usd": 54594598.0,
+    "initial_volume_usd": 24527855.89,
+    "current_volume_usd": 7171667.13,
+    "current_volume_5m_usd": 59.11,
+    "current_liquidity_usd": 20476.49,
+    "holder_count": 180,
+    "dev_holding_pct": 0.0,
+    "top_holder_pct": 0.0,
+    "sniper_bundler_pct": 0.0,
+    "lore_description": null,
+    "alert_timestamp": "2026-10-25T09:36:02.887220100Z",
+    "last_refreshed": "2026-10-26T10:19:25.012242600Z",
+    "bottom_market_cap_usd": 0.0,
+    "surge_pct_from_bottom": 0.0,
+    "is_cto": true,
+    "cto_status_desc": "Community Active / Multi-Chain",
+    "top_holders": [],
+    "top_10_pct": 0.0,
+    "clustered_wallets_count": 0,
+    "bubblemaps_url": "https://bubblemaps.io/bsc/token/0xB0CC643EAFfd28D4ed43D2793Bcca54438380650",
+    "ath_timestamp": "2026-10-25T09:36:02.887220100Z",
+    "last_notified_milestone": 1.0,
+    "chain": "bsc",
+    "sustained_secs": 121,
+    "buys_5m": 164,
+    "sells_5m": 16,
+    "websites": [],
+    "socials": []
+  },
+  {
+    "alert_type": "MultiChainRevival",
+    "mint": "4hj5Pf5UNtu5UCjv3kCLQscj6B9TroUDcDMnGzEhpump",
+    "name": "Take The Risk",
+    "symbol": "Fish",
+    "initial_market_cap_usd": 25932.46,
+    "current_market_cap_usd": 25252.75,
+    "highest_market_cap_usd": 32981.45802023339,
+    "initial_volume_usd": 118716.65,
+    "current_volume_usd": 167846.91,
+    "current_volume_5m_usd": 847.62,
+    "current_liquidity_usd": 10101.1,
+    "holder_count": 79,
+    "dev_holding_pct": 0.0,
+    "top_holder_pct": 0.0,
+    "sniper_bundler_pct": 0.0,
+    "lore_description": "take the risk",
+    "alert_timestamp": "2026-10-26T08:32:40.626517500Z",
+    "last_refreshed": "2026-10-26T10:19:26.148142200Z",
+    "bottom_market_cap_usd": 0.0,
+    "surge_pct_from_bottom": 0.0,
+    "is_cto": true,
+    "cto_status_desc": "Community Active / Multi-Chain",
+    "top_holders": [],
+    "top_10_pct": 0.0,
+    "clustered_wallets_count": 0,
+    "bubblemaps_url": "https://bubblemaps.io/solana/token/4hj5Pf5UNtu5UCjv3kCLQscj6B9TroUDcDMnGzEhpump",
+    "ath_timestamp": "2026-10-26T09:23:01.629239200Z",
+    "last_notified_milestone": 1.0,
+    "chain": "solana",
+    "sustained_secs": 124,
+    "buys_5m": 52,
+    "sells_5m": 27,
+    "websites": [],
+    "socials": []
+  },
+  {
+    "alert_type": "MultiChainRevival",
+    "mint": "43SYgbobrEmcQp4HvnqPd6TzaY8ZBExkXKhdYWFrpump",
+    "name": "Lordkek official coin",
+    "symbol": "kek",
+    "initial_market_cap_usd": 12701.96,
+    "current_market_cap_usd": 3180.42,
+    "highest_market_cap_usd": 12701.96,
+    "initial_volume_usd": 48653.11,
+    "current_volume_usd": 55987.95,
+    "current_volume_5m_usd": 0.0,
+    "current_liquidity_usd": 1272.1680000000001,
+    "holder_count": 56,
+    "dev_holding_pct": 0.0,
+    "top_holder_pct": 0.0,
+    "sniper_bundler_pct": 0.0,
+    "lore_description": "Pepe dev official coin $Kek",
+    "alert_timestamp": "2026-10-25T14:00:23.142414800Z",
+    "last_refreshed": "2026-10-26T10:19:27.338621200Z",
+    "bottom_market_cap_usd": 0.0,
+    "surge_pct_from_bottom": 0.0,
+    "is_cto": true,
+    "cto_status_desc": "Community Active / Multi-Chain",
+    "top_holders": [],
+    "top_10_pct": 0.0,
+    "clustered_wallets_count": 0,
+    "bubblemaps_url": "https://bubblemaps.io/solana/token/43SYgbobrEmcQp4HvnqPd6TzaY8ZBExkXKhdYWFrpump",
+    "ath_timestamp": "2026-10-25T14:00:23.142414800Z",
+    "last_notified_milestone": 1.0,
+    "chain": "solana",
+    "sustained_secs": 121,
+    "buys_5m": 45,
+    "sells_5m": 11,
+    "websites": [],
+    "socials": []
+  },
+  {
+    "alert_type": "EarlyLaunch",
+    "mint": "9sKp9RiscaVEAcmbMQ5pH212A7bEhKdntU54gao2pump",
+    "name": "Orwell & Goode ",
+    "symbol": "OG",
+    "initial_market_cap_usd": 10842.83,
+    "current_market_cap_usd": 2923.94,
+    "highest_market_cap_usd": 13315.63016708184,
+    "initial_volume_usd": 68955.57,
+    "current_volume_usd": 14.8,
+    "current_volume_5m_usd": 0.0,
+    "current_liquidity_usd": 1169.576,
+    "holder_count": 100,
+    "dev_holding_pct": 0.0,
+    "top_holder_pct": 3.2475152136712,
+    "sniper_bundler_pct": -0.0,
+    "lore_description": null,
+    "alert_timestamp": "2026-10-22T18:52:18.047637400Z",
+    "last_refreshed": "2026-10-26T10:19:30.055530800Z",
+    "bottom_market_cap_usd": 4233.209190758743,
+    "surge_pct_from_bottom": 156.1373537520969,
+    "is_cto": true,
+    "cto_status_desc": "Dev Dumped (0.0% Clean CTO)",
+    "top_holders": [
+      {
+        "rank": 1,
+        "address": "2NHz6YyLkojUpEKFCheWEmum3K3Lrj5oF48TrMujYEPV",
+        "amount": 32475152.136712,
+        "pct": 3.2475152136712,
+        "is_dev": false
+      },
+      {
+        "rank": 2,
+        "address": "6omgUr7k5md7BkMuXPohs1dcd5oBBQe2K5wrwHSkKZsn",
+        "amount": 25708458.405331,
+        "pct": 2.5708458405331003,
+        "is_dev": false
+      },
+      {
+        "rank": 3,
+        "address": "CreHBcEJGCHawL6yn8LsRyzheYeMDCizbNgg3RjhAhzv",
+        "amount": 25323281.399244,
+        "pct": 2.5323281399244,
+        "is_dev": false
+      },
+      {
+        "rank": 4,
+        "address": "G9hW12riLgMSfKpAH51hVVZiqAnVQwt9awkUoAghaieG",
+        "amount": 23426783.139382,
+        "pct": 2.3426783139382,
+        "is_dev": false
+      },
+      {
+        "rank": 5,
+        "address": "BZ3tzHDb7LArQCd74Gg5P5QD8XvEwqANDC1LVbzdx2Rx",
+        "amount": 21238770.302542,
+        "pct": 2.1238770302542003,
+        "is_dev": false
+      },
+      {
+        "rank": 6,
+        "address": "7RDbbwc8Hvu4FxcrDJohMSAvPiSCcwKJr24z6f87Btcp",
+        "amount": 20771172.305902,
+        "pct": 2.0771172305901997,
+        "is_dev": false
+      },
+      {
+        "rank": 7,
+        "address": "AP3C4vuV8NhavU3MwTyUmhYi8FXLr9Xo8ncZikp5G6Xv",
+        "amount": 16866094.581905,
+        "pct": 1.6866094581905002,
+        "is_dev": false
+      },
+      {
+        "rank": 8,
+        "address": "GfgjqbhCbrYa5K3nTz3thG1sLFyhEnJhsMgEzThpuDuj",
+        "amount": 16645853.5303,
+        "pct": 1.66458535303,
+        "is_dev": false
+      },
+      {
+        "rank": 9,
+        "address": "7weea7nLqK6J5qUHNDCFyRzFfiThGru5GnoQu2kKvRxd",
+        "amount": 14835465.863625,
+        "pct": 1.4835465863625,
+        "is_dev": false
+      },
+      {
+        "rank": 10,
+        "address": "BNSaUuDaxuKqQXJwqkhvnFLg2mLmWq3NigcXKRm7iZUM",
+        "amount": 14046617.195448,
+        "pct": 1.4046617195448,
+        "is_dev": false
+      },
+      {
+        "rank": 11,
+        "address": "BLxk6ZMXDZHs7F448FP51cYC2QetRCshtrxzPYsfjirK",
+        "amount": 13995670.095304,
+        "pct": 1.3995670095303998,
+        "is_dev": false
+      },
+      {
+        "rank": 12,
+        "address": "CWuNep7jvsDicw6hEuYMiz7Mf8TfDtd2dqxpGiW53WQf",
+        "amount": 13892181.45471,
+        "pct": 1.389218145471,
+        "is_dev": false
+      },
+      {
+        "rank": 13,
+        "address": "7sQtU5hvUmniTtrcKQgsnzAdCpBcy7dxmEXHvwdXFEyJ",
+        "amount": 12898881.92343,
+        "pct": 1.289888192343,
+        "is_dev": false
+      },
+      {
+        "rank": 14,
+        "address": "C75XdS59yz1PsA2ZxwmxZ3btMxQXzKtD3bG4XSM8pPBC",
+        "amount": 12763777.273101,
+        "pct": 1.2763777273101,
+        "is_dev": false
+      },
+      {
+        "rank": 15,
+        "address": "D1ZgHBBKyGZLj85dfD8QVWixUyFuuqvdJ4Z4yzPZFHr8",
+        "amount": 12554292.983385,
+        "pct": 1.2554292983385,
+        "is_dev": false
+      },
+      {
+        "rank": 16,
+        "address": "98xYnhyPrwX23tvwytFho4JTDXhfDc3Hw2HFjwKwqPf8",
+        "amount": 12374739.446504,
+        "pct": 1.2374739446504002,
+        "is_dev": false
+      },
+      {
+        "rank": 17,
+        "address": "EJxR2nVwAjRxPeAQtYzqog8NNDRBQHj9dqa9NJPnnvTm",
+        "amount": 11640032.364982,
+        "pct": 1.1640032364982,
+        "is_dev": false
+      },
+      {
+        "rank": 18,
+        "address": "32BUfeKuGNqUPuzLPEkyF1BjF8n6ZG9rVJXER3ZqZ2g8",
+        "amount": 11551217.076714,
+        "pct": 1.1551217076714,
+        "is_dev": false
+      },
+      {
+        "rank": 19,
+        "address": "E9jxPZN1qZvMHXKnH86ZQCqZ2UL1y2mJ8E5goggESqN7",
+        "amount": 10325693.859208,
+        "pct": 1.0325693859208,
+        "is_dev": false
+      }
+    ],
+    "top_10_pct": 21.133764886039103,
+    "clustered_wallets_count": 0,
+    "bubblemaps_url": "https://bubblemaps.io/solana/token/9sKp9RiscaVEAcmbMQ5pH212A7bEhKdntU54gao2pump",
+    "ath_timestamp": "2026-10-24T15:13:59.454487500Z",
+    "last_notified_milestone": 1.0,
+    "chain": "solana",
+    "sustained_secs": 0,
+    "buys_5m": 0,
+    "sells_5m": 0,
+    "websites": [],
+    "socials": []
+  },
+  {
+    "alert_type": "MultiChainRevival",
+    "mint": "7Yn6XiurWwemRbTaQaWbECTgxBS4mtAb7gsEwZg9pump",
+    "name": "Gadi Eisenkot",
+    "symbol": "Eisenkot",
+    "initial_market_cap_usd": 41794.73,
+    "current_market_cap_usd": 28382.0,
+    "highest_market_cap_usd": 45944.54970253754,
+    "initial_volume_usd": 29997.6,
+    "current_volume_usd": 64461.67999999999,
+    "current_volume_5m_usd": 0.0,
+    "current_liquidity_usd": 12829.03,
+    "holder_count": 20,
+    "dev_holding_pct": 0.0,
+    "top_holder_pct": 0.0,
+    "sniper_bundler_pct": 0.0,
+    "lore_description": "Gadi Eisenkot is the frontrunner to become Israel\u2019s next prime minister, leading all polls on Polymarket.",
+    "alert_timestamp": "2026-10-25T18:32:15.114109800Z",
+    "last_refreshed": "2026-10-26T10:19:31.055038300Z",
+    "bottom_market_cap_usd": 0.0,
+    "surge_pct_from_bottom": 0.0,
+    "is_cto": true,
+    "cto_status_desc": "Community Active / Multi-Chain",
+    "top_holders": [],
+    "top_10_pct": 0.0,
+    "clustered_wallets_count": 0,
+    "bubblemaps_url": "https://bubblemaps.io/solana/token/7Yn6XiurWwemRbTaQaWbECTgxBS4mtAb7gsEwZg9pump",
+    "ath_timestamp": "2026-10-26T08:42:14.216046700Z",
+    "last_notified_milestone": 1.0,
+    "chain": "solana",
+    "sustained_secs": 122,
+    "buys_5m": 14,
+    "sells_5m": 5,
+    "websites": [],
+    "socials": []
+  },
+  {
+    "alert_type": "EarlyLaunch",
+    "mint": "6F3ARx9epz8DHL5rZXDexfotkpphdycKLLdMcx5k35gg",
+    "name": "PUMP LAUNCH",
+    "symbol": "PUMPLAUNCH",
+    "initial_market_cap_usd": 10584.74,
+    "current_market_cap_usd": 41749.53,
+    "highest_market_cap_usd": 41767.47394763046,
+    "initial_volume_usd": 20193.66,
+    "current_volume_usd": 225578.43,
+    "current_volume_5m_usd": 0.0,
+    "current_liquidity_usd": 16699.812,
+    "holder_count": 50,
+    "dev_holding_pct": 0.0,
+    "top_holder_pct": 4.0375660894036995,
+    "sniper_bundler_pct": 0.6844757238521001,
+    "lore_description": "A new way to launch on Pumpfun, designed to block zero-block sniping, limit MEV bundling and give everyone a fairer start.",
+    "alert_timestamp": "2026-10-25T18:39:13.459394600Z",
+    "last_refreshed": "2026-10-26T10:19:32.515621Z",
+    "bottom_market_cap_usd": 4193.849021435229,
+    "surge_pct_from_bottom": 152.38724488888886,
+    "is_cto": true,
+    "cto_status_desc": "Dev Dumped (0.0% Clean CTO)",
+    "top_holders": [
+      {
+        "rank": 1,
+        "address": "5rPYiFtFrWGJmj6nemUGkTPM5UTvqsie56wjmUnMdyCN",
+        "amount": 40375660.894037,
+        "pct": 4.0375660894036995,
+        "is_dev": false
+      },
+      {
+        "rank": 2,
+        "address": "61B5WocJB2vxzvEWDf9gXv7AkSmDE9EDUQSHHC128b6s",
+        "amount": 35781072.982042,
+        "pct": 3.5781072982042,
+        "is_dev": false
+      },
+      {
+        "rank": 3,
+        "address": "3Wi5wbkV2253kbhdpSD74wFCS5Wb4NJBTrkEYTDGGYnp",
+        "amount": 32188447.715829,
+        "pct": 3.2188447715829,
+        "is_dev": false
+      },
+      {
+        "rank": 4,
+        "address": "3ois3wRX7JWryp6zuSwD37oonNecCaKKVn9Y3iRrLhZu",
+        "amount": 29845423.491756,
+        "pct": 2.9845423491756,
+        "is_dev": false
+      },
+      {
+        "rank": 5,
+        "address": "D3nr22gbsWY1D2F5iDeAcW4k2j3BUP7hR8gpgAvU7mXN",
+        "amount": 25937159.950678,
+        "pct": 2.5937159950678,
+        "is_dev": false
+      },
+      {
+        "rank": 6,
+        "address": "3wV9XC6wMArFG5fDKsBnE2qCF7VkMTQNWjCChFokwf9H",
+        "amount": 23732713.513766,
+        "pct": 2.3732713513765997,
+        "is_dev": false
+      },
+      {
+        "rank": 7,
+        "address": "8NtPo9bYTcFcJiHPG5NsgevdkpdYJ1xCCAVJNQuANWjy",
+        "amount": 23178124.095607,
+        "pct": 2.3178124095607004,
+        "is_dev": false
+      },
+      {
+        "rank": 8,
+        "address": "D3JgqVCJ1DZDGTtMyX4swPhaZ6v6tzXGoijT4EoGEvKM",
+        "amount": 21703112.998323,
+        "pct": 2.1703112998323,
+        "is_dev": false
+      },
+      {
+        "rank": 9,
+        "address": "2mAWLn5XrpFiDzWYUhSVb7m6ssYvYSFUKF97jSsfxkLs",
+        "amount": 20207137.439042,
+        "pct": 2.0207137439042,
+        "is_dev": false
+      },
+      {
+        "rank": 10,
+        "address": "C32ojFz4wt3MExjDDHZPJADajPkTy9tQm2kG2a1ZSGef",
+        "amount": 19196062.039165,
+        "pct": 1.9196062039165,
+        "is_dev": false
+      },
+      {
+        "rank": 11,
+        "address": "3UbHU4qfAguXybM5KQN2ovShiZ3c2ZuwYMTXqnRMpQTk",
+        "amount": 18262895.779737,
+        "pct": 1.8262895779737,
+        "is_dev": false
+      },
+      {
+        "rank": 12,
+        "address": "BMykf1KWaFMvzWEwupmfAVVPqJmpfQSF12gJsMfPB76T",
+        "amount": 17957865.48688,
+        "pct": 1.7957865486880005,
+        "is_dev": false
+      },
+      {
+        "rank": 13,
+        "address": "ExtEkutRgaJv9DodqHgqnSxvxncej9fXkv5iQWFJEiAw",
+        "amount": 17760361.907237,
+        "pct": 1.7760361907237,
+        "is_dev": false
+      },
+      {
+        "rank": 14,
+        "address": "J2vkQC7kwQE3LjyeKJovSXJuP5nikxPp2VASNkUTo3dN",
+        "amount": 17359971.521674,
+        "pct": 1.7359971521674,
+        "is_dev": false
+      },
+      {
+        "rank": 15,
+        "address": "2YNWmiXDTSYJQDJySKD1RZFCEFJ7xiv3ZsJTi2aA5UM4",
+        "amount": 16451880.010253,
+        "pct": 1.6451880010253,
+        "is_dev": false
+      },
+      {
+        "rank": 16,
+        "address": "9j2ZijzcMgthrvaAhz48LXcK5D18vmTh7q59mxNgEhsA",
+        "amount": 14757576.703926,
+        "pct": 1.4757576703926,
+        "is_dev": false
+      },
+      {
+        "rank": 17,
+        "address": "FbjpZaRYMSG6wAkafFERfG9hdjFhHwFggLTTeekyj6XP",
+        "amount": 11600389.936719,
+        "pct": 1.1600389936719,
+        "is_dev": false
+      },
+      {
+        "rank": 18,
+        "address": "5q4noTzNpVomYpjZhKnnTvwC9cRBhdcbTmriSW1p149D",
+        "amount": 10304572.458091,
+        "pct": 1.0304572458091,
+        "is_dev": false
+      },
+      {
+        "rank": 19,
+        "address": "J1kSd9w39BB6j6JR5W5wGzDy7fc7uiuGP9NSvEH4vLfy",
+        "amount": 10192327.003342,
+        "pct": 1.0192327003342,
+        "is_dev": false
+      }
+    ],
+    "top_10_pct": 27.214491512024505,
+    "clustered_wallets_count": 1,
+    "bubblemaps_url": "https://bubblemaps.io/solana/token/6F3ARx9epz8DHL5rZXDexfotkpphdycKLLdMcx5k35gg",
+    "ath_timestamp": "2026-10-26T08:37:01.778475300Z",
+    "last_notified_milestone": 2.0,
+    "chain": "solana",
+    "sustained_secs": 0,
+    "buys_5m": 0,
+    "sells_5m": 0,
+    "websites": [],
+    "socials": []
   },
   {
     "alert_type": "EarlyLaunch",
@@ -2606,19 +2391,19 @@
     "name": "minehub",
     "symbol": "MINEHUB",
     "initial_market_cap_usd": 24012.49,
-    "current_market_cap_usd": 15342.92,
+    "current_market_cap_usd": 18920.58,
     "highest_market_cap_usd": 29656.5313178854,
     "initial_volume_usd": 56295.24,
-    "current_volume_usd": 149704.79,
-    "current_volume_5m_usd": 880.69,
-    "current_liquidity_usd": 6137.168000000001,
+    "current_volume_usd": 151030.89,
+    "current_volume_5m_usd": 0.47,
+    "current_liquidity_usd": 7568.232000000001,
     "holder_count": 100,
     "dev_holding_pct": 0.0,
     "top_holder_pct": 9.999999999999911,
     "sniper_bundler_pct": 0.6789998970287007,
     "lore_description": null,
     "alert_timestamp": "2026-10-25T18:22:20.990954800Z",
-    "last_refreshed": "2026-10-26T09:24:42.564783Z",
+    "last_refreshed": "2026-10-26T10:19:36.270072400Z",
     "bottom_market_cap_usd": 5100.192346489861,
     "surge_pct_from_bottom": 370.8153804537642,
     "is_cto": true,
@@ -2656,14 +2441,14 @@
         "rank": 5,
         "address": "GbgKqgcvUyBj2eAX1yp8npZPePxr5Ev6uqgJWUt179hD",
         "amount": 18301933.180995,
-        "pct": 1.8301933180995018,
+        "pct": 1.8301933180995016,
         "is_dev": false
       },
       {
         "rank": 6,
         "address": "88Czg61yVbVKnQUekwGdcocyPMBWmrvYjdL5bJkovpok",
         "amount": 17179721.737345,
-        "pct": 1.7179721737345017,
+        "pct": 1.7179721737345015,
         "is_dev": false
       },
       {
@@ -2754,7 +2539,7 @@
         "rank": 19,
         "address": "CYrT56iXKqpStE6VbKVJmeExLGTyvC3dvETtZH7npVeu",
         "amount": 9402940.412174,
-        "pct": 0.9402940412174009,
+        "pct": 0.9402940412174008,
         "is_dev": false
       }
     ],
@@ -2766,6 +2551,619 @@
     "chain": "solana",
     "sustained_secs": 0,
     "buys_5m": 0,
-    "sells_5m": 0
+    "sells_5m": 0,
+    "websites": [],
+    "socials": []
+  },
+  {
+    "alert_type": "MultiChainRevival",
+    "mint": "JBdcnX7qT4yVsTWHQzzCzTbsR7QsNd8YvziA5ziJpump",
+    "name": "The Otanm\u00e4ki Wolves",
+    "symbol": "Wolves",
+    "initial_market_cap_usd": 27741.79,
+    "current_market_cap_usd": 21441.0,
+    "highest_market_cap_usd": 63705.6472357381,
+    "initial_volume_usd": 157054.5,
+    "current_volume_usd": 151035.15,
+    "current_volume_5m_usd": 134.75,
+    "current_liquidity_usd": 10949.09,
+    "holder_count": 33,
+    "dev_holding_pct": 0.0,
+    "top_holder_pct": 0.0,
+    "sniper_bundler_pct": 0.0,
+    "lore_description": "",
+    "alert_timestamp": "2026-10-25T09:36:28.899424500Z",
+    "last_refreshed": "2026-10-26T10:18:46.420789900Z",
+    "bottom_market_cap_usd": 0.0,
+    "surge_pct_from_bottom": 0.0,
+    "is_cto": true,
+    "cto_status_desc": "Community Active / Multi-Chain",
+    "top_holders": [],
+    "top_10_pct": 0.0,
+    "clustered_wallets_count": 0,
+    "bubblemaps_url": "https://bubblemaps.io/solana/token/JBdcnX7qT4yVsTWHQzzCzTbsR7QsNd8YvziA5ziJpump",
+    "ath_timestamp": "2026-10-25T13:41:03.352686500Z",
+    "last_notified_milestone": 2.0,
+    "chain": "solana",
+    "sustained_secs": 121,
+    "buys_5m": 29,
+    "sells_5m": 4,
+    "websites": [],
+    "socials": []
+  },
+  {
+    "alert_type": "EarlyLaunch",
+    "mint": "GSdzioCmcouDADrJAx2Va8AXfG6EMkGrxQpf5Lypump",
+    "name": "Bounceback",
+    "symbol": "BOUNCEBACK",
+    "initial_market_cap_usd": 7989.81,
+    "current_market_cap_usd": 7989.81,
+    "highest_market_cap_usd": 7989.81,
+    "initial_volume_usd": 33791.52,
+    "current_volume_usd": 1.79,
+    "current_volume_5m_usd": 0.0,
+    "current_liquidity_usd": 1214.6,
+    "holder_count": 50,
+    "dev_holding_pct": 0.0,
+    "top_holder_pct": 5.0,
+    "sniper_bundler_pct": 5.0,
+    "lore_description": null,
+    "alert_timestamp": "2026-10-22T12:06:22.257440600Z",
+    "last_refreshed": "2026-10-24T09:57:50.732403Z",
+    "bottom_market_cap_usd": 7989.81,
+    "surge_pct_from_bottom": 0.0,
+    "is_cto": false,
+    "cto_status_desc": "Tracked on demand",
+    "top_holders": [],
+    "top_10_pct": 0.0,
+    "clustered_wallets_count": 0,
+    "bubblemaps_url": "https://bubblemaps.io/solana/token/GSdzioCmcouDADrJAx2Va8AXfG6EMkGrxQpf5Lypump",
+    "ath_timestamp": "2026-10-22T12:06:22Z",
+    "last_notified_milestone": 1.0,
+    "chain": "solana",
+    "sustained_secs": 0,
+    "buys_5m": 0,
+    "sells_5m": 0,
+    "websites": [],
+    "socials": []
+  },
+  {
+    "alert_type": "MultiChainRevival",
+    "mint": "8gnyYyngFtzPP6K9YRQ8a7kZWKQ5tzu5N2D23Rafxrn5",
+    "name": "StonkMarket",
+    "symbol": "STM",
+    "initial_market_cap_usd": 337451.0,
+    "current_market_cap_usd": 223034.0,
+    "highest_market_cap_usd": 337451.0,
+    "initial_volume_usd": 593044.14,
+    "current_volume_usd": 911376.82,
+    "current_volume_5m_usd": 2595.9,
+    "current_liquidity_usd": 44046.5,
+    "holder_count": 365,
+    "dev_holding_pct": 0.0,
+    "top_holder_pct": 0.0,
+    "sniper_bundler_pct": 0.0,
+    "lore_description": "",
+    "alert_timestamp": "2026-10-26T08:43:04.989209300Z",
+    "last_refreshed": "2026-10-26T10:19:45.605425400Z",
+    "bottom_market_cap_usd": 0.0,
+    "surge_pct_from_bottom": 0.0,
+    "is_cto": true,
+    "cto_status_desc": "Community Active / Multi-Chain",
+    "top_holders": [],
+    "top_10_pct": 0.0,
+    "clustered_wallets_count": 0,
+    "bubblemaps_url": "https://bubblemaps.io/solana/token/8gnyYyngFtzPP6K9YRQ8a7kZWKQ5tzu5N2D23Rafxrn5",
+    "ath_timestamp": "2026-10-26T10:19:45.605426600Z",
+    "last_notified_milestone": 1.0,
+    "chain": "solana",
+    "sustained_secs": 154,
+    "buys_5m": 219,
+    "sells_5m": 146,
+    "websites": [],
+    "socials": []
+  },
+  {
+    "alert_type": "MultiChainRevival",
+    "mint": "5Aa378KvCX3bz2dJ3YncoXijBBVvgvipQAXHWaBNNHRw",
+    "name": "TRUMPDOLLAR",
+    "symbol": "TRUMPDOLLAR",
+    "initial_market_cap_usd": 816537.0,
+    "current_market_cap_usd": 803330.0,
+    "highest_market_cap_usd": 827791.663726102,
+    "initial_volume_usd": 410212.33,
+    "current_volume_usd": 410586.45,
+    "current_volume_5m_usd": 141.78,
+    "current_liquidity_usd": 88630.2,
+    "holder_count": 31,
+    "dev_holding_pct": 0.0,
+    "top_holder_pct": 0.0,
+    "sniper_bundler_pct": 0.0,
+    "lore_description": "",
+    "alert_timestamp": "2026-10-26T10:13:19.357813900Z",
+    "last_refreshed": "2026-10-26T10:19:46.246909500Z",
+    "bottom_market_cap_usd": 0.0,
+    "surge_pct_from_bottom": 0.0,
+    "is_cto": true,
+    "cto_status_desc": "Community Active / Multi-Chain",
+    "top_holders": [],
+    "top_10_pct": 0.0,
+    "clustered_wallets_count": 0,
+    "bubblemaps_url": "https://bubblemaps.io/solana/token/5Aa378KvCX3bz2dJ3YncoXijBBVvgvipQAXHWaBNNHRw",
+    "ath_timestamp": "2026-10-26T10:18:49.625473900Z",
+    "last_notified_milestone": 1.0,
+    "chain": "solana",
+    "sustained_secs": 148,
+    "buys_5m": 24,
+    "sells_5m": 7,
+    "websites": [],
+    "socials": [
+      [
+        "twitter",
+        "https://x.com/0xLogie"
+      ]
+    ]
+  },
+  {
+    "alert_type": "EarlyLaunch",
+    "mint": "Hmpfs3cGmAiRgFFxwXHN1tJqqcmXfztUbfGFvvQCpump",
+    "name": "Sleepless",
+    "symbol": "SLEEP",
+    "initial_market_cap_usd": 22425.0,
+    "current_market_cap_usd": 1928.0,
+    "highest_market_cap_usd": 55853.651927784114,
+    "initial_volume_usd": 58539.7,
+    "current_volume_usd": 2.64,
+    "current_volume_5m_usd": 0.0,
+    "current_liquidity_usd": 2084.17,
+    "holder_count": 100,
+    "dev_holding_pct": 0.0,
+    "top_holder_pct": 8.471176548141386,
+    "sniper_bundler_pct": 8.471176548141386,
+    "lore_description": null,
+    "alert_timestamp": "2026-10-24T15:23:30.901344500Z",
+    "last_refreshed": "2026-10-26T10:19:47.022719100Z",
+    "bottom_market_cap_usd": 4235.365529418966,
+    "surge_pct_from_bottom": 429.4702392092331,
+    "is_cto": true,
+    "cto_status_desc": "Dev Dumped (0.0% Clean CTO)",
+    "top_holders": [
+      {
+        "rank": 1,
+        "address": "6QVKaGn96wwJxXj5x6PMTNE6TqasUuHGt72B59PKZYFC",
+        "amount": 81369486.787496,
+        "pct": 8.471176548141386,
+        "is_dev": false
+      },
+      {
+        "rank": 2,
+        "address": "CSGhVAH8Kv32cKCvjjB4vxVypVMAiSSYnNWrQDNkULAi",
+        "amount": 51516500.844983,
+        "pct": 5.36325582266531,
+        "is_dev": false
+      },
+      {
+        "rank": 3,
+        "address": "HYaYevTQAJkXApbNTQHZ58e5WnvBfRg2RXcQZ2dZ8sQA",
+        "amount": 8403179.660608,
+        "pct": 0.874834305599923,
+        "is_dev": false
+      },
+      {
+        "rank": 4,
+        "address": "7vE6huv91ZLUowDNF6voEUJh5hzxjxzjoCXpwebwtBDq",
+        "amount": 8368638.94014,
+        "pct": 0.8712383563966477,
+        "is_dev": false
+      },
+      {
+        "rank": 5,
+        "address": "FcVrC7EvMo1bxSEm9SRHWScsUqLwmQD9MRtwjHGsi7Pn",
+        "amount": 7856270.374142,
+        "pct": 0.817896928895423,
+        "is_dev": false
+      },
+      {
+        "rank": 6,
+        "address": "9tvEpaTEv5r2xyZbowVHXFKTfYA35TQyYjis7PmXwLXD",
+        "amount": 7802432.989306,
+        "pct": 0.8122920515655824,
+        "is_dev": false
+      },
+      {
+        "rank": 7,
+        "address": "9oTv7j5n8pnHGc74iXF132q3nnmcf6rGNCrowGZ2ygyz",
+        "amount": 7048006.663968,
+        "pct": 0.7337505878447391,
+        "is_dev": false
+      },
+      {
+        "rank": 8,
+        "address": "ESpv7ohGhgGAmfAQRyMQxW9e3TodDngyyL4hZpxjyp59",
+        "amount": 7015400.700152,
+        "pct": 0.7303560613838683,
+        "is_dev": false
+      },
+      {
+        "rank": 9,
+        "address": "Gaayh8oGmWEh2jjqY27qzZN3Lm21v9zFoH1ZnpZq64M2",
+        "amount": 7000768.344127,
+        "pct": 0.7288327228930314,
+        "is_dev": false
+      },
+      {
+        "rank": 10,
+        "address": "GUoAG9yppTA2NFQnn194PF4p5quoZiJkh7Ey4qEjKWuG",
+        "amount": 6916389.707232,
+        "pct": 0.7200482711501344,
+        "is_dev": false
+      },
+      {
+        "rank": 11,
+        "address": "f6Ht8wvC68M2r7ng9vtLJXN25TwXpaXNfzAYSU9T46E",
+        "amount": 6897341.60861,
+        "pct": 0.7180652205902263,
+        "is_dev": false
+      },
+      {
+        "rank": 12,
+        "address": "8A4dUepveTLefM2hEdXuzkHt7UnUexAK3AairaVPcEmT",
+        "amount": 6587789.208304,
+        "pct": 0.685838483794634,
+        "is_dev": false
+      },
+      {
+        "rank": 13,
+        "address": "9Q3fmKZB6KSXVLV15v49T594vTykfp8H72mZwWsbNwGm",
+        "amount": 6353714.862647,
+        "pct": 0.6614695810801605,
+        "is_dev": false
+      },
+      {
+        "rank": 14,
+        "address": "6GKdJQuZACBnZxmeRwYVR6EKf5RovSoejUkdsGFk2FKP",
+        "amount": 6347691.284921,
+        "pct": 0.6608424812619983,
+        "is_dev": false
+      },
+      {
+        "rank": 15,
+        "address": "4shgXLBu6cWj8P7d8P6WLoLVDUKPxADA82qj3hRsqzbt",
+        "amount": 6267361.925935,
+        "pct": 0.6524795898534954,
+        "is_dev": false
+      },
+      {
+        "rank": 16,
+        "address": "B4wQUTyEBkdgC59f6vPCszAfm74pZMnLQTmLtytshNdq",
+        "amount": 6256724.364289,
+        "pct": 0.6513721395511439,
+        "is_dev": false
+      },
+      {
+        "rank": 17,
+        "address": "Q1pdVC3UBTxiWTGuEWPX4vwMe6vUNbSXS6hbzGLWztq",
+        "amount": 6135985.883323,
+        "pct": 0.638802354134056,
+        "is_dev": false
+      },
+      {
+        "rank": 18,
+        "address": "8yHUqU4X9piKFWz99jcZnYhChibv8nknEMoMVfVUBMgY",
+        "amount": 6108039.548333,
+        "pct": 0.6358929301359417,
+        "is_dev": false
+      },
+      {
+        "rank": 19,
+        "address": "Efsztg2QMJpiL3nLmjREo22q1bFDbsQqmTzF4nJUGGXL",
+        "amount": 6096893.601299,
+        "pct": 0.6347325530849246,
+        "is_dev": false
+      }
+    ],
+    "top_10_pct": 20.123681656536043,
+    "clustered_wallets_count": 1,
+    "bubblemaps_url": "https://bubblemaps.io/solana/token/Hmpfs3cGmAiRgFFxwXHN1tJqqcmXfztUbfGFvvQCpump",
+    "ath_timestamp": "2026-10-24T23:31:24.723711Z",
+    "last_notified_milestone": 2.0,
+    "chain": "solana",
+    "sustained_secs": 0,
+    "buys_5m": 0,
+    "sells_5m": 0,
+    "websites": [],
+    "socials": []
+  },
+  {
+    "alert_type": "EarlyLaunch",
+    "mint": "9PPQ5jEY3UpXjAa22a1aMb12VjoYYfL21aC9RhSspump",
+    "name": "Genny The Hippo",
+    "symbol": "GENNY",
+    "initial_market_cap_usd": 19519.86,
+    "current_market_cap_usd": 7271.0,
+    "highest_market_cap_usd": 144514.76334377844,
+    "initial_volume_usd": 62295.24,
+    "current_volume_usd": 652504.99,
+    "current_volume_5m_usd": 82.22,
+    "current_liquidity_usd": 5815.13,
+    "holder_count": 100,
+    "dev_holding_pct": 0.0,
+    "top_holder_pct": 2.7245455313159352,
+    "sniper_bundler_pct": -0.0,
+    "lore_description": null,
+    "alert_timestamp": "2026-10-25T18:22:14.794737200Z",
+    "last_refreshed": "2026-10-26T10:19:48.067940Z",
+    "bottom_market_cap_usd": 5002.672602530828,
+    "surge_pct_from_bottom": 290.18863617269295,
+    "is_cto": true,
+    "cto_status_desc": "Dev Dumped (0.0% Clean CTO)",
+    "top_holders": [
+      {
+        "rank": 1,
+        "address": "ELG46yhBqzveg1hTWqZvgKS8b3rTbywHLMmPVfx5o2br",
+        "amount": 27245450.728749,
+        "pct": 2.7245455313159352,
+        "is_dev": false
+      },
+      {
+        "rank": 2,
+        "address": "HEYfPhGeGag2a4hx2wCcw3fKHBqgHxBth5doEWN77vJE",
+        "amount": 22865554.552439,
+        "pct": 2.2865558399873427,
+        "is_dev": false
+      },
+      {
+        "rank": 3,
+        "address": "3N9MLdY6si2UauRUvcs68Xx7gSgbCUTpkoG5xgmjvqxE",
+        "amount": 21647818.6457,
+        "pct": 2.1647822288234124,
+        "is_dev": false
+      },
+      {
+        "rank": 4,
+        "address": "Edu8p2M7Sv5fcUSEv7MXxC7xwmzrPTYPG719JNZyYAdT",
+        "amount": 20464711.582891,
+        "pct": 2.0464715026351583,
+        "is_dev": false
+      },
+      {
+        "rank": 5,
+        "address": "EvKUGZmHybgUgRimHN7zqz3L3BCYA9JA2sX5bzk3XYQN",
+        "amount": 19620073.029855,
+        "pct": 1.9620076331193887,
+        "is_dev": false
+      },
+      {
+        "rank": 6,
+        "address": "3NDMoJpqCYHeKUp7hApakU1mqUi9X2ZVZyctE4VX2CQ8",
+        "amount": 19040371.253253,
+        "pct": 1.9040374457049336,
+        "is_dev": false
+      },
+      {
+        "rank": 7,
+        "address": "77t1ruCCF5uqL7zFbK8wZSih4ckLNHHwyTdjAm4N7cCS",
+        "amount": 18098887.746014,
+        "pct": 1.8098890791393176,
+        "is_dev": false
+      },
+      {
+        "rank": 8,
+        "address": "Ah232uPQg76XDEmT3JhNb8NkzBzRKhVgGCV2nhnFprPi",
+        "amount": 16741922.383503,
+        "pct": 1.6741925200554664,
+        "is_dev": false
+      },
+      {
+        "rank": 9,
+        "address": "8yS28KjSsmxJZ2WNH6caxz3r8q8AuKJmPSiwr9VXM2LT",
+        "amount": 14655465.922664,
+        "pct": 1.4655468388641546,
+        "is_dev": false
+      },
+      {
+        "rank": 10,
+        "address": "D5xQqzNkq6pMcumC3mM7WD8eRz8Q8TsUSQqjGkmzBeq8",
+        "amount": 14582344.215195,
+        "pct": 1.4582346668868844,
+        "is_dev": false
+      },
+      {
+        "rank": 11,
+        "address": "H1uifLZz3S6QraBPf3PWdby2MT72Jm4Jb7LuFwWsxyoG",
+        "amount": 13481408.07022,
+        "pct": 1.3481410338646658,
+        "is_dev": false
+      },
+      {
+        "rank": 12,
+        "address": "9FBDi3oAHQPwYCTuRmKV75UZj2YfVf5xtpHnKGkW9KgB",
+        "amount": 12311003.770328,
+        "pct": 1.231100584181853,
+        "is_dev": false
+      },
+      {
+        "rank": 13,
+        "address": "HbNBpcLNXuTA2eLErE7SoCxzNA8MKQWoHB1LZeysfNYt",
+        "amount": 12148732.055835,
+        "pct": 1.214873410002115,
+        "is_dev": false
+      },
+      {
+        "rank": 14,
+        "address": "FBdejDoCGAxRFNK2oqsWU7YqeepSEEw5ca4SPuifoyKG",
+        "amount": 11955932.239388,
+        "pct": 1.1955934251133011,
+        "is_dev": false
+      },
+      {
+        "rank": 15,
+        "address": "4s5haayosYoNf9UqBTgqbWHjz5W6VokxFCdDCsW4idK2",
+        "amount": 10972579.0847,
+        "pct": 1.0972580930982732,
+        "is_dev": false
+      },
+      {
+        "rank": 16,
+        "address": "ExmmQEBDycdHcneMuoQT44yVdnWoSF5J5Ffg47FTju4J",
+        "amount": 10778522.003481,
+        "pct": 1.077852381711104,
+        "is_dev": false
+      },
+      {
+        "rank": 17,
+        "address": "6B9Fx8SBoTva3ArhENo8Hsn91vst52rtH9rGkq2oNfU3",
+        "amount": 10751474.708241,
+        "pct": 1.0751476517319971,
+        "is_dev": false
+      },
+      {
+        "rank": 18,
+        "address": "2wFEnFSsqrdJa1c4MXzpVTdsxM4i6vHNru3PrVqedDCD",
+        "amount": 10709241.217177,
+        "pct": 1.0709243019149624,
+        "is_dev": false
+      },
+      {
+        "rank": 19,
+        "address": "5fuB8aHMbcks3p59PoLCieRzxWnVFomr6uZ3NvfoHsZp",
+        "amount": 9233111.46741,
+        "pct": 0.9233113021004112,
+        "is_dev": false
+      }
+    ],
+    "top_10_pct": 19.496263286531992,
+    "clustered_wallets_count": 0,
+    "bubblemaps_url": "https://bubblemaps.io/solana/token/9PPQ5jEY3UpXjAa22a1aMb12VjoYYfL21aC9RhSspump",
+    "ath_timestamp": "2026-10-26T08:31:02.025501900Z",
+    "last_notified_milestone": 5.0,
+    "chain": "solana",
+    "sustained_secs": 0,
+    "buys_5m": 0,
+    "sells_5m": 0,
+    "websites": [],
+    "socials": []
+  },
+  {
+    "alert_type": "MultiChainRevival",
+    "mint": "HEPG65DZHGePLKrTqkkkJLUb7vt9A2436kdTxTJSSTNK",
+    "name": "Fomopad",
+    "symbol": "FOMOPAD",
+    "initial_market_cap_usd": 128502.0,
+    "current_market_cap_usd": 107955.0,
+    "highest_market_cap_usd": 128502.0,
+    "initial_volume_usd": 443719.83,
+    "current_volume_usd": 478504.43000000005,
+    "current_volume_5m_usd": 19882.230000000003,
+    "current_liquidity_usd": 29022.19,
+    "holder_count": 216,
+    "dev_holding_pct": 0.0,
+    "top_holder_pct": 0.0,
+    "sniper_bundler_pct": 0.0,
+    "lore_description": "",
+    "alert_timestamp": "2026-10-26T10:10:18.179300Z",
+    "last_refreshed": "2026-10-26T10:19:49.290878800Z",
+    "bottom_market_cap_usd": 0.0,
+    "surge_pct_from_bottom": 0.0,
+    "is_cto": true,
+    "cto_status_desc": "Community Active / Multi-Chain",
+    "top_holders": [],
+    "top_10_pct": 0.0,
+    "clustered_wallets_count": 0,
+    "bubblemaps_url": "https://bubblemaps.io/solana/token/HEPG65DZHGePLKrTqkkkJLUb7vt9A2436kdTxTJSSTNK",
+    "ath_timestamp": "2026-10-26T10:13:49.073093600Z",
+    "last_notified_milestone": 1.0,
+    "chain": "solana",
+    "sustained_secs": 148,
+    "buys_5m": 131,
+    "sells_5m": 85,
+    "websites": [
+      "https://fomopad.name/"
+    ],
+    "socials": [
+      [
+        "twitter",
+        "https://x.com/fomoxpad/status/2114638169643581475?s=20"
+      ]
+    ]
+  },
+  {
+    "alert_type": "MultiChainRevival",
+    "mint": "9gexoGn8qnxT1XpncwNXJDwQci9cPGuNXG3uNfDkpump",
+    "name": "Gigantic Milker Enjoyers",
+    "symbol": "GME",
+    "initial_market_cap_usd": 314868.0,
+    "current_market_cap_usd": 109214.0,
+    "highest_market_cap_usd": 819655.1398464967,
+    "initial_volume_usd": 774361.18,
+    "current_volume_usd": 3569124.1500000004,
+    "current_volume_5m_usd": 805.43,
+    "current_liquidity_usd": 30347.9,
+    "holder_count": 1074,
+    "dev_holding_pct": 0.0,
+    "top_holder_pct": 0.0,
+    "sniper_bundler_pct": 0.0,
+    "lore_description": "Community of like minded gigantic milker enjoyers",
+    "alert_timestamp": "2026-10-25T14:24:52.126699500Z",
+    "last_refreshed": "2026-10-26T10:19:50.407552400Z",
+    "bottom_market_cap_usd": 0.0,
+    "surge_pct_from_bottom": 0.0,
+    "is_cto": true,
+    "cto_status_desc": "Community Active / Multi-Chain",
+    "top_holders": [],
+    "top_10_pct": 0.0,
+    "clustered_wallets_count": 0,
+    "bubblemaps_url": "https://bubblemaps.io/solana/token/9gexoGn8qnxT1XpncwNXJDwQci9cPGuNXG3uNfDkpump",
+    "ath_timestamp": "2026-10-25T17:37:47.979436800Z",
+    "last_notified_milestone": 2.0,
+    "chain": "solana",
+    "sustained_secs": 122,
+    "buys_5m": 658,
+    "sells_5m": 416,
+    "websites": [],
+    "socials": []
+  },
+  {
+    "alert_type": "MultiChainRevival",
+    "mint": "GEaHnPjTVeSw8QSPTnh1KcEASsbES8U6BSTWmiY8pump",
+    "name": "Freebots",
+    "symbol": "Freebots",
+    "initial_market_cap_usd": 25072.0,
+    "current_market_cap_usd": 14414.0,
+    "highest_market_cap_usd": 31113.95194794266,
+    "initial_volume_usd": 86633.27,
+    "current_volume_usd": 163466.43,
+    "current_volume_5m_usd": 1643.98,
+    "current_liquidity_usd": 8656.65,
+    "holder_count": 37,
+    "dev_holding_pct": 0.0,
+    "top_holder_pct": 0.0,
+    "sniper_bundler_pct": 0.0,
+    "lore_description": "Freebots - creator onboarded. ( SpaceX grokathon 2026 winner )",
+    "alert_timestamp": "2026-10-26T09:57:54.379530500Z",
+    "last_refreshed": "2026-10-26T10:19:51.045961800Z",
+    "bottom_market_cap_usd": 0.0,
+    "surge_pct_from_bottom": 0.0,
+    "is_cto": true,
+    "cto_status_desc": "Community Active / Multi-Chain",
+    "top_holders": [],
+    "top_10_pct": 0.0,
+    "clustered_wallets_count": 0,
+    "bubblemaps_url": "https://bubblemaps.io/solana/token/GEaHnPjTVeSw8QSPTnh1KcEASsbES8U6BSTWmiY8pump",
+    "ath_timestamp": "2026-10-26T09:59:49.371414700Z",
+    "last_notified_milestone": 1.0,
+    "chain": "solana",
+    "sustained_secs": 148,
+    "buys_5m": 24,
+    "sells_5m": 13,
+    "websites": [
+      "https://freebots.lol/"
+    ],
+    "socials": [
+      [
+        "twitter",
+        "https://x.com/jxswal/status/2114646763839594742?s=20"
+      ]
+    ]
   }
 ]

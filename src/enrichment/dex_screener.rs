@@ -93,50 +93,6 @@ impl DexScreenerClient {
         }
     }
 
-    /// Queries GeckoTerminal 5-minute OHLCV candles for the pool address strictly AFTER alert_epoch.
-    /// This prevents attributing price action that occurred before the call to the token's ATH.
-    pub async fn fetch_pool_candle_peak_after(&self, pool_address: &str, alert_epoch: i64) -> Option<f64> {
-        let url = format!(
-            "https://api.geckoterminal.com/api/v2/networks/solana/pools/{}/ohlcv/minute?aggregate=5&limit=288",
-            pool_address
-        );
-        let resp = self
-            .http_client
-            .get(&url)
-            .send()
-            .await
-            .ok()?;
-
-        if !resp.status().is_success() {
-            return None;
-        }
-
-        let body: serde_json::Value = resp.json().await.ok()?;
-        let candles = body.get("data")?.get("attributes")?.get("ohlcv_list")?.as_array()?;
-        let mut max_high = 0.0;
-        for c in candles {
-            // Candle format: [timestamp, open, high, low, close, volume]
-            let ts = c.get(0).and_then(|v| v.as_i64()).unwrap_or(0);
-            // STRICT FILTER: Only consider candles that started at or after the call time
-            if ts < (alert_epoch - 300) {
-                continue;
-            }
-            if let Some(h) = c.get(2).and_then(|v| v.as_f64()) {
-                if h > max_high {
-                    max_high = h;
-                }
-            }
-        }
-
-        if max_high > 0.0 {
-            // Pump.fun standard supply 1,000,000,000 tokens
-            Some(max_high * 1_000_000_000.0)
-        } else {
-            None
-        }
-    }
-
-    /// Fetch live market cap, volume, and liquidity from DexScreener
     pub async fn fetch_metrics(&self, mint: &str) -> Result<Option<DexMetrics>> {
         let url = format!("https://api.dexscreener.com/latest/dex/tokens/{}", mint);
         let resp = match self.http_client.get(&url).send().await {
