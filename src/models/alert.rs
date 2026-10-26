@@ -63,6 +63,10 @@ pub struct AlertCard {
     pub buys_5m: u64,
     #[serde(default)]
     pub sells_5m: u64,
+    #[serde(default)]
+    pub websites: Vec<String>,
+    #[serde(default)]
+    pub socials: Vec<(String, String)>,
 }
 
 impl AlertCard {
@@ -80,6 +84,8 @@ impl AlertCard {
         sustained_secs: u64,
         _dex_url: String,
         description: Option<String>,
+        websites: Vec<String>,
+        socials: Vec<(String, String)>,
     ) -> Self {
         let bubblemaps_url = if chain == "solana" {
             format!("https://bubblemaps.io/solana/token/{}", token_address)
@@ -124,6 +130,8 @@ impl AlertCard {
             sustained_secs,
             buys_5m,
             sells_5m,
+            websites,
+            socials,
         }
     }
 
@@ -205,6 +213,8 @@ impl From<&TokenState> for AlertCard {
             sustained_secs: 0,
             buys_5m: 0,
             sells_5m: 0,
+            websites: token.websites.clone(),
+            socials: token.socials.clone(),
         }
     }
 }
@@ -257,6 +267,10 @@ pub struct CallRecord {
     pub buys_5m: u64,
     #[serde(default)]
     pub sells_5m: u64,
+    #[serde(default)]
+    pub websites: Vec<String>,
+    #[serde(default)]
+    pub socials: Vec<(String, String)>,
 }
 
 impl From<&AlertCard> for CallRecord {
@@ -295,6 +309,8 @@ impl From<&AlertCard> for CallRecord {
             sustained_secs: card.sustained_secs,
             buys_5m: card.buys_5m,
             sells_5m: card.sells_5m,
+            websites: card.websites.clone(),
+            socials: card.socials.clone(),
         }
     }
 }

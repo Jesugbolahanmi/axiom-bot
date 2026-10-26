@@ -74,6 +74,25 @@ pub struct DexPairInfo {
     txns: Option<DexTxnsM5>,
     #[serde(rename = "pairCreatedAt")]
     pair_created_at: Option<i64>,
+    pub info: Option<DexPairDetailInfo>,
+}
+
+#[derive(Debug, Deserialize)]
+pub struct DexPairDetailInfo {
+    pub websites: Option<Vec<DexPairLink>>,
+    pub socials: Option<Vec<DexPairSocial>>,
+}
+
+#[derive(Debug, Deserialize)]
+pub struct DexPairLink {
+    pub url: Option<String>,
+}
+
+#[derive(Debug, Deserialize)]
+pub struct DexPairSocial {
+    #[serde(rename = "type")]
+    pub kind: Option<String>,
+    pub url: Option<String>,
 }
 
 #[derive(Debug, Deserialize)]
@@ -265,6 +284,29 @@ impl MultiChainRevivalScanner {
                     symbol, token_address, chain.to_uppercase(), sustained_secs, vol_5m, buys, total_tx, mcap
                 );
 
+                let mut websites = Vec::new();
+                let mut socials = Vec::new();
+                if let Some(ref info) = pair.info {
+                    if let Some(ref ws) = info.websites {
+                        for w in ws {
+                            if let Some(ref u) = w.url {
+                                if !u.is_empty() && u.starts_with("http") {
+                                    websites.push(u.clone());
+                                }
+                            }
+                        }
+                    }
+                    if let Some(ref ss) = info.socials {
+                        for s in ss {
+                            if let (Some(ref k), Some(ref u)) = (&s.kind, &s.url) {
+                                if !u.is_empty() && u.starts_with("http") {
+                                    socials.push((k.clone(), u.clone()));
+                                }
+                            }
+                        }
+                    }
+                }
+
                 let card = AlertCard::new_multi_chain_revival(
                     chain,
                     token_address,
@@ -279,6 +321,8 @@ impl MultiChainRevivalScanner {
                     sustained_secs,
                     dex_url,
                     description,
+                    websites,
+                    socials,
                 );
                 return Some(card);
             } else if !candidate.alerted {

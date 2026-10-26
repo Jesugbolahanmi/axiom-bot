@@ -213,6 +213,16 @@ impl TelegramBotService {
 
     pub fn create_action_keyboard_for_chain(mint: &str, chain: &str) -> InlineKeyboardMarkup {
         if chain.to_lowercase() == "solana" {
+            let chart_url = reqwest::Url::parse(&format!("https://dexscreener.com/solana/{}", mint)).ok();
+            let mut row2 = vec![
+                InlineKeyboardButton::callback(
+                    "👥 Top Holders",
+                    format!("holders:{}", mint),
+                ),
+            ];
+            if let Some(url) = chart_url {
+                row2.push(InlineKeyboardButton::url("📈 Chart", url));
+            }
             InlineKeyboardMarkup::new(vec![
                 vec![
                     InlineKeyboardButton::callback(
@@ -224,12 +234,7 @@ impl TelegramBotService {
                         format!("buy:0.5:{}", mint),
                     ),
                 ],
-                vec![
-                    InlineKeyboardButton::callback(
-                        "Dismiss",
-                        format!("ignore:{}", mint),
-                    ),
-                ],
+                row2,
             ])
         } else {
             let chart_url = reqwest::Url::parse(&format!("https://dexscreener.com/{}/{}", chain, mint)).ok();
@@ -247,8 +252,8 @@ impl TelegramBotService {
                 row1,
                 vec![
                     InlineKeyboardButton::callback(
-                        "Dismiss",
-                        format!("ignore:{}", mint),
+                        "👥 Top Holders",
+                        format!("holders:{}", mint),
                     ),
                 ],
             ])
@@ -352,11 +357,11 @@ impl TelegramBotService {
         if chain == "solana" {
             row1.push(InlineKeyboardButton::callback("⚡ Buy 0.5 SOL", format!("buy:0.5:{}", addr)));
         }
-        let mut rows = vec![row1];
+        let mut row2 = vec![InlineKeyboardButton::callback("👥 Top Holders", format!("holders:{}", addr))];
         if let Ok(url) = reqwest::Url::parse(dex_url) {
-            rows.push(vec![InlineKeyboardButton::url("📈 Chart", url)]);
+            row2.push(InlineKeyboardButton::url("📈 Chart", url));
         }
-        InlineKeyboardMarkup::new(rows)
+        InlineKeyboardMarkup::new(vec![row1, row2])
     }
 
     /// Build the live details card + keyboard for any contract address.
@@ -575,6 +580,12 @@ impl TelegramBotService {
                                                     record.name = n.clone();
                                                 }
                                             }
+                                            if !m.websites.is_empty() {
+                                                record.websites = m.websites.clone();
+                                            }
+                                            if !m.socials.is_empty() {
+                                                record.socials = m.socials.clone();
+                                            }
                                             if peak > record.highest_market_cap_usd {
                                                 record.highest_market_cap_usd = peak;
                                                 record.ath_timestamp = chrono::Utc::now();
@@ -644,6 +655,8 @@ impl TelegramBotService {
                                             sustained_secs: 0,
                                             buys_5m: 0,
                                             sells_5m: 0,
+                                            websites: metrics_opt.as_ref().map(|m| m.websites.clone()).unwrap_or_default(),
+                                            socials: metrics_opt.as_ref().map(|m| m.socials.clone()).unwrap_or_default(),
                                         };
                                         service.calls.insert(mint.to_string(), rec.clone());
                                         service.save_calls_to_disk();
@@ -718,6 +731,43 @@ impl TelegramBotService {
                                 } else {
                                     let _ = bot.answer_callback_query(q.id).text("⚠️ Could not fetch token metrics").await;
                                 }
+                            }
+                            ["holders", mint] => {
+                                let _ = bot.answer_callback_query(q.id).text("👥 Fetching holder distribution...").await;
+
+                                let text = if let Some(rec) = service.calls.get(*mint) {
+                                    let th_tree = if !rec.top_holders.is_empty() {
+                                        crate::alerts::formatter::format_top_holders_tree(&rec.top_holders, rec.current_market_cap_usd)
+                                    } else {
+                                        "├ Top Holders: Pending on-chain indexing\n".to_string()
+                                    };
+                                    let cluster = if rec.clustered_wallets_count > 0 {
+                                        format!("<b>{:.1}%</b> ({} wallets bundled)", rec.sniper_bundler_pct, rec.clustered_wallets_count)
+                                    } else {
+                                        "None (Organic)".to_string()
+                                    };
+                                    let bm_chain = match rec.chain.as_str() { "base" => "base", "bsc" => "bsc", "ethereum" => "eth", _ => "solana" };
+                                    let bm_link = format!("https://bubblemaps.io/{}/token/{}", bm_chain, rec.mint);
+                                    format!(
+                                        "👥 <b>Top Holders & Security: ${}</b>\n<code>{}</code>\n\n                                        <b>Security Breakdown</b>\n                                        ├ Dev Holding: <b>{:.1}%</b> ({})\n                                        ├ Top 10:      <b>{:.1}%</b>\n                                        ├ Clustered:   {}\n                                        └ Bubblemaps:  <a href=\"{}\">Inspect Connections ↗</a>\n\n                                        <b>Top Holders (excl. curve)</b>\n{}",
+                                        html_escape::encode_text(&rec.symbol),
+                                        rec.mint,
+                                        rec.dev_holding_pct,
+                                        rec.cto_status_desc,
+                                        rec.top_10_pct,
+                                        cluster,
+                                        bm_link,
+                                        th_tree
+                                    )
+                                } else {
+                                    format!("👥 <b>Security &amp; Holders</b>\n<code>{}</code>\n\n<i>Check wallet bubble connections on <a href=\"https://bubblemaps.io/solana/token/{}\">Bubblemaps</a></i>", mint, mint)
+                                };
+
+                                let _ = bot
+                                    .send_message(teloxide::types::ChatId(service.allowed_user_id), text)
+                                    .parse_mode(ParseMode::Html)
+                                    .link_preview_options(disabled_link_preview())
+                                    .await;
                             }
                             ["ignore", mint] => {
                                 info!("Ignore button clicked on mint {}", mint);
@@ -875,6 +925,8 @@ I'm watching Pump.fun in real-time and will ping you the moment a new token pass
                                         sustained_secs: 0,
                                         buys_5m: 0,
                                         sells_5m: 0,
+                                        websites: Vec::new(),
+                                        socials: Vec::new(),
                                     },
                                     CallRecord {
                                         alert_type: crate::models::alert::AlertType::Revival,
@@ -909,6 +961,8 @@ I'm watching Pump.fun in real-time and will ping you the moment a new token pass
                                         sustained_secs: 0,
                                         buys_5m: 0,
                                         sells_5m: 0,
+                                        websites: Vec::new(),
+                                        socials: Vec::new(),
                                     },
                                     CallRecord {
                                         alert_type: crate::models::alert::AlertType::EarlyLaunch,
@@ -943,6 +997,8 @@ I'm watching Pump.fun in real-time and will ping you the moment a new token pass
                                         sustained_secs: 0,
                                         buys_5m: 0,
                                         sells_5m: 0,
+                                        websites: Vec::new(),
+                                        socials: Vec::new(),
                                     },
                                     CallRecord {
                                         alert_type: crate::models::alert::AlertType::EarlyLaunch,
@@ -977,6 +1033,8 @@ I'm watching Pump.fun in real-time and will ping you the moment a new token pass
                                         sustained_secs: 0,
                                         buys_5m: 0,
                                         sells_5m: 0,
+                                        websites: Vec::new(),
+                                        socials: Vec::new(),
                                     },
                                 ];
 
@@ -1216,6 +1274,8 @@ I'm watching Pump.fun in real-time and will ping you the moment a new token pass
                                     sustained_secs: 0,
                                     buys_5m: 0,
                                     sells_5m: 0,
+                                    websites: Vec::new(),
+                                    socials: Vec::new(),
                                 };
                                 let _ = service.send_alert(&sample_card).await;
                             }
@@ -1292,6 +1352,8 @@ I'm watching Pump.fun in real-time and will ping you the moment a new token pass
                                     sustained_secs: 0,
                                     buys_5m: 0,
                                     sells_5m: 0,
+                                    websites: Vec::new(),
+                                    socials: Vec::new(),
                                 };
                                 let _ = service.send_alert(&sample_card).await;
                             }

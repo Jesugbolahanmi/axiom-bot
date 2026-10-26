@@ -37,6 +37,10 @@ pub struct TokenState {
     pub top_holders: Vec<TopHolderItem>,
     pub top_10_pct: f64,
     pub clustered_wallets_count: usize,
+    #[serde(default)]
+    pub websites: Vec<String>,
+    #[serde(default)]
+    pub socials: Vec<(String, String)>,
 }
 
 impl TokenState {
@@ -81,6 +85,8 @@ impl TokenState {
             top_holders: Vec::new(),
             top_10_pct: 0.0,
             clustered_wallets_count: 0,
+            websites: Vec::new(),
+            socials: Vec::new(),
         }
     }
 

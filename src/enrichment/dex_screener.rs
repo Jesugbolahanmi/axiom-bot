@@ -14,6 +14,8 @@ pub struct DexMetrics {
     pub volume_5m_usd: f64,
     pub pair_address: Option<String>,
     pub peak_candle_mcap_usd: Option<f64>,
+    pub websites: Vec<String>,
+    pub socials: Vec<(String, String)>,
 }
 
 #[derive(Debug, Deserialize)]
@@ -41,6 +43,25 @@ struct DexPair {
     fdv: Option<f64>,
     volume: Option<DexVolume>,
     liquidity: Option<DexLiquidity>,
+    info: Option<DexInfo>,
+}
+
+#[derive(Debug, Deserialize)]
+struct DexInfo {
+    websites: Option<Vec<DexWebsite>>,
+    socials: Option<Vec<DexSocial>>,
+}
+
+#[derive(Debug, Deserialize)]
+struct DexWebsite {
+    url: Option<String>,
+}
+
+#[derive(Debug, Deserialize)]
+struct DexSocial {
+    #[serde(rename = "type")]
+    kind: Option<String>,
+    url: Option<String>,
 }
 
 #[derive(Debug, Deserialize)]
@@ -200,6 +221,29 @@ impl DexScreenerClient {
         let base_name = best_pair.base_token.as_ref().and_then(|t| t.name.clone());
         let base_sym = best_pair.base_token.as_ref().and_then(|t| t.symbol.clone());
 
+        let mut websites = Vec::new();
+        let mut socials = Vec::new();
+        if let Some(ref info) = best_pair.info {
+            if let Some(ref ws) = info.websites {
+                for w in ws {
+                    if let Some(ref u) = w.url {
+                        if !u.is_empty() && u.starts_with("http") {
+                            websites.push(u.clone());
+                        }
+                    }
+                }
+            }
+            if let Some(ref ss) = info.socials {
+                for s in ss {
+                    if let (Some(ref k), Some(ref u)) = (&s.kind, &s.url) {
+                        if !u.is_empty() && u.starts_with("http") {
+                            socials.push((k.clone(), u.clone()));
+                        }
+                    }
+                }
+            }
+        }
+
         Ok(Some(DexMetrics {
             base_token_name: base_name,
             base_token_symbol: base_sym,
@@ -209,6 +253,8 @@ impl DexScreenerClient {
             volume_5m_usd: vol_5m,
             pair_address: best_pair.pair_address.clone(),
             peak_candle_mcap_usd: None,
+            websites,
+            socials,
         }))
     }
 }

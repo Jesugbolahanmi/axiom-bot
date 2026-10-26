@@ -38,6 +38,8 @@ fn create_sample_token(age_mins: i64, mcap_usd: f64, total_vol_usd: f64, vol_5m_
         top_holders: Vec::new(),
         top_10_pct: 12.0,
         clustered_wallets_count: 0,
+        websites: Vec::new(),
+        socials: Vec::new(),
     }
 }
 
@@ -327,6 +329,8 @@ fn test_pnl_analytics_win_rate_and_math() {
             sustained_secs: 0,
             buys_5m: 0,
             sells_5m: 0,
+            websites: Vec::new(),
+            socials: Vec::new(),
         },
         // 3 days ago - 3.0x ATH (Peak $60k from $20k)
         CallRecord {
@@ -362,6 +366,8 @@ fn test_pnl_analytics_win_rate_and_math() {
             sustained_secs: 0,
             buys_5m: 0,
             sells_5m: 0,
+            websites: Vec::new(),
+            socials: Vec::new(),
         },
         // 10 days ago - 0.7x Drawdown (Peak $14k from $20k)
         CallRecord {
@@ -397,6 +403,8 @@ fn test_pnl_analytics_win_rate_and_math() {
             sustained_secs: 0,
             buys_5m: 0,
             sells_5m: 0,
+            websites: Vec::new(),
+            socials: Vec::new(),
         },
     ];
 

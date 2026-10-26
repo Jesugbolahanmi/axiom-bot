@@ -31,7 +31,7 @@ fn format_usd(usd: f64) -> String {
     }
 }
 
-fn format_top_holders_tree(holders: &[TopHolderItem], market_cap_usd: f64) -> String {
+pub fn format_top_holders_tree(holders: &[TopHolderItem], market_cap_usd: f64) -> String {
     if holders.is_empty() {
         return "├ Top Holders: Pending indexing\n".to_string();
     }
@@ -67,88 +67,86 @@ pub fn format_alert_html(card: &AlertCard) -> String {
             } else {
                 lore.clone()
             };
-            format!("<b>Lore</b>\n<i>\"{}\"</i>\n\n", encode_text(&truncated))
+            format!("<b>Lore</b>
+<i>\"{}\"</i>\n\n", encode_text(&truncated))
         }
         _ => String::new(),
     };
 
-    let th_row = if !card.top_holders.is_empty() {
-        card.top_holders
-            .iter()
-            .take(5)
-            .map(|h| format!("{:.1}", h.pct))
-            .collect::<Vec<_>>()
-            .join("|")
-    } else {
-        format!("{:.1}", card.top_holder_pct)
-    };
-
-    let holders_tree = format_top_holders_tree(&card.top_holders, card.market_cap_usd);
-
-    let cluster_summary = if card.clustered_wallets_count > 0 {
-        format!("<b>{:.1}%</b> ({} wallets bundled in B0)", card.sniper_bundler_pct, card.clustered_wallets_count)
-    } else {
-        "None detected (Organic)".to_string()
-    };
-
     let axiom_link = format!("https://axiom.trade/token/{}", mint);
-    let dexscreener_link = format!("https://dexscreener.com/{}/{}", card.chain, mint);
     let bm_chain = match card.chain.as_str() { "base" => "base", "bsc" => "bsc", "ethereum" => "eth", _ => "solana" };
     let bubblemaps_link = format!("https://bubblemaps.io/{}/token/{}", bm_chain, mint);
-    let solscan_link = if card.chain == "solana" { format!("https://solscan.io/token/{}", mint) } else { format!("https://dexscreener.com/{}/{}", card.chain, mint) };
 
     let mc_k = card.market_cap_usd / 1000.0;
     let liq_k = card.liquidity_usd / 1000.0;
     let vol_k = card.total_volume_usd / 1000.0;
     let vol5m_k = card.rolling_5m_volume_usd / 1000.0;
 
-    let header = if card.alert_type == AlertType::Revival {
-        format!("<b>{}</b> (<code>${}</code>) — <b>TOKEN REVIVAL</b>", name_escaped, symbol_escaped)
+    let age_str = if card.age_mins >= 1440.0 {
+        format!("{:.1}d", card.age_mins / 1440.0)
+    } else if card.age_mins >= 60.0 {
+        format!("{:.1}h", card.age_mins / 60.0)
     } else {
-        format!("<b>{}</b> (<code>${}</code>)", name_escaped, symbol_escaped)
+        format!("{:.0}m", card.age_mins)
     };
 
-    let revival_block = if card.alert_type == AlertType::Revival {
-        let bottom_k = card.bottom_market_cap_usd / 1000.0;
-        let age_hours = card.age_mins / 60.0;
-        format!(
-            "<b>Revival Reclaim</b>\n\
-            ├ Reclaim:     ${:.2}K ──&gt; <b>${:.2}K</b> (<b>+{:.1}%</b> from death)\n\
-            ├ 5m Surge:    <b>${:.2}K</b> ({:.1}% MC)\n\
-            ├ CTO Status:  <b>{}</b>\n\
-            └ Age:         <b>{:.1}h</b> (Dormant Re-awakening)\n\n",
-            bottom_k,
-            mc_k,
-            card.surge_pct_from_bottom,
-            vol5m_k,
-            card.volume_5m_to_mc_ratio * 100.0,
-            card.cto_status_desc,
-            age_hours
-        )
+    let chain_uc = card.chain.to_uppercase();
+    let header = if card.alert_type == AlertType::Revival || card.alert_type == AlertType::MultiChainRevival {
+        format!("🔄 <b>TOKEN REVIVAL</b> • <b>{}</b>\n<b>{}</b> (<code>${}</code>)", chain_uc, name_escaped, symbol_escaped)
+    } else {
+        format!("🚨 <b>NEW EARLY LAUNCH</b> • <b>{}</b>\n<b>{}</b> (<code>${}</code>)", chain_uc, name_escaped, symbol_escaped)
+    };
+
+    let revival_block = if card.alert_type == AlertType::Revival || card.alert_type == AlertType::MultiChainRevival {
+        if card.bottom_market_cap_usd > 0.0 {
+            let bottom_k = card.bottom_market_cap_usd / 1000.0;
+            format!(
+                "<b>Revival Reclaim</b>\n                ├ Bottom:  ${:.1}K ──&gt; <b>${:.1}K</b> (<b>+{:.0}%</b>)\n                ├ 5m Flow: <b>${:.1}K</b>\n                └ Status:  <b>{}</b>\n\n",
+                bottom_k,
+                mc_k,
+                card.surge_pct_from_bottom,
+                vol5m_k,
+                card.cto_status_desc
+            )
+        } else {
+            format!(
+                "<b>Revival Flow</b>\n                ├ 5m Vol:  <b>${:.1}K</b> (Sustained)\n                └ Status:  <b>{}</b>\n\n",
+                vol5m_k,
+                card.cto_status_desc
+            )
+        }
     } else {
         String::new()
     };
 
+    // Socials section
+    let mut social_links: Vec<String> = Vec::new();
+    for w in card.websites.iter().filter(|u| u.starts_with("http")).take(2) {
+        social_links.push(format!("<a href=\"{}\">Website</a>", html_escape::encode_double_quoted_attribute(w)));
+    }
+    for (kind, url) in card.socials.iter().filter(|(_, u)| u.starts_with("http")) {
+        let label = match kind.as_str() {
+            "twitter" => "X".to_string(),
+            "telegram" => "Telegram".to_string(),
+            "discord" => "Discord".to_string(),
+            other => encode_text(other).to_string(),
+        };
+        social_links.push(format!("<a href=\"{}\">{}</a>", html_escape::encode_double_quoted_attribute(url), label));
+    }
+    let socials_line = if !social_links.is_empty() {
+        format!("<b>Socials:</b> {}\n\n", social_links.join(" • "))
+    } else {
+        String::new()
+    };
+
+    let links_line = if card.chain == "solana" {
+        format!("<a href=\"{}\">Axiom</a> • <a href=\"https://dexscreener.com/solana/{}\">DexScreener</a> • <a href=\"{}\">Bubblemaps</a> • <a href=\"https://solscan.io/token/{}\">Solscan</a>", axiom_link, mint, bubblemaps_link, mint)
+    } else {
+        format!("<a href=\"https://dexscreener.com/{}/{}\">DexScreener</a> • <a href=\"{}\">Bubblemaps</a>", card.chain, mint, bubblemaps_link)
+    };
+
     format!(
-        "{}\n\
-        <code>{}</code>\n\n\
-        {}\
-        <b>Token Stats</b>\n\
-        ├ MC:   <b>${:.2}K</b>\n\
-        ├ LIQ:  <b>${:.2}K</b> ({:.1}% MC)\n\
-        ├ VOL:  <b>${:.2}K</b> (5m: ${:.2}K)\n\
-        ├ HLD:  <b>{}</b>\n\
-        └ Age:  <b>{:.1}m</b>\n\n\
-        <b>Security &amp; Wallet Clusters</b>\n\
-        ├ Dev Holding: <b>{:.1}%</b>\n\
-        ├ Top 10:      <b>{:.1}%</b> | {} (total)\n\
-        ├ TH:          <code>{}</code>\n\
-        ├ Clustered:   {}\n\
-        └ Bubblemaps:  <a href=\"{}\">Inspect Wallet Connections ↗</a>\n\n\
-        <b>Top Holders (excl. curve)</b>\n\
-        {}\n\
-        {}\
-        <a href=\"{}\">Axiom</a> • <a href=\"{}\">DexScreener</a> • <a href=\"{}\">Bubblemaps</a> • <a href=\"{}\">Solscan</a>",
+        "{}\n        <code>{}</code>\n\n        {}        <b>Market Stats</b>\n        ├ MCap: <b>${:.1}K</b>\n        ├ LIQ:  <b>${:.2}K</b> ({:.1}%)\n        ├ VOL:  <b>${:.2}K</b> (5m: ${:.2}K)\n        ├ HLD:  <b>{}</b>\n        └ Age:  <b>{}</b>\n\n        {}        {}        {}",
         header,
         mint,
         revival_block,
@@ -158,19 +156,10 @@ pub fn format_alert_html(card: &AlertCard) -> String {
         vol_k,
         vol5m_k,
         card.holder_count,
-        card.age_mins,
-        card.dev_holding_pct,
-        card.top_10_pct,
-        card.holder_count,
-        th_row,
-        cluster_summary,
-        bubblemaps_link,
-        holders_tree,
+        age_str,
         lore_section,
-        axiom_link,
-        dexscreener_link,
-        bubblemaps_link,
-        solscan_link
+        socials_line,
+        links_line
     )
 }
 
@@ -192,13 +181,13 @@ pub fn format_refreshed_alert_html(record: &CallRecord) -> String {
     let gain_pct = (multiple - 1.0) * 100.0;
     let gain_sign = if gain_pct >= 0.0 { "+" } else { "" };
     let return_badge = if multiple >= 5.0 {
-        "<b>[MOONSHOT 5X+]</b>"
+        "[MOONSHOT 5X+]"
     } else if multiple >= 2.0 {
-        "<b>[2X+ FLIP]</b>"
+        "[2X+ FLIP]"
     } else if multiple >= 1.0 {
-        "<b>[IN PROFIT]</b>"
+        "[IN PROFIT]"
     } else {
-        "<b>[UNDER CALL]</b>"
+        "[UNDER CALL]"
     };
 
     let lore_section = match &record.lore_description {
@@ -214,36 +203,19 @@ pub fn format_refreshed_alert_html(record: &CallRecord) -> String {
     };
 
     let elapsed_mins = (chrono::Utc::now() - record.alert_timestamp).num_seconds() as f64 / 60.0;
+    let age_str = if elapsed_mins >= 1440.0 {
+        format!("{:.1}d", elapsed_mins / 1440.0)
+    } else if elapsed_mins >= 60.0 {
+        format!("{:.1}h", elapsed_mins / 60.0)
+    } else {
+        format!("{:.0}m", elapsed_mins)
+    };
+
     let liq_pct = if record.current_market_cap_usd > 0.0 {
         (record.current_liquidity_usd / record.current_market_cap_usd) * 100.0
     } else {
         0.0
     };
-
-    let th_row = if !record.top_holders.is_empty() {
-        record.top_holders
-            .iter()
-            .take(5)
-            .map(|h| format!("{:.1}", h.pct))
-            .collect::<Vec<_>>()
-            .join("|")
-    } else {
-        format!("{:.1}", record.top_holder_pct)
-    };
-
-    let holders_tree = format_top_holders_tree(&record.top_holders, record.current_market_cap_usd);
-
-    let cluster_summary = if record.clustered_wallets_count > 0 {
-        format!("<b>{:.1}%</b> ({} wallets bundled in B0)", record.sniper_bundler_pct, record.clustered_wallets_count)
-    } else {
-        "None detected (Organic)".to_string()
-    };
-
-    let axiom_link = format!("https://axiom.trade/token/{}", mint);
-    let _dexscreener_link = format!("https://dexscreener.com/{}/{}", record.chain, mint);
-    let bm_chain = match record.chain.as_str() { "base" => "base", "bsc" => "bsc", "ethereum" => "eth", _ => "solana" };
-    let bubblemaps_link = format!("https://bubblemaps.io/{}/token/{}", bm_chain, mint);
-    let _solscan_link = if record.chain == "solana" { format!("https://solscan.io/token/{}", mint) } else { format!("https://dexscreener.com/{}/{}", record.chain, mint) };
 
     let mc_k = record.current_market_cap_usd / 1000.0;
     let call_mc_k = record.initial_market_cap_usd / 1000.0;
@@ -252,48 +224,45 @@ pub fn format_refreshed_alert_html(record: &CallRecord) -> String {
     let vol_k = record.current_volume_usd / 1000.0;
     let vol5m_k = record.current_volume_5m_usd / 1000.0;
 
-    let ath_elapsed_mins = (chrono::Utc::now() - record.ath_timestamp).num_seconds() as f64 / 60.0;
-    let ath_elapsed_str = if ath_elapsed_mins >= 1440.0 {
-        format!("{:.1}d ago", ath_elapsed_mins / 1440.0)
-    } else if ath_elapsed_mins >= 60.0 {
-        format!("{:.1}h ago", ath_elapsed_mins / 60.0)
-    } else if ath_elapsed_mins < 1.0 {
-        "just now".to_string()
-    } else {
-        format!("{:.0}m ago", ath_elapsed_mins)
+    let chain_uc = record.chain.to_uppercase();
+    let revival_badge = match record.alert_type {
+        AlertType::Revival => " • <b>REVIVAL</b>".to_string(),
+        AlertType::MultiChainRevival => format!(" • <b>{}</b>", chain_uc),
+        _ => format!(" • <b>{}</b>", chain_uc),
     };
 
-    let revival_badge = match record.alert_type {
-        AlertType::Revival => " [REVIVAL]".to_string(),
-        AlertType::MultiChainRevival => format!(" [{}]", record.chain.to_uppercase()),
-        _ => String::new(),
+    // Socials section
+    let mut social_links: Vec<String> = Vec::new();
+    for w in record.websites.iter().filter(|u| u.starts_with("http")).take(2) {
+        social_links.push(format!("<a href=\"{}\">Website</a>", html_escape::encode_double_quoted_attribute(w)));
+    }
+    for (kind, url) in record.socials.iter().filter(|(_, u)| u.starts_with("http")) {
+        let label = match kind.as_str() {
+            "twitter" => "X".to_string(),
+            "telegram" => "Telegram".to_string(),
+            "discord" => "Discord".to_string(),
+            other => encode_text(other).to_string(),
+        };
+        social_links.push(format!("<a href=\"{}\">{}</a>", html_escape::encode_double_quoted_attribute(url), label));
+    }
+    let socials_line = if !social_links.is_empty() {
+        format!("<b>Socials:</b> {}\n\n", social_links.join(" • "))
+    } else {
+        String::new()
+    };
+
+    // Quick links
+    let axiom_link = format!("https://axiom.trade/token/{}", mint);
+    let bm_chain = match record.chain.as_str() { "base" => "base", "bsc" => "bsc", "ethereum" => "eth", _ => "solana" };
+    let bubblemaps_link = format!("https://bubblemaps.io/{}/token/{}", bm_chain, mint);
+    let links_line = if record.chain == "solana" {
+        format!("<a href=\"{}\">Axiom</a> • <a href=\"https://dexscreener.com/solana/{}\">DexScreener</a> • <a href=\"{}\">Bubblemaps</a> • <a href=\"https://solscan.io/token/{}\">Solscan</a>", axiom_link, mint, bubblemaps_link, mint)
+    } else {
+        format!("<a href=\"https://dexscreener.com/{}/{}\">DexScreener</a> • <a href=\"{}\">Bubblemaps</a>", record.chain, mint, bubblemaps_link)
     };
 
     format!(
-        "<b>{}</b> (<code>${}</code>){} — <b>LIVE REFRESH</b>\n\
-        <code>{}</code>\n\n\
-        <b>Call Performance &amp; ATH</b>\n\
-        ├ Status:    {}\n\
-        ├ Call MCap: <b>${:.1}K</b>\n\
-        ├ Peak ATH:  <b>{:.2}x</b> (<b>${:.1}K</b>)\n\
-        ├ Current:   <b>{:.2}x</b> (<b>${:.1}K</b>, {}{:.1}%)\n\
-        └ ATH Hit:   <b>{}</b>\n\n\
-        <b>Live Stats</b>\n\
-        ├ LIQ:  <b>${:.2}K</b> ({:.1}% MC)\n\
-        ├ VOL:  <b>${:.2}K</b> (5m: ${:.2}K)\n\
-        ├ HLD:  <b>{}</b>\n\
-        └ Age:  <b>{:.1}m</b> (Alerted {:.1}m ago)\n\n\
-        <b>Security &amp; Wallet Clusters</b>\n\
-        ├ Dev Holding: <b>{:.1}%</b>\n\
-        ├ Top 10:      <b>{:.1}%</b> | {} (total)\n\
-        ├ TH:          <code>{}</code>\n\
-        ├ Clustered:   {}\n\
-        └ Bubblemaps:  <a href=\"{}\">Inspect Wallet Connections ↗</a>\n\n\
-        <b>Top Holders (excl. curve)</b>\n\
-        {}\n\
-        {}\
-        {}\n\
-        <i>Refreshed at {}</i>",
+        "<b>{}</b> (<code>${}</code>){} — <b>LIVE REFRESH</b>\n        <code>{}</code>\n\n        <b>Call Performance</b>\n        ├ Status:    <b>{}</b>\n        ├ Call MCap: <b>${:.1}K</b>\n        ├ Peak ATH:  <b>{:.2}x</b> (${:.1}K)\n        └ Current:   <b>{:.2}x</b> (${:.1}K, {}{:.1}%)\n\n        <b>Live Stats</b>\n        ├ MCap: <b>${:.1}K</b>\n        ├ LIQ:  <b>${:.2}K</b> ({:.1}%)\n        ├ VOL:  <b>${:.2}K</b> (5m: ${:.2}K)\n        ├ HLD:  <b>{}</b>\n        └ Age:  <b>{}</b>\n\n        {}        {}        {}\n        <i>Refreshed at {}</i>",
         name_escaped,
         symbol_escaped,
         revival_badge,
@@ -306,28 +275,16 @@ pub fn format_refreshed_alert_html(record: &CallRecord) -> String {
         mc_k,
         gain_sign,
         gain_pct,
-        ath_elapsed_str,
+        mc_k,
         liq_k,
         liq_pct,
         vol_k,
         vol5m_k,
         record.holder_count,
-        elapsed_mins,
-        elapsed_mins,
-        record.dev_holding_pct,
-        record.top_10_pct,
-        record.holder_count,
-        th_row,
-        cluster_summary,
-        bubblemaps_link,
-        holders_tree,
+        age_str,
         lore_section,
-        if record.chain == "solana" {
-            format!("<a href=\"{}\">Axiom</a> • <a href=\"https://dexscreener.com/solana/{}\">DexScreener</a> • <a href=\"https://bubblemaps.io/solana/token/{}\">Bubblemaps</a> • <a href=\"https://solscan.io/token/{}\">Solscan</a>", axiom_link, mint, mint, mint)
-        } else {
-            let bm_chain = match record.chain.as_str() { "base" => "base", "bsc" => "bsc", "ethereum" => "eth", _ => "solana" };
-            format!("<a href=\"https://dexscreener.com/{}/{}\">DexScreener</a> • <a href=\"https://bubblemaps.io/{}/token/{}\">Bubblemaps</a>", record.chain, mint, bm_chain, mint)
-        },
+        socials_line,
+        links_line,
         record.last_refreshed.format("%H:%M:%S UTC")
     )
 }
