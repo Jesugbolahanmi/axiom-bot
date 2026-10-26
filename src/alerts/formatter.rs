@@ -9,6 +9,38 @@ fn abbreviate_address(addr: &str) -> String {
     }
 }
 
+/// Intelligent financial formatter:
+/// - >= $1B  => $1.54B
+/// - >= $100M => $154.0M
+/// - >= $1M   => $30.80M / $1.25M
+/// - >= $1K   => $310.7K / $24.5K
+/// - < $1K    => $450
+pub fn format_smart_usd(v: f64) -> String {
+    if v >= 1_000_000_000.0 {
+        format!("${:.2}B", v / 1_000_000_000.0)
+    } else if v >= 100_000_000.0 {
+        format!("${:.1}M", v / 1_000_000.0)
+    } else if v >= 1_000_000.0 {
+        format!("${:.2}M", v / 1_000_000.0)
+    } else if v >= 1_000.0 {
+        format!("${:.1}K", v / 1_000.0)
+    } else if v > 0.0 {
+        format!("${:.0}", v)
+    } else {
+        "$0".to_string()
+    }
+}
+
+pub fn format_count(c: u64) -> String {
+    if c >= 1_000_000 {
+        format!("{:.1}M", c as f64 / 1_000_000.0)
+    } else if c >= 10_000 {
+        format!("{:.1}K", c as f64 / 1_000.0)
+    } else {
+        c.to_string()
+    }
+}
+
 fn format_amount(amount: f64) -> String {
     if amount >= 1_000_000_000.0 {
         format!("{:.2}B", amount / 1_000_000_000.0)
@@ -22,10 +54,12 @@ fn format_amount(amount: f64) -> String {
 }
 
 fn format_usd(usd: f64) -> String {
-    if usd >= 1_000_000.0 {
+    if usd >= 1_000_000_000.0 {
+        format!("~${:.2}B", usd / 1_000_000_000.0)
+    } else if usd >= 1_000_000.0 {
         format!("~${:.2}M", usd / 1_000_000.0)
     } else if usd >= 1_000.0 {
-        format!("~${:.2}K", usd / 1_000.0)
+        format!("~${:.1}K", usd / 1_000.0)
     } else {
         format!("~${:.0}", usd)
     }
@@ -77,10 +111,10 @@ pub fn format_alert_html(card: &AlertCard) -> String {
     let bm_chain = match card.chain.as_str() { "base" => "base", "bsc" => "bsc", "ethereum" => "eth", _ => "solana" };
     let bubblemaps_link = format!("https://bubblemaps.io/{}/token/{}", bm_chain, mint);
 
-    let mc_k = card.market_cap_usd / 1000.0;
-    let liq_k = card.liquidity_usd / 1000.0;
-    let vol_k = card.total_volume_usd / 1000.0;
-    let vol5m_k = card.rolling_5m_volume_usd / 1000.0;
+    let mc_str = format_smart_usd(card.market_cap_usd);
+    let liq_str = format_smart_usd(card.liquidity_usd);
+    let vol_str = format_smart_usd(card.total_volume_usd);
+    let vol5m_str = format_smart_usd(card.rolling_5m_volume_usd);
 
     let age_str = if card.age_mins >= 1440.0 {
         format!("{:.1}d", card.age_mins / 1440.0)
@@ -99,19 +133,19 @@ pub fn format_alert_html(card: &AlertCard) -> String {
 
     let revival_block = if card.alert_type == AlertType::Revival || card.alert_type == AlertType::MultiChainRevival {
         if card.bottom_market_cap_usd > 0.0 {
-            let bottom_k = card.bottom_market_cap_usd / 1000.0;
+            let bottom_str = format_smart_usd(card.bottom_market_cap_usd);
             format!(
-                "<b>Revival Reclaim</b>\n                ├ Bottom:  ${:.1}K ──&gt; <b>${:.1}K</b> (<b>+{:.0}%</b>)\n                ├ 5m Flow: <b>${:.1}K</b>\n                └ Status:  <b>{}</b>\n\n",
-                bottom_k,
-                mc_k,
+                "<b>Revival Reclaim</b>\n                ├ Bottom:  {} ──&gt; <b>{}</b> (<b>+{:.0}%</b>)\n                ├ 5m Flow: <b>{}</b>\n                └ Status:  <b>{}</b>\n\n",
+                bottom_str,
+                mc_str,
                 card.surge_pct_from_bottom,
-                vol5m_k,
+                vol5m_str,
                 card.cto_status_desc
             )
         } else {
             format!(
-                "<b>Revival Flow</b>\n                ├ 5m Vol:  <b>${:.1}K</b> (Sustained)\n                └ Status:  <b>{}</b>\n\n",
-                vol5m_k,
+                "<b>Revival Flow</b>\n                ├ 5m Vol:  <b>{}</b> (Sustained)\n                └ Status:  <b>{}</b>\n\n",
+                vol5m_str,
                 card.cto_status_desc
             )
         }
@@ -146,16 +180,16 @@ pub fn format_alert_html(card: &AlertCard) -> String {
     };
 
     format!(
-        "{}\n        <code>{}</code>\n\n        {}        <b>Market Stats</b>\n        ├ MCap: <b>${:.1}K</b>\n        ├ LIQ:  <b>${:.2}K</b> ({:.1}%)\n        ├ VOL:  <b>${:.2}K</b> (5m: ${:.2}K)\n        ├ HLD:  <b>{}</b>\n        └ Age:  <b>{}</b>\n\n        {}        {}        {}",
+        "{}\n        <code>{}</code>\n\n        {}        <b>Market Stats</b>\n        ├ MCap: <b>{}</b>\n        ├ LIQ:  <b>{}</b> ({:.1}%)\n        ├ VOL:  <b>{}</b> (5m: {})\n        ├ HLD:  <b>{}</b>\n        └ Age:  <b>{}</b>\n\n        {}        {}        {}",
         header,
         mint,
         revival_block,
-        mc_k,
-        liq_k,
+        mc_str,
+        liq_str,
         card.liquidity_ratio * 100.0,
-        vol_k,
-        vol5m_k,
-        card.holder_count,
+        vol_str,
+        vol5m_str,
+        format_count(card.holder_count),
         age_str,
         lore_section,
         socials_line,
@@ -217,12 +251,12 @@ pub fn format_refreshed_alert_html(record: &CallRecord) -> String {
         0.0
     };
 
-    let mc_k = record.current_market_cap_usd / 1000.0;
-    let call_mc_k = record.initial_market_cap_usd / 1000.0;
-    let ath_mc_k = record.highest_market_cap_usd / 1000.0;
-    let liq_k = record.current_liquidity_usd / 1000.0;
-    let vol_k = record.current_volume_usd / 1000.0;
-    let vol5m_k = record.current_volume_5m_usd / 1000.0;
+    let mc_str = format_smart_usd(record.current_market_cap_usd);
+    let call_mc_str = format_smart_usd(record.initial_market_cap_usd);
+    let ath_mc_str = format_smart_usd(record.highest_market_cap_usd);
+    let liq_str = format_smart_usd(record.current_liquidity_usd);
+    let vol_str = format_smart_usd(record.current_volume_usd);
+    let vol5m_str = format_smart_usd(record.current_volume_5m_usd);
 
     let chain_uc = record.chain.to_uppercase();
     let revival_badge = match record.alert_type {
@@ -262,25 +296,25 @@ pub fn format_refreshed_alert_html(record: &CallRecord) -> String {
     };
 
     format!(
-        "<b>{}</b> (<code>${}</code>){} — <b>LIVE REFRESH</b>\n        <code>{}</code>\n\n        <b>Call Performance</b>\n        ├ Status:    <b>{}</b>\n        ├ Call MCap: <b>${:.1}K</b>\n        ├ Peak ATH:  <b>{:.2}x</b> (${:.1}K)\n        └ Current:   <b>{:.2}x</b> (${:.1}K, {}{:.1}%)\n\n        <b>Live Stats</b>\n        ├ MCap: <b>${:.1}K</b>\n        ├ LIQ:  <b>${:.2}K</b> ({:.1}%)\n        ├ VOL:  <b>${:.2}K</b> (5m: ${:.2}K)\n        ├ HLD:  <b>{}</b>\n        └ Age:  <b>{}</b>\n\n        {}        {}        {}\n        <i>Refreshed at {}</i>",
+        "<b>{}</b> (<code>${}</code>){} — <b>LIVE REFRESH</b>\n        <code>{}</code>\n\n        <b>Call Performance</b>\n        ├ Status:    <b>{}</b>\n        ├ Call MCap: <b>{}</b>\n        ├ Peak ATH:  <b>{:.2}x</b> ({})\n        └ Current:   <b>{:.2}x</b> ({}, {}{:.1}%)\n\n        <b>Live Stats</b>\n        ├ MCap: <b>{}</b>\n        ├ LIQ:  <b>{}</b> ({:.1}%)\n        ├ VOL:  <b>{}</b> (5m: {})\n        ├ HLD:  <b>{}</b>\n        └ Age:  <b>{}</b>\n\n        {}        {}        {}\n        <i>Refreshed at {}</i>",
         name_escaped,
         symbol_escaped,
         revival_badge,
         mint,
         return_badge,
-        call_mc_k,
+        call_mc_str,
         ath_multiple,
-        ath_mc_k,
+        ath_mc_str,
         multiple,
-        mc_k,
+        mc_str,
         gain_sign,
         gain_pct,
-        mc_k,
-        liq_k,
+        mc_str,
+        liq_str,
         liq_pct,
-        vol_k,
-        vol5m_k,
-        record.holder_count,
+        vol_str,
+        vol5m_str,
+        format_count(record.holder_count),
         age_str,
         lore_section,
         socials_line,
@@ -317,8 +351,8 @@ pub fn format_calls_summary(calls: &[CallRecord]) -> String {
             call.mint.clone()
         };
 
-        let call_mc = call.initial_market_cap_usd / 1000.0;
-        let now_mc = call.current_market_cap_usd / 1000.0;
+        let call_mc_str = format_smart_usd(call.initial_market_cap_usd);
+        let now_mc_str = format_smart_usd(call.current_market_cap_usd);
 
         let tag = match call.alert_type {
             AlertType::Revival => " [REVIVAL]".to_string(),
@@ -329,7 +363,7 @@ pub fn format_calls_summary(calls: &[CallRecord]) -> String {
         out.push_str(&format!(
             "{}. <b>${}</b>{} (<code>{}</code>)\n\
             ├ Return: <b>{:.2}x</b> ({}{:.0}%) | ATH: <b>{:.2}x</b>\n\
-            ├ MCap:   ${:.1}K —&gt; <b>${:.1}K</b>\n\
+            ├ MCap:   {} —&gt; <b>{}</b>\n\
             └ Alerted {:.1}m ago • <a href=\"https://dexscreener.com/solana/{}\">DexScreener</a> • <a href=\"https://bubblemaps.io/solana/token/{}\">Bubblemaps</a>\n\n",
             i + 1,
             encode_text(&call.symbol),
@@ -339,8 +373,8 @@ pub fn format_calls_summary(calls: &[CallRecord]) -> String {
             gain_sign,
             gain_pct,
             ath_multiple,
-            call_mc,
-            now_mc,
+            call_mc_str,
+            now_mc_str,
             elapsed_mins,
             call.mint,
             call.mint
@@ -504,9 +538,9 @@ pub fn format_milestone_alert(call: &CallRecord, milestone: f64) -> String {
     } else {
         1.0
     };
-    let call_mc_k = call.initial_market_cap_usd / 1000.0;
-    let ath_mc_k = call.highest_market_cap_usd / 1000.0;
-    let curr_mc_k = call.current_market_cap_usd / 1000.0;
+    let call_mc_str = format_smart_usd(call.initial_market_cap_usd);
+    let ath_mc_str = format_smart_usd(call.highest_market_cap_usd);
+    let curr_mc_str = format_smart_usd(call.current_market_cap_usd);
     let elapsed_mins = (chrono::Utc::now() - call.alert_timestamp).num_seconds() as f64 / 60.0;
 
     let short_mint = if call.mint.len() > 10 {
@@ -522,15 +556,15 @@ pub fn format_milestone_alert(call: &CallRecord, milestone: f64) -> String {
         };
 
     format!(
-        "🎯 <b>CALL ATH UPDATE: ${}{} ({:.0}x Milestone Reached!)</b>\n\n        <b>Performance Metrics</b>\n        ├ Peak ATH:  <b>{:.2}x</b> (${:.1}K —&gt; <b>${:.1}K</b>)\n        ├ Current:   <b>{:.2}x</b> (${:.1}K)\n        ├ Mint:      <code>{}</code>\n        └ Alerted:   <b>{:.1}m ago</b>\n\n        <a href=\"https://dexscreener.com/solana/{}\">DexScreener</a> • <a href=\"https://bubblemaps.io/solana/token/{}\">Bubblemaps</a> • <a href=\"https://axiom.trade/token/{}\">Axiom</a>",
+        "🎯 <b>CALL ATH UPDATE: ${}{} ({:.0}x Milestone Reached!)</b>\n\n        <b>Performance Metrics</b>\n        ├ Peak ATH:  <b>{:.2}x</b> ({} —&gt; <b>{}</b>)\n        ├ Current:   <b>{:.2}x</b> ({})\n        ├ Mint:      <code>{}</code>\n        └ Alerted:   <b>{:.1}m ago</b>\n\n        <a href=\"https://dexscreener.com/solana/{}\">DexScreener</a> • <a href=\"https://bubblemaps.io/solana/token/{}\">Bubblemaps</a> • <a href=\"https://axiom.trade/token/{}\">Axiom</a>",
         encode_text(&call.symbol),
         tag,
         milestone,
         ath_multiple,
-        call_mc_k,
-        ath_mc_k,
+        call_mc_str,
+        ath_mc_str,
         curr_multiple,
-        curr_mc_k,
+        curr_mc_str,
         short_mint,
         elapsed_mins,
         call.mint,
@@ -543,9 +577,9 @@ pub fn format_milestone_alert(call: &CallRecord, milestone: f64) -> String {
 pub fn format_token_pnl_html(record: &CallRecord) -> String {
     let sym = encode_text(&record.symbol);
     let name = encode_text(&record.name);
-    let init_mc = record.initial_market_cap_usd / 1000.0;
-    let curr_mc = record.current_market_cap_usd / 1000.0;
-    let highest_mc = record.highest_market_cap_usd / 1000.0;
+    let init_mc_str = format_smart_usd(record.initial_market_cap_usd);
+    let curr_mc_str = format_smart_usd(record.current_market_cap_usd);
+    let highest_mc_str = format_smart_usd(record.highest_market_cap_usd);
 
     let curr_mult = if record.initial_market_cap_usd > 0.0 {
         record.current_market_cap_usd / record.initial_market_cap_usd
@@ -584,20 +618,20 @@ pub fn format_token_pnl_html(record: &CallRecord) -> String {
     format!(
         "🎯 <b>${}</b> ({}){}
 
-        ├ <b>Call MCap:</b>  ${:.1}K
-        ├ <b>Peak ATH:</b>   <b>{:.2}x</b> (${:.1}K)
-        ├ <b>Current:</b>    <b>{:.2}x</b> (${:.1}K)
+        ├ <b>Call MCap:</b>  {}
+        ├ <b>Peak ATH:</b>   <b>{:.2}x</b> ({})
+        ├ <b>Current:</b>    <b>{:.2}x</b> ({})
         └ <b>Alerted:</b>    {}
 
         <a href=\"https://dexscreener.com/solana/{}\">DexScreener</a> • <a href=\"https://axiom.trade/token/{}\">Axiom</a>",
         sym,
         name,
         badge,
-        init_mc,
+        init_mc_str,
         peak_mult,
-        highest_mc,
+        highest_mc_str,
         curr_mult,
-        curr_mc,
+        curr_mc_str,
         elapsed_str,
         record.mint,
         record.mint
@@ -606,15 +640,7 @@ pub fn format_token_pnl_html(record: &CallRecord) -> String {
 
 
 fn plain_usd(v: f64) -> String {
-    if v >= 1_000_000_000.0 {
-        format!("${:.2}B", v / 1_000_000_000.0)
-    } else if v >= 1_000_000.0 {
-        format!("${:.2}M", v / 1_000_000.0)
-    } else if v >= 1_000.0 {
-        format!("${:.1}K", v / 1_000.0)
-    } else {
-        format!("${:.0}", v)
-    }
+    format_smart_usd(v)
 }
 
 fn format_price(p: f64) -> String {
