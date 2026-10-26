@@ -466,6 +466,8 @@ fn test_milestone_alert_formatting() {
             sustained_secs: 0,
             buys_5m: 0,
             sells_5m: 0,
+            websites: Vec::new(),
+            socials: Vec::new(),
     };
 
     let alert_msg = format_milestone_alert(&call, 5.0);
